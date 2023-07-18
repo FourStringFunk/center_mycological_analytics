@@ -1,16 +1,16 @@
 /**
- * Comment Model - Represents a comment in the tech_blog database.
+ * Courses Model - .
  *
  * @module models/Courses
  */
-const Sequelize = require('sequelize');
+const sequelize = require('../config/dbconnection');
 const {Model, DataTypes} = require('sequelize')
 class Courses extends Model{
 
   // static functions go here
 
 }
-  Comment.init( {
+Courses.init( {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,

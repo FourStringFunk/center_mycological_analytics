@@ -1,6 +1,16 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('Students', {
+/**
+ * Students Model - .
+ *
+ * @module models/Students
+ */
+const sequelize = require('../config/dbconnection');
+const {Model, DataTypes} = require('sequelize')
+class Students extends Model{
+
+  // static functions go here
+
+}
+Students.init( {
     id: {
       autoIncrement: true,
       type: DataTypes.INTEGER,
@@ -88,4 +98,4 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
-};
+module.exports = Students;

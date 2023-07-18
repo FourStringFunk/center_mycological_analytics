@@ -1,0 +1,58 @@
+{
+    "Students": [
+      {
+        "id": 1,
+        "email": "example1@example.com",
+        "password": "password1",
+        "enrollment_status": "enrolled",
+        "first_name": "John",
+        "last_name": "Doe",
+        "address_1": "123 Main St",
+        "address_2": "Apt 4B",
+        "city": "New York",
+        "state": "NY",
+        "country": "USA",
+        "zip": 10001,
+        "deleted": false
+      }
+ 
+    ],
+    "Finance": [
+      {
+        "id": 1,
+        "student_id": 1,
+        "account_status": "active",
+        "payment_term": 30,
+        "employer_name": "Acme Corp",
+        "employment_status": true,
+        "payment_plan": true,
+        "payment_amount": 200,
+        "deleted": false,
+        "last_payment": "2023-06-24"
+      }
+
+    ],
+    "Courses": [
+      {
+        "id": 1,
+        "course_name": "Physics 101",
+        "start_date": "2023-09-01",
+        "end_date": "2023-12-20",
+        "start_time": "09:00:00",
+        "end_time": "10:30:00",
+        "course_active": true,
+        "completion_status": "in_progress",
+        "certificate_awarded": false,
+        "cost": 300,
+        "deleted": false
+      }
+ 
+    ],
+    "StudentCourses": [
+      {
+        "student_id": 1,
+        "course_id": 1
+      }
+  
+    ]
+  }

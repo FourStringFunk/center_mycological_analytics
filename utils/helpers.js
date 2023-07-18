@@ -1,4 +1,7 @@
-/**
+/** 
+ * 
+ * Guys Helpers
+ * 
  * Registering helper function 
  * this function is being used in homepage.handlebars as {{randomImage}}
  */

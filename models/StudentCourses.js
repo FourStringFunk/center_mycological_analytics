@@ -1,6 +1,16 @@
-const Sequelize = require('sequelize');
-module.exports = function(sequelize, DataTypes) {
-  return sequelize.define('StudentCourses', {
+/**
+ * Student/Courses Model - A table to join on.
+ *
+ * @module models/StudentCourses
+ */
+const sequelize = require('../config/dbconnection');
+const {Model, DataTypes} = require('sequelize')
+class StudentCourses extends Model{
+
+  // static functions go here
+
+}
+StudentCourses.init( {
     student_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -42,4 +52,4 @@ module.exports = function(sequelize, DataTypes) {
       },
     ]
   });
-};
+module.exports = StudentCourses;

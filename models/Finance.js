@@ -1,12 +1,32 @@
 /**
- * Comment Model - Represents a comment in the tech_blog database.
+ * Finance Model - .
  *
  * @module models/Finance
  */
-const Sequelize = require('sequelize');
-const {Model, DataTypes} = require('sequelize')
+const sequelize = require('../config/dbconnection');
+const {Model, DataTypes, Op} = require('sequelize')
 class Finance extends Model{
-  // static methods go here
+  // static methods go here// these can be called from the server, but not from the client side scripts
+      // find delinquents
+  static async lateStudent(studentId){
+    try{
+      const rigthNow = new Date();
+      const ninetyDaysAgo = new Date(rigthNow.getTime() - 90 * 24 * 60 * 60 * 1000);
+      const lateStudent = await this.findOne({
+        where:{ 
+          last_payment: {     
+            [Op.lt]: ninetyDaysAgo
+          },
+          payment_term:{
+            [Op.lte]: ninetyDaysAgo
+          },
+        },
+      });
+      return lateStudent;
+    }catch(err){
+      console.error({message: 'Error in finance model, lateStudent static method', Error: err})
+    }
+  }
 }
   Finance.init( {
     id: {
@@ -51,7 +71,11 @@ class Finance extends Model{
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: 0
-    }
+    },
+    last_payment: {
+      type: DataTypes.DATE,
+      allowNull: false
+    },
   }, {
     sequelize,
     tableName: 'Finance',
