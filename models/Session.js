@@ -122,7 +122,7 @@ Session.init( {
       allowNull: false,
       unique: true,
       references: {
-        model: 'users',
+        model: 'Students',
         key: 'id'
       }
     },
