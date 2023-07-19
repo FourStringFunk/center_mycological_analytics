@@ -3,7 +3,7 @@
  *
  * @module models/Courses
  */
-const sequelize = require('../config/dbconnection');
+const sequelize = require('../config/connection');
 const {Model, DataTypes} = require('sequelize')
 class Courses extends Model{
 
