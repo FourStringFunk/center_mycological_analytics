@@ -5,7 +5,7 @@ const router = require('express').Router();
 //const commentRoutes = require('./comment_routes');
 // const dashboard = require('./api/dashboard_routes');
 const contact = require('./api/contact_routes');
-// const login = require('./api/login_routes')
+const login = require('./api/login_routes')
 // const signUp= require('./api/signUp_routes')
 // const home = require('./api/home_routes')
 // const logout = require('./api/logout_routes')
@@ -13,7 +13,7 @@ const contact = require('./api/contact_routes');
 // gets all user comments and posts
 router.use('/', home);
 // for loging in directly
-// router.use('/login', login)
+router.use('/login', login)
 // for the dashboard
 // router.use('/dashboard', dashboard)
 // for signing up
