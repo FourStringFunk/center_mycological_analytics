@@ -1,0 +1,91 @@
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Atlas</title>
+    <link rel="icon" href="/img/favicon.png" sizes="32x32" type="image/png">
+    <!-- custom.css -->
+    <link rel="stylesheet" href="/css/custom.css">
+    {{#if isLoginTemplate}}
+    <!-- login css -->
+    <link rel="stylesheet" href="/css/login.css">
+    {{/if}}
+    {{#ifCond isSignUpTemplate '||' isNewPostTemplate}} <!-- custom || condition registered in hepler.js -->
+     <!-- sign up css -->
+    <link rel="stylesheet" href="/css/signUp.css">
+    {{/ifCond}}
+    {{#if isNewUserTemplate}}
+    <link rel="stylesheet" href="/css/newUser.css">
+    {{/if}}
+    {{#if isContactTemplate}}
+    <link rel="stylesheet" href="/css/contact.css">
+    {{/if}}
+    <link rel="stylesheet" href="/css/viewAndComment.css">
+    <!-- bootstrap.min.css -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <!-- font-awesome -->
+    <link rel="stylesheet" href="/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500&family=Dancing+Script&family=Josefin+Sans:wght@300&family=Playfair+Display:wght@400&family=Rajdhani&family=Roboto+Slab:wght@300&display=swap" rel="stylesheet">
+    <!-- AOS -->
+    <link rel="stylesheet" href="/css/aos.css">
+</head>
+<body>
+{{{body}}}
+{{#if viewAndCommentTemplate}}
+<script src="/js/commentPost.js" defer ></script>
+{{/if}}
+{{#if isDashboardTemplate}}
+<script src="/js/ping.js" defer ></script>
+{{/if}}
+</body>
+{{#if isConfirmLogOut}}
+<script src="/js/logout.js" defer ></script>
+{{/if}}
+{{#if isLoginTemplate}}
+<script src="/js/loginValidation.js"defer></script>
+{{/if}}
+{{#if isSignUpTemplate}}
+<script src="/js/signUpValidation.js"defer></script>
+{{/if}}
+{{#if isNewUserTemplate}}
+<script src="/js/newUser.js"defer></script>
+{{/if}}
+{{#if isNewPostTemplate}}
+<script src="/js/ping.js" defer ></script>
+<script src="/ckeditor/ckeditor.js"defer></script>
+<script>
+    CKEDITOR.replace( 'postContent', {
+               height: 300,
+        width: '100%',
+        toolbarGroups: [
+            { name: 'document', groups: [ 'mode', 'document', 'doctools' ] },
+            { name: 'clipboard', groups: [ 'clipboard', 'undo' ] },
+            { name: 'editing', groups: [ 'find', 'selection', 'spellchecker' ] },
+            '/',
+            { name: 'basicstyles', groups: [ 'basicstyles', 'cleanup' ] },
+            { name: 'paragraph', groups: [ 'list', 'indent', 'blocks', 'align', 'bidi' ] },
+            { name: 'links' },
+            { name: 'insert' },
+            '/',
+            { name: 'styles' },
+            { name: 'colors' },
+            { name: 'tools' },
+            { name: 'others' },
+            { name: 'about' }
+        ]
+    } );
+</script>
+<script src="/js/newPost.js"defer></script>
+{{/if}}
+{{#if isViewPostTemplate}}
+{{/if}}
+<!-- AOS -->
+<script src="/js/aos.js"></script>
+<script>
+    AOS.init({
+    });
+</script>
+</html>
