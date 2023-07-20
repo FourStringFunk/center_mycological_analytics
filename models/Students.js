@@ -7,10 +7,6 @@ const sequelize = require('../config/connection');
 const {Model, DataTypes} = require('sequelize')
 const bcrypt = require('bcrypt')
 
-const scramblePassword = async(newUser)=>{
-  const newPassword = await bcrypt.hash(newUser.password, 10);
-
-}
 
 class Students extends Model{
   // validate user password
@@ -30,7 +26,7 @@ Students.init( {
       allowNull: false,
       unique: "email"
     },
-    password: {
+    password_hash: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
@@ -73,32 +69,24 @@ Students.init( {
     deleted: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: false
     }
   }, 
   {
-
     hooks: {
-      // Use the beforeCreate hook to work with data before a new instance is created
-      beforeCreate: (newUserData) => scramblePassword(newUserData), //(POST methods)
-      // Here, perform a check before updating the database.
-      beforeUpdate: (newUserData) => scramblePassword(newUserData), //(PUT methods)
+      beforeCreate: async (newUserData) => {
+        newUserData.password_hash = await bcrypt.hash(newUserData.password_hash, 10);
       },
-
+      beforeUpdate: async (newUserData) => {
+        newUserData.password_hash = await bcrypt.hash(newUserData.password_hash, 10);
+      },
+      },
     sequelize,
     tableName: 'Students',
     timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
-        name: "id",
         unique: true,
         using: "BTREE",
         fields: [
