@@ -1,8 +1,30 @@
+require('dotenv').config();
 const router = require('express').Router();
 const Students = require('../../models/students');
 const Session = require('../../models/session')
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
+
+
+const sendEmail = async (email, subject, text, html) => {
+    const transporter = nodemailer.createTransport({
+      service: 'Gmail',
+      auth:{
+        user: process.env.TRANSPORTERUSER,
+        pass: process.env.TRANSPORTERPASS
+      },
+    });
+    
+    let mailOptions = {
+      from: process.env.FORGOTPASSWORD,
+      to: email,
+      subject: subject,
+      text: text,
+      html: html,
+    };
+  
+    await transporter.sendMail(mailOptions);
+  };
 
 //  /login route to render needed content
 router.get('/', (req, res) => {
@@ -37,28 +59,9 @@ router.post('/forgot/retrieve', async (req,res)=>{
                 res.status(400).json({message: 'No user found with this email'});
                 return;
             }
-            console.log('student-email: ', email)    
+    
             console.log('--before transporter for forgot password--');
-            const transporter = nodemailer.createTransport({
-                service: 'Gmail',
-                auth:{
-                    user: process.env.TRANSPORTERUSER,
-                    pass: process.env.TRANSPORTERPASS
-                },
-            });
-            if(!transporter){
-                res.status(500).json({message: 'Server email error @transporter (inside server route) credentials not valid'});
-                return;
-            }
-            console.log('--before mail options forgot password--');
-            let mailOptions = {
-                from: process.env.FORGOTPASSWORD,
-                to: student.email,
-                subject: 'Your password reset',
-                text: 'Please click the following link to reset your password: resetmypassword.com',
-                html: `<p>Please click the following link to reset your password:</p>
-                       <a href="http://www.resetmypassword.com" style="display: inline-block; padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none; border-radius: 5px;">Reset Password</a>`
-                };
+            await sendEmail(student.email, 'Your password reset', 'Please click the following link to reset your password: resetmypassword.com', '<p>Please click the following link to reset your password:</p><a href="https://www.resetmypassword.com" style="display: inline-block; padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none; border-radius: 5px;">Reset Password</a>');
 // todo- need to generate a unique token for each user and include it in the reset password link so that you can identify the user when the link is clicked.
             if(!mailOptions){
                 res.status(400).json({message: 'Server email error @mailOption invalid input'});
@@ -100,6 +103,7 @@ router.post('/', body('email').isEmail(),body('password').isLength({ min: 5 }), 
         }
         const validPassword = await userData.validatePassword(req.body.password);
         if(!validPassword){
+            console.error("Error in post route /login: ", err)
             res.status(400).json({message: "Incorrect email or password"});
             return;
         }
