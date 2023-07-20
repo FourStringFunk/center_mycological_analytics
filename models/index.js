@@ -9,8 +9,8 @@
 const Courses = require("./Courses");
 const Finance = require("./Finance");
 const StudentCourses = require("./StudentCourses");
-const Students = require("./students");
-const Session = require('./session');
+const Students = require("./Students");
+const Session = require('./Session');
 
 
   Courses.belongsToMany(Students, { as: 'student_id_Students', through: StudentCourses, foreignKey: "course_id", otherKey: "student_id" });

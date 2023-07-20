@@ -3,7 +3,7 @@
  */
 const router = require('express').Router();
 //const commentRoutes = require('./comment_routes');
-// const dashboard = require('./api/dashboard_routes');
+const dashboard = require('./api/dashboard_routes');
 const contact = require('./api/contact_routes');
 const login = require('./api/login_routes')
 const createprofile= require('./api/create_profile')
@@ -15,7 +15,7 @@ router.use('/', home);
 // for loging in directly
 router.use('/login', login)
 // for the dashboard
-// router.use('/dashboard', dashboard)
+router.use('/dashboard', dashboard)
 // for signing up
 router.use('/createProfile', createprofile)
 // for signing out
