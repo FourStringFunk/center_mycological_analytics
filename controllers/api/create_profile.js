@@ -3,8 +3,8 @@
  * @module api/sign_up_routes
  */
 const router = require('express').Router();
-const Student = require('../../models/students');
-const Session = require('../../models/session')
+const Student = require('../../models/Students');
+const Session = require('../../models/Session')
 const uuid = require('uuid');
 let userData = {};
 
@@ -33,7 +33,7 @@ router.post('/newuser', async (req,res)=>{
             zip: parseInt(req.body.zip),
         }
     } else {
-        res.status(400)
+        res.status(400).json({message: "Email already exists."})
         return
     }
     try{
