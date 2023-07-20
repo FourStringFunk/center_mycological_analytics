@@ -6,72 +6,65 @@ const router = require('express').Router();
 const nodemailer = require('nodemailer');
 const multer = require('multer'); // handles file uploads
 const path = require('path');
+const nodemailer = require('nodemailer');
 require('dotenv').config();
 let mailOptions = null;
 let application = null;
 let maxCount = 3;
 // '/contact' endpoint 
-router.post('/', (req,res) =>{
+router.post('/', (req,res) => {
     try{
         let first_name = req.body.firstName;
         let last_name = req.body.lastName;
-        // create a transporter for the contact page NOTE: .env varialble must be set
+        
         console.log('--before transporter--')
         const transporter = nodemailer.createTransport({
-            service: 'Gmail', // your service
+            service: 'Gmail', 
             auth:{
                 user: process.env.TRANSPORTERUSER,
                 pass: process.env.TRANSPORTERPASS
             },
         });
+        
         if(!transporter){
-            res.status(500).json({message: 'Server email error @transporter (inside server route) credentials not valid'})
+            res.status(500).json({message: 'Server email error @transporter (inside server route) credentials not valid'});
             return;
         }
-        console.log('--before mail options--')
-        if(first_name && last_name){
-            mailOptions = {
-                from: req.body.email,
-                to: 'recipient@example.com',
-                subject: 'From the Contact form',
-                text: `${req.body.message} - ${first_name} ${last_name}`,
-            }
-        }else{
-            mailOptions = {
-                from: req.body.email,
-                to: 'recipient@example.com',
-                subject: 'From the Contact form',
-                text: req.body.message,
-            }
+        
+        console.log('--before mail options--');
+        
+        let mailOptions = {
+            from: req.body.email,
+            to: (first_name && last_name) ? 'recipient@example.com' : process.env.TRANSPORTERRECIPIENT,
+            subject: 'From the Contact form',
+            text: (first_name && last_name) ? `${req.body.message} - ${first_name} ${last_name}` : req.body.message
         }
+        
         if(!mailOptions){
-            res.status(400).json({message: 'Server email error @mailOption invalid input'})
+            res.status(400).json({message: 'Server email error @mailOption invalid input'});
             return;
         }
+
         try{
             transporter.sendMail(mailOptions,(error, info)=>{
                 if(error){
                     console.error('Error sending email:', error);
-                    res.status(404).json({message: 'Error, failed to send'})
+                    res.status(404).json({message: 'Error, failed to send'});
                     return;
                 }
-                res.status(200).json({message: info.response})
+                res.status(200).json({message: info.response});
                 console.log('Email sent:', info.response);
-                // The info object is provided as a parameter in the callback function of the sendMail() method. 
-                // It contains information about the sent email, including the response received from the email service provider. 
-                // The response property of the info object contains the response message received from the email service provider 
-                // when the email was successfully sent.
-            })
+            });
         }catch(err){
-            res.status(400).json({message: 'failed to send email', Error: err})
+            res.status(400).json({message: 'failed to send email', Error: err});
             console.log('Email not sent: ', err);
-            return
+            return;
         }
     }catch(err){
-        res.status(400).json({message: 'Server error @ contact_routes.js /contact', Error: err})
+        res.status(400).json({message: 'Server error @ /contact', Error: err});
         console.log('Email failure: ', err);
     }
-})
+});
 
 // key functions defined within this object: destination and filename.
 const storage = multer.diskStorage({    

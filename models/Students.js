@@ -14,7 +14,7 @@ const scramblePassword = async(newUser)=>{
 
 class Students extends Model{
   // validate user password
-static async validatePassword(loginPassword){
+static async validatePassword(loginPw){
   return bcrypt.compareSync(loginPw, this.password_hash);
 }
 }

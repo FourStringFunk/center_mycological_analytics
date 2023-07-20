@@ -8,16 +8,16 @@ const Session = require('../../models/session')
 const uuid = require('uuid');
 let userData = {};
 
-// '/signup' endpoint
+// '/createProfile' endpoint
 router.get('/', (req, res) => {
     try{
-        res.status(200).render('signup', { isSignUpTemplate: true, imageUrl });
+        res.status(200).render('createProfile', { isSignUpTemplate: true, imageUrl });
     }catch(error){
         console.error(error);
         res.status(500).send('Server Error')
     }
 });
-// '/signup/newuser' endpoint
+// '/createProfile/newuser' endpoint
 // validate their email is good and not a duplicate
 router.post('/newuser', async (req,res)=>{
     let imageUrl;

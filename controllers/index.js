@@ -6,7 +6,7 @@ const router = require('express').Router();
 // const dashboard = require('./api/dashboard_routes');
 const contact = require('./api/contact_routes');
 const login = require('./api/login_routes')
-// const signUp= require('./api/signUp_routes')
+const createprofile= require('./api/create_profile')
 // const home = require('./api/home_routes')
 // const logout = require('./api/logout_routes')
 // const ping = require('./api/ping_route')
@@ -17,7 +17,7 @@ router.use('/login', login)
 // for the dashboard
 // router.use('/dashboard', dashboard)
 // for signing up
-// router.use('/signup', signUp)
+router.use('/createProfile', createprofile)
 // for signing out
 // router.use('/logout', logout)
 //for contact page
