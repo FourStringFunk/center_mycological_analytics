@@ -15,6 +15,8 @@ const helpers = require('./utils/helpers');                                     
 var cookieParser = require('cookie-parser')
 const { Op } = require('sequelize');
 const { connect } = require('http2');
+const { Courses, Students, Session, StudentCourses } = require('./models');
+
 const hbs = exphbs.create({                                             // Create an instance of Express Handlebars with helpers and default layout
     helpers: helpers,
     defaultLayout: 'main' 
@@ -26,6 +28,7 @@ app.set('view engine', 'handlebars');
 
 app.use(cookieParser())
 app.use(express.json());                                         // Parse JSON bodies sent in requests
+
 // sets up your cookies
 app.use(session({
     secret: process.env.SECRET,                                 // the secret helps with hashing the session cookie I think?
@@ -44,7 +47,35 @@ app.use(express.urlencoded({ extended: true }));                // Parse URL-enc
 app.use(express.static(path.join(__dirname, 'public')));        // Serve static files from the 'public' directory
 app.use(routes); // Use the defined routes
 
-sequelize.sync({ force: false }).then(() => {
-    // Start the server and listen on the specified port
-    app.listen(PORT, () => console.log('Server Listening!')); 
-});
+async function startServer() {
+    try {
+        await sequelize.authenticate();
+        console.log('Connection has been established successfully.');
+
+        await Courses.sync();
+        await Students.sync();
+        await Session.sync();
+        await StudentCourses.sync();
+        
+        app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+    } catch (err) {
+        console.error('Unable to connect to the database:', err);
+    }
+}
+startServer();
+
+// alrenative format
+// sequelize.authenticate()
+//   .then(() => {
+//     console.log('Connection has been established successfully.');
+//   })
+//   .then(() => Courses.sync())
+//   .then(() => Students.sync())
+//   .then(() => Sessions.sync())
+//   .then(() => StudentCourses.sync())
+//   .then(() => {
+//     app.listen(PORT, () => console.log('Server Listening!')); 
+//   })
+//   .catch(err => {
+//     console.error('Unable to connect to the database:', err);
+//   });
