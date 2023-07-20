@@ -4,12 +4,13 @@
 const express = require('express');                                     // Import the Express module
 require('dotenv').config();
 const routes = require('./controllers');                                // Import the routes from the controllers file
-const sequelize = require('./config/dbconnection.js');                  // Import the Sequelize instance from the dbconnection.js file
+const sequelize = require('./config/connection.js');                  // Import the Sequelize instance from the dbconnection.js file
 const app = express();                                                  // Create an instance of the Express application
 const PORT = process.env.PORT || 3001;                                  // Define the port for the server to listen on
 const exphbs = require('express-handlebars');                           // Import the Express Handlebars module
 const session = require('express-session');                             // used for session cookies
-const path = require('path');                                           // Import the path module      
+const path = require('path');   
+const helpers = require('./utils/helpers');                                        // Import the path module      
 //const SequelizeStore = require('connect-session-sequelize')(session.save)
 var cookieParser = require('cookie-parser')
 const { Op } = require('sequelize');
