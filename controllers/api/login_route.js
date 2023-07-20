@@ -1,10 +1,10 @@
 require('dotenv').config();
 const router = require('express').Router();
-const Students = require('../../models/students');
-const Session = require('../../models/sessions')
+const Students = require('../../models/Students');
+const Session = require('../../models/Session')
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
-
+const { body, validationResult } = require('express-validator');
 
 const sendEmail = async (email, subject, text, html) => {
     const transporter = nodemailer.createTransport({
@@ -90,7 +90,7 @@ router.post('/forgot/retrieve', async (req,res)=>{
 });
 
 // '/login' endpoint, using express-validator
-router.post('/', body('email').isEmail(),body('password').isLength({ min: 5 }), async (req, res) => {
+router.post('/', body('email').isEmail(), body('password').isLength({ min: 5 }), async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
