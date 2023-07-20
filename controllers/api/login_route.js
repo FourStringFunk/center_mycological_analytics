@@ -1,7 +1,7 @@
 require('dotenv').config();
 const router = require('express').Router();
 const Students = require('../../models/students');
-const Session = require('../../models/session')
+const Session = require('../../models/sessions')
 const uuid = require('uuid');
 const nodemailer = require('nodemailer');
 

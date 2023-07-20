@@ -31,8 +31,6 @@ const Session = require('./session');
 
   Session.belongsTo(User, {foreignKey: 'userId'});
 
-  Students.hasMany(Session, {foreignKey: 'userId'});
-
   module.exports = {
     Courses,
     Finance,
