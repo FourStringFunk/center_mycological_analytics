@@ -29,7 +29,7 @@ const Session = require('./Session');
   
   Students.hasMany(StudentCourses, { as: "StudentCourses", foreignKey: "student_id"});
 
-  Session.belongsTo(User, {foreignKey: 'userId'});
+  Session.belongsTo(Students, {foreignKey: 'userId'});
 
   module.exports = {
     Courses,
