@@ -10,7 +10,7 @@ const Courses = require("./Courses");
 const Finance = require("./Finance");
 const StudentCourses = require("./StudentCourses");
 const Students = require("./Students");
-
+const Session = require('./Session');
 
 
   Courses.belongsToMany(Students, { as: 'student_id_Students', through: StudentCourses, foreignKey: "course_id", otherKey: "student_id" });
@@ -29,9 +29,12 @@ const Students = require("./Students");
   
   Students.hasMany(StudentCourses, { as: "StudentCourses", foreignKey: "student_id"});
 
+  Session.belongsTo(User, {foreignKey: 'userId'});
+
   module.exports = {
     Courses,
     Finance,
     StudentCourses,
     Students,
+    Session
   };

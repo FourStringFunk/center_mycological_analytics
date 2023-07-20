@@ -1,13 +1,44 @@
 /**
- * Student/Courses Model - A table to join on.
+ * Student/Courses Model - 
  *
  * @module models/StudentCourses
  */
-const sequelize = require('../config/dbconnection');
+const sequelize = require('../config/connection');
 const {Model, DataTypes} = require('sequelize')
 class StudentCourses extends Model{
 
-  // static functions go here
+  static async addStudentCourse(studentId, courseId, completionStatus, certificateAwarded){
+    try {
+        const newCourse = await this.create({
+            student_id: studentId,
+            course_id: courseId,
+            certificate_awarded: certificateAwarded,
+            completion_status: completionStatus,
+        });
+        return newCourse;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+}
+
+static async updateStudentCourse(studentId, courseId, completionStatus, certificateAwarded){
+    try {
+        const updateCourse = await this.update({
+            certificate_awarded: certificateAwarded,
+            completion_status: completionStatus,
+        }, {
+            where: {
+                student_id: studentId,
+                course_id: courseId,
+            }
+        });
+        return updateCourse;
+    } catch (err) {
+        console.error(err);
+        return null;
+    }
+}
 
 }
 StudentCourses.init( {
@@ -28,7 +59,15 @@ StudentCourses.init( {
         model: 'Courses',
         key: 'id'
       }
-    }
+    },
+    certificate_awarded: {
+      type: DataTypes.BOOLEAN,
+      allowNull: true
+    },
+    completion_status: {
+      type: DataTypes.STRING(200),
+      allowNull: true
+    },
   }, {
     sequelize,
     tableName: 'StudentCourses',

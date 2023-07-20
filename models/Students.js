@@ -3,12 +3,16 @@
  *
  * @module models/Students
  */
-const sequelize = require('../config/dbconnection');
+const sequelize = require('../config/connection');
 const {Model, DataTypes} = require('sequelize')
+const bcrypt = require('bcrypt')
+
+
 class Students extends Model{
-
-  // static functions go here
-
+  // validate user password
+static async validatePassword(loginPw){
+  return bcrypt.compareSync(loginPw, this.password_hash);
+}
 }
 Students.init( {
     id: {
@@ -22,7 +26,7 @@ Students.init( {
       allowNull: false,
       unique: "email"
     },
-    password: {
+    password_hash: {
       type: DataTypes.STRING(255),
       allowNull: false
     },
@@ -65,23 +69,24 @@ Students.init( {
     deleted: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: false
     }
-  }, {
+  }, 
+  {
+    hooks: {
+      beforeCreate: async (newUserData) => {
+        newUserData.password_hash = await bcrypt.hash(newUserData.password_hash, 10);
+      },
+      beforeUpdate: async (newUserData) => {
+        newUserData.password_hash = await bcrypt.hash(newUserData.password_hash, 10);
+      },
+      },
     sequelize,
     tableName: 'Students',
     timestamps: true,
     indexes: [
       {
         name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "id" },
-        ]
-      },
-      {
-        name: "id",
         unique: true,
         using: "BTREE",
         fields: [

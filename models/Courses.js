@@ -3,7 +3,7 @@
  *
  * @module models/Courses
  */
-const sequelize = require('../config/dbconnection');
+const sequelize = require('../config/connection');
 const {Model, DataTypes} = require('sequelize')
 class Courses extends Model{
 
@@ -12,7 +12,7 @@ class Courses extends Model{
 }
 Courses.init( {
     id: {
-      autoIncrement: true,
+      autoIncrement: false,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
@@ -41,14 +41,6 @@ Courses.init( {
       type: DataTypes.BOOLEAN,
       allowNull: true
     },
-    completion_status: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-    certificate_awarded: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
     cost: {
       type: DataTypes.INTEGER,
       allowNull: true
@@ -56,7 +48,7 @@ Courses.init( {
     deleted: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: false
     }
   }, {
     sequelize,
