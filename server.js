@@ -9,9 +9,8 @@ const app = express();                                                  // Creat
 const PORT = process.env.PORT || 3001;                                  // Define the port for the server to listen on
 const exphbs = require('express-handlebars');                           // Import the Express Handlebars module
 const session = require('express-session');                             // used for session cookies
-const path = require('path');                                           // Import the path module
-const helpers = require('./utils/helpers');                             // Import the helper functions
-const Session = require('./models/sessions');
+const path = require('path');                                           // Import the path module      
+
 var cookieParser = require('cookie-parser')
 const { Op } = require('sequelize');
 const hbs = exphbs.create({                                             // Create an instance of Express Handlebars with helpers and default layout

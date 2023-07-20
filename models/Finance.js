@@ -3,7 +3,7 @@
  *
  * @module models/Finance
  */
-const sequelize = require('../config/dbconnection');
+const sequelize = require('../config/connection');
 const {Model, DataTypes, Op} = require('sequelize')
 class Finance extends Model{
   // static methods go here// these can be called from the server, but not from the client side scripts

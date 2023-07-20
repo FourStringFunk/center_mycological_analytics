@@ -55,5 +55,17 @@ USE C_M_A;
 --   PRIMARY KEY (student_id, course_id)
 -- );
 
+-- CREATE TABLE  Sessions (
+--   id INTEGER AUTO_INCREMENT NOT NULL PRIMARY KEY,
+--   user_id INTEGER NOT NULL UNIQUE,
+--   session_token VARCHAR(255) NOT NULL UNIQUE,
+--   expires_at DATE,
+--   active BOOLEAN NOT NULL DEFAULT false,
+--   minutes_active` INTEGER,
+--   createdAt DATETIME NOT NULL,
+--   updatedAt DATETIME NOT NULL,
+--   FOREIGN KEY (user_id) REFERENCES Students(id)
+--   );
+
 
 
