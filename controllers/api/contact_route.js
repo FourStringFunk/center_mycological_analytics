@@ -6,8 +6,9 @@ const router = require('express').Router();
 const nodemailer = require('nodemailer');
 const multer = require('multer'); // handles file uploads
 const path = require('path');
-const nodemailer = require('nodemailer');
+const fs = require('fs');
 require('dotenv').config();
+
 let mailOptions = null;
 let application = null;
 let maxCount = 3;
@@ -82,12 +83,11 @@ const storage = multer.diskStorage({
   // Create multer upload middleware using the storage configuration
 const upload = multer({ storage: storage });
 // '/contact/apply' endpoint
-router.post('/apply',upload.array('images', maxCount) ,(req,res)=>{
-    //the field name for the file input in the form should match the field name specified here. 
-    //So if your file input has name="images", it should be upload.array('images', maxCount).
-    
-    try{
-        application = {
+router.post('/apply', upload.array('images', maxCount), (req,res) => {
+    try {
+        const filenames = req.files ? req.files.map(file => file.filename) : [];
+        
+        const application = {
             first_name: req.body.firstName,
             last_name: req.body.lastName,
             address_1: req.body.address1,
@@ -100,14 +100,23 @@ router.post('/apply',upload.array('images', maxCount) ,(req,res)=>{
             employer_name: req.body.employerName,
             income: req.body.income,
             payment_plan: req.body.paymentPlan,
-            upload: req.file ? req.file.filename : null // Check if file exists and assign the filename or null
+            uploads: filenames // Check if files exist and assign the filenames or an empty array
         }
-        res.status(200).json({ message: application });
-    }catch(err){
+        // write the application to the directory
+        const dir = path.join(__dirname, '../../utils/uploads/applications');
+        if (!fs.existsSync(dir)){
+            fs.mkdirSync(dir, { recursive: true });
+        }
+
+        const filename = path.join(dir, `${application.first_name}_${application.last_name}_${Date.now()}.json`);
+        fs.writeFileSync(filename, JSON.stringify(application, null, 4));
+
+        res.status(200).json({ message: "Application received", application: application });
+    } catch(err) {
         res.status(400).json({message: 'Server error @ contact_routes.js /contact/apply', Error: err})
         console.log('Email failure: ', err);
     }
-})
+});
 
 module.exports = router;
 

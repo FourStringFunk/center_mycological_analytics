@@ -9,7 +9,7 @@
 const Courses = require("./Courses");
 const Finance = require("./Finance");
 const StudentCourses = require("./StudentCourses");
-const Students = require("./Students");
+const Students = require("./students");
 
 
 

@@ -7,7 +7,7 @@ const nodemailer = require('nodemailer');
 //  /login route to render needed content
 router.get('/', (req, res) => {
     try{
-        res.status(200).render('login', { isLoginTemplate: true, imageUrl });
+        res.status(200).render('login', { isLoginTemplate: true });
     }catch(error){
         console.error(error);
         res.status(500).send('Server Error')
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 //  /login/fogot route to render needed content
 router.get('/forgot', (req, res) => {
     try{
-        res.status(200).render('login', { forgotPassword: true, imageUrl });
+        res.status(200).render('login', { forgotPassword: true});
     }catch(error){
         console.error(error);
         res.status(500).send('Server Error')
@@ -59,6 +59,7 @@ router.post('/forgot/retrieve', async (req,res)=>{
                 html: `<p>Please click the following link to reset your password:</p>
                        <a href="http://www.resetmypassword.com" style="display: inline-block; padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none; border-radius: 5px;">Reset Password</a>`
                 };
+// todo- need to generate a unique token for each user and include it in the reset password link so that you can identify the user when the link is clicked.
             if(!mailOptions){
                 res.status(400).json({message: 'Server email error @mailOption invalid input'});
                 return;
@@ -85,8 +86,12 @@ router.post('/forgot/retrieve', async (req,res)=>{
     }
 });
 
-// '/login' endpoint
-router.post('/', async (req, res) => {
+// '/login' endpoint, using express-validator
+router.post('/', body('email').isEmail(),body('password').isLength({ min: 5 }), async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
     try{
         const userData = await Students.findOne({where:{email: req.body.email}})
         if(!userData){
@@ -110,22 +115,20 @@ router.post('/', async (req, res) => {
             active: true,
         });
 
-         // sets the express-session as active
+        // sets the express-session as active
         req.session.user_id = userData.id;
-        req.session.active = true;
-        await req.session.save()
 
         // set the users status to active in the database
         const userSession = await Session.findOne({where: { user_id: userData.id }})
         if (userSession) {
             userSession.active = true;
             await userSession.save();
-            }
+        }
         
-               // send back session info
-     res.status(201).json({ message: session });
+        // send back user info
+        res.status(201).json({ message: 'Login successful', user: { id: userData.id, email: userData.email } });
     }catch(err){
-        console.error({message: "Error in post route: ", Error: err})
+        console.error("Error in post route: ", err)
         return res.status(500).json({message: 'Session interrupted unexpectedly: Session will refresh in 30 min'})
     }
 });
