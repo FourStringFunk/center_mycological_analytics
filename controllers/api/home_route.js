@@ -14,14 +14,6 @@ router.get('/', async (req, res) => {
 
 // NAVIGATION ROUTERS
 // About page
-router.get('/about', async (req, res) => {
-    try{
-        res.status(200).render('about', {isAboutTemplate});
-    } catch(error) {
-        console.error(error);
-        res.status(500).send('Server Error');
-    };
-});
 
 // Scholarships Page
 
