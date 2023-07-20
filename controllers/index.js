@@ -8,7 +8,7 @@ const contact = require('./api/contact_routes');
 const login = require('./api/login_routes')
 const createprofile= require('./api/create_profile')
 // const home = require('./api/home_routes')
-// const logout = require('./api/logout_routes')
+const logout = require('./api/logout_routes')
 // const ping = require('./api/ping_route')
 // gets all user comments and posts
 router.use('/', home);
@@ -19,7 +19,7 @@ router.use('/login', login)
 // for signing up
 router.use('/createProfile', createprofile)
 // for signing out
-// router.use('/logout', logout)
+router.use('/logout', logout)
 //for contact page
 router.use('/contact', contact)
 // for ping
