@@ -8,17 +8,18 @@ const multer = require('multer'); // handles file uploads
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
-
-let mailOptions = null;
-let application = null;
 let maxCount = 3;
-// '/contact' endpoint 
+/**
+ * contact page route, send an email from the contact page if(success) redirect--> '/'
+ * Endpoint: /contact
+ */
 router.post('/', (req,res) => {
     try{
         let first_name = req.body.firstName;
         let last_name = req.body.lastName;
         
         console.log('--before transporter--')
+
         const transporter = nodemailer.createTransport({
             service: 'Gmail', 
             auth:{
@@ -53,8 +54,8 @@ router.post('/', (req,res) => {
                     res.status(404).json({message: 'Error, failed to send'});
                     return;
                 }
-                res.status(200).json({message: info.response});
-                console.log('Email sent:', info.response);
+                res.status(200).redirect('/');
+                console.info('Email sent:', info.response);
             });
         }catch(err){
             res.status(400).json({message: 'failed to send email', Error: err});
@@ -66,7 +67,10 @@ router.post('/', (req,res) => {
         console.log('Email failure: ', err);
     }
 });
-
+/**
+ * Multer helper function
+ * for uploading images (i left this here for testing) once tested should be moved to another file and imported)
+ */
 // key functions defined within this object: destination and filename.
 const storage = multer.diskStorage({    
     // specifies how uploaded files should be stored on the disk
@@ -82,12 +86,16 @@ const storage = multer.diskStorage({
   });
   // Create multer upload middleware using the storage configuration
 const upload = multer({ storage: storage });
-// '/contact/apply' endpoint
+
+/**
+ * application page route, if(success) file written at /utils/uploads/applications, then redirect--> '/'
+ * Endpoint: /contact/apply
+ */
 router.post('/apply', upload.array('images', maxCount), (req,res) => {
     try {
         const filenames = req.files ? req.files.map(file => file.filename) : [];
         
-        const application = {
+        let application = {
             first_name: req.body.firstName,
             last_name: req.body.lastName,
             address_1: req.body.address1,
@@ -107,11 +115,10 @@ router.post('/apply', upload.array('images', maxCount), (req,res) => {
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir, { recursive: true });
         }
-
         const filename = path.join(dir, `${application.first_name}_${application.last_name}_${Date.now()}.json`);
         fs.writeFileSync(filename, JSON.stringify(application, null, 4));
-
-        res.status(200).json({ message: "Application received", application: application });
+        console.info({Application: application})
+        res.status(200).redirect('/');
     } catch(err) {
         res.status(400).json({message: 'Server error @ contact_routes.js /contact/apply', Error: err})
         console.log('Email failure: ', err);

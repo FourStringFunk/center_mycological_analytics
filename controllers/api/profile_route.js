@@ -3,49 +3,16 @@ const Session = require('../../models/Session');
 const Students = require('../../models/Students')
 const StudentCourses = require('../../models/StudentCourses')
 const { v4: uuidv4 } = require('uuid');
-require('dotenv').config();
-//its probably best to use a dedicated middleware for authorization like passport.js
-// Middleware to check if user is authenticated
-async function checkAuth(req, res, next) {
-    let sessionToken = req.cookies.session_token; // this is the users id that is saved in the session
-   
-    if (!sessionToken) {
-        res.redirect('/signup')
-        return
-    }
-    // Search for the users session in the database by their cookieUserId saved by express-sessions
-    const userSession = await Session.findOne({ where: { session_token: sessionToken } }); 
-    try {
-        if (!userSession) {
-            throw new Error('Session not found'); // throws an error if no session found
-        }
-        const rightNow = new Date();
-        const sessionExpiration = new Date(userSession.expires_at);
-        if (rightNow < sessionExpiration) {
-            // resets the session
-            req.session.user_id = userSession.user_id
-            req.session.active = true;
-            await req.session.save(),
+const checkAuth2 = require('../../utils/checkAuth')
 
-            next(); // Session is valid, continue to the requested route
-
-            console.log(chalk.blue("Session is valid, browser and Database match: "), chalk.green(req.cookies.session_token), "|", chalk.blue("Session user_id: "), chalk.green(req.session.user_id));
-        } else {
-            // Session is not valid, redirect the user to the signup page
-            res.redirect('/signup');
-        }
-    } catch(err) {
-        console.error('error: '+ err); // log the error
-        res.redirect('/signup');
-    }
-}
-// '/userProfile' endpoint
-// allows user to view all community posts, but if user has no posts, they cant see everyones posts
-router.get('/', checkAuth , async (req, res) => {
+/**
+ *
+ * 
+ */
+router.get('/', checkAuth2 , async (req, res) => {
     let cookieUserId = req.session.user_id;
     try {
         const userHasPosts = await getUserPostData(cookieUserId);;
-        
         if (userHasPosts) {
             // User has posts
             const postDataList = await fetchPostData();  // Fetch posts data
@@ -60,9 +27,10 @@ router.get('/', checkAuth , async (req, res) => {
         res.status(500).send('Server error');
     }
 });
-
-// '/userProfile/newpost' endpoint
-// allows user to access new post feature
+/**
+ * 
+ * 
+ */
 router.get('/newpost', (req, res) => {
     let imageUrl;
     fetch('https://source.unsplash.com/random')
@@ -119,7 +87,6 @@ router.post('/viewposts/createnew', checkAuth, async (req, res) => {
                 res.status(401).redirect('/viewposts');
                 return;
             }
-
             let uuid = uuidv4();
             let newBlogPost = {
                 id: uuid,
@@ -127,10 +94,8 @@ router.post('/viewposts/createnew', checkAuth, async (req, res) => {
                 body: body,
                 user_id: cookieUserId
             }
-
         try{
             await Post.create(newBlogPost)
-            
             res.redirect('/dashboard/viewposts');
         }catch(err){
             console.error(err);
