@@ -17,21 +17,24 @@ router.get('/', async (req, res) => {
 /**
  * about page route
  * Endpoint: /scholarships
+ * 
+ * This route renders scholarship page, (Page not built yet)
  */
 router.get('/scholarships', (req, res) => {
     
     try{
-        res.status(200).render('about', { isScholarships: true });
+        res.status(200).render('scholarships', { isScholarships: true });
         return;
     }
     catch(err){
-        res.status(400).json({ message: 'About page failed to load', Error: errb})
+        res.status(400).json({ message: 'About page failed to load', Error: err})
         console.error(err)
     }
 });
 /**
  * courses page route
  * Endpoint: /courses
+ * 
  */
 router.get('/courses', (req, res) => {
     
@@ -46,12 +49,12 @@ router.get('/courses', (req, res) => {
 });
 /**
  * scholarships page route
- * Endpoint: /scholarships
+ * Endpoint: /about
  */
-router.get('/scholarships', (req, res) => {
+router.get('/about', (req, res) => {
     
     try{
-        res.status(200).render('about', { scholarshipTemplates: true });
+        res.status(200).render('about', { isAboutTemplate: true });
         return;
     }
     catch(err){
@@ -59,5 +62,22 @@ router.get('/scholarships', (req, res) => {
         console.error(err)
     }
 });
+/**
+ * Connection page route
+ * Endpoint: /connection
+ */
+router.get('/connection', (req, res) => {
+    
+    try{
+        res.status(200).render('(TBD)');
+        return;
+    }
+    catch(err){
+        res.status(400).json({message: 'About page failed to load', Error: err})
+        console.error(err)
+    }
+});
+
+
 
 module.exports = router;

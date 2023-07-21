@@ -1,16 +1,20 @@
+/**
+ * User Routes.
+ * @module /api/users
+ */
 require('dotenv').config();
 const router = require('express').Router();
 const Students = require('../../models/Students');
-const Session = require('../../models/Session')
+const Session = require('../../models/Session');
 const uuid = require('uuid');
 const sendEmail = require('../../utils/forgotPasswordEmail')
 const { body, validationResult } = require('express-validator');
-
+const checkAuth1 = require('../../utils/checkAuth')
 /**
  * login page route serves the content
- * Endpoint: /login
+ * Endpoint: /users/login
  */
-router.get('/', (req, res) => {
+router.get('/login', (req, res) => {
     try{
         res.status(200).render('login', { isLoginTemplate: true });
     }catch(error){
@@ -20,7 +24,7 @@ router.get('/', (req, res) => {
 });
 /**
  * login validation, if(valid) redirects--> /profile
- * Endpoint: /login/validate
+ * Endpoint: /users/validate
  */
 router.post('/validate', body('email').isEmail(), body('password').isLength({ min: 5 }), async (req, res) => {
     const errors = validationResult(req);
@@ -70,7 +74,7 @@ router.post('/validate', body('email').isEmail(), body('password').isLength({ mi
 });
 /**
  * serves the forgot password page, user should input their email and request a forgot password email
- * Endpoint: /login/forgot
+ * Endpoint: /users/forgot
  */
 router.get('/forgot', (req, res) => {
     try{
@@ -82,7 +86,7 @@ router.get('/forgot', (req, res) => {
 });
 /**
  * login sends forgot password email, if(sucess) redirects--> /login
- * Endpoint: /login/forgot/retrieve
+ * Endpoint: /users/forgot/retrieve
  */
 router.post('/forgot/retrieve', async (req,res)=>{
     try{
@@ -125,5 +129,44 @@ router.post('/forgot/retrieve', async (req,res)=>{
         console.log('Email failure: ', err);
     }
 });
+
+/**
+ * User clicks, they are authenticated, confirm logout template is rendered.
+ * Endpoint: /users/logout' endpoint
+ */
+router.get('/logout', checkAuth1 ,(req, res) => {
+    try{
+        res.status(200).render('logout', { isLogoutTemplate: true });
+    }catch(error){
+        console.error(error);
+        res.status(500).send('Server Error')
+    }
+});
+/**
+ * User is asked if they are sure they want to logout, they either confirm or decline, clicking decline should send them to home.
+ * Endpoint: users/logout/confirm' endpoint
+ */
+router.get('logout/confirm', (req, res) => {
+    try {
+        req.session.destroy(function (err) {
+        if (err) {
+            // Handle error, you can also use next(err) if you have a error handler middleware in express
+            console.error(err);
+            return res.status(500).send('Server Error');
+        }
+        let sessionToken = req.cookies.session_token
+        Session.updateActiveStatus(false, sessionToken)
+        Session.kill(sessionToken);
+        // Session destroyed, user logged out
+        res.clearCookie('session_token'); // clear the browser cookie
+        res.status(200).render('logout', { isConfirmLogOut: true });
+    });
+    }catch(error){
+        console.error(error);
+        res.status(500).send('Server Error')
+    }
+});
+
+
 
 module.exports = router;
