@@ -3,8 +3,10 @@
  */
 const router = require('express').Router();
 const Session = require('../../models/Session')
-
-// '/ping' endpoint
+/**
+ * contact page route, send an email from the contact page if(success) redirect--> '/'
+ * Endpoint: /contact
+ */
 router.post('/', (req, res) => {
   try{
     const sessionToken = req.cookies.session_token;
@@ -23,6 +25,5 @@ router.post('/', (req, res) => {
   }catch(err){
     res.status(500).json({message: 'Server Error', Error: err})
   }
-
-  });
+});
 module.exports = router;

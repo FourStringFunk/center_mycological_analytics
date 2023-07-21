@@ -4,7 +4,7 @@
  * @module models/Students
  */
 const sequelize = require('../config/connection');
-const {Model, DataTypes} = require('sequelize')
+const {Model, DataTypes, ValidationError} = require('sequelize')
 const bcrypt = require('bcrypt')
 
 
@@ -13,13 +13,30 @@ class Students extends Model{
 static async validatePassword(loginPw){
   return bcrypt.compareSync(loginPw, this.password_hash);
 }
+static async getCompletedCourses(studentId){
+  try{
+    if(!studentId){
+      throw new ValidationError('Error, no student id provided')
+    }
+    const student = await this.findByPk(studentId)
+    if(!student){
+      throw new ValidationError('Student not found');
+    }
+    const completedCourses = student.completed_courses || [];
+    return completedCourses
+  }catch(err){
+    console.error('Unable to retrieve completed courses: ', err);
+  }
+}
+
 }
 Students.init( {
     id: {
-      autoIncrement: true,
+      autoIncrement: false,
       type: DataTypes.INTEGER,
       allowNull: false,
-      primaryKey: true
+      primaryKey: true,
+      unique: true,
     },
     email: {
       type: DataTypes.STRING(40),
@@ -65,6 +82,10 @@ Students.init( {
     zip: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    completed_courses: {
+      type: DataTypes.STRING(50),
+      allowNull: true
     },
     deleted: {
       type: DataTypes.BOOLEAN,

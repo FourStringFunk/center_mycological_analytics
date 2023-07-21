@@ -167,13 +167,6 @@ Session.init( {
           { name: "session_token" },
         ]
       },
-      {
-        name: "user_id",
-        using: "BTREE",
-        fields: [
-          { name: "user_id" },
-        ]
-      },
     ]
   });
   module.exports = Session;
