@@ -39,7 +39,7 @@ async function checkAuth(req, res, next) {
         res.redirect('/signup');
     }
 }
-// '/dashboard' endpoint
+// '/userProfile' endpoint
 // allows user to view all community posts, but if user has no posts, they cant see everyones posts
 router.get('/', checkAuth , async (req, res) => {
     let cookieUserId = req.session.user_id;
@@ -61,7 +61,7 @@ router.get('/', checkAuth , async (req, res) => {
     }
 });
 
-// '/dashboard/newpost' endpoint
+// '/userProfile/newpost' endpoint
 // allows user to access new post feature
 router.get('/newpost', (req, res) => {
     let imageUrl;
@@ -82,7 +82,7 @@ router.get('/newpost', (req, res) => {
             }
         });
 });
-// '/dashboard/viewpost' endpoint
+// '/userProfile/viewpost' endpoint
 // allows user to view their posts
 router.get('/viewposts', checkAuth, async (req, res) => {
     let cookieUserId = req.session.user_id;
@@ -107,7 +107,7 @@ router.get('/viewposts', checkAuth, async (req, res) => {
         res.status(500).send('Server Error');
     }
 });
-// '/dashboard/viewposts/createnew' endpoint
+// '/userProfile/viewposts/createnew' endpoint
 // creates new post
 router.post('/viewposts/createnew', checkAuth, async (req, res) => {
     try{
