@@ -34,15 +34,27 @@ router.post('/newuser', async (req,res)=>{
             res.status(409).json({message: "You didnt send any data."})
             return
         } 
-        let expiresAt = new Date();
-        // Set the initial expiration time of the session for 30 minutes
-        expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
-        const sessionToken = uuid.v4();
+        let studentData = await Student.create({
+            first_name: req.body.firstName,
+            last_name: req.body.lastName,
+            email: req.body.email,
+
+        })
+        if(!studentData){
+            res.status(500).json({message: 'Failed to add new user to the student database'})
+            return
+        }
+        // create a new student entry
         userData = await Student.create({
             first_name: req.body.fName,
             last_name: req.body.lName,
             email: req.body.email,
-        })
+            password_hash: req.body.password,
+        });
+        let expiresAt = new Date();
+        // Set the initial expiration time of the session for 30 minutes
+        expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
+        const sessionToken = uuid.v4();
         // set the session in the database
         const newSession = await Session.create({
             user_id: userData.id,
