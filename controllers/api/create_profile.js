@@ -7,58 +7,59 @@ const Student = require('../../models/Students');
 const Session = require('../../models/Session')
 const uuid = require('uuid');
 let userData = {};
-
-// '/createProfile' endpoint
+/**
+ * create profile route, serves the content
+ * Endpoint: /createProfile
+ */
 router.get('/', (req, res) => {
     try{
-        res.status(200).render('createProfile', { isSignUpTemplate: true, imageUrl });
+        res.status(200).render('createProfile', { isCreateProfileTemplate: true, imageUrl });
     }catch(error){
         console.error(error);
         res.status(500).send('Server Error')
     }
 });
-// '/createProfile/newuser' endpoint
-// validate their email is good and not a duplicate
+/**
+ * new user route, checks the users email, creates a new 
+ * Endpoint: /createProfile/newuser
+ */
 router.post('/newuser', async (req,res)=>{
-    let imageUrl;
-    if(req.body) {
-        userData = {
-            first_name: req.body.fName,
-            last_name: req.body.lName,
-            username: "",
-            email: req.body.email,
-            password_hash: "",
-            role: 'user',
-            dob: req.body.dob,
-            zip: parseInt(req.body.zip),
-        }
-    } else {
-        res.status(400).json({message: "Email already exists."})
-        return
-    }
     try{
-        const duplicateData = await User.findOne({where:{email: userData.email}})
+        const duplicateData = await Student.findOne({where:{email: req.body.email}})
         if(duplicateData){
             res.status(409).json({message: "Email already exists."})
             return;
-        }    
-        fetch('https://source.unsplash.com/random')
-        .then(response => {
-            imageUrl = response.url;
+        }
+        if(!req.body) {
+            res.status(409).json({message: "You didnt send any data."})
+            return
+        } 
+        let expiresAt = new Date();
+        // Set the initial expiration time of the session for 30 minutes
+        expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
+        const sessionToken = uuid.v4();
+        userData = await Student.create({
+            first_name: req.body.fName,
+            last_name: req.body.lName,
+            email: req.body.email,
         })
-        .catch(error => {
-            console.log(error);
-            imageUrl = "/img/tech2.png";
-        })
-        .finally(() => {
-            try{
-                res.status(200).render('newUser', { isNewUserTemplate: true, imageUrl });
-            }catch(error){
-                console.error(error);
-                res.status(500).send('Server Error')
-            }
+        // set the session in the database
+        const newSession = await Session.create({
+            user_id: userData.id,
+            session_token: sessionToken,  // session IDs
+            expires_at: expiresAt,
+            active: true,
         });
-    }catch(err){
+        // set the session on req session
+        req.session.save(() => {
+            req.session.user_id = userData.id;
+            req.session.logged_in = true;
+            res.json({ user: userData, message: 'You are now logged in!' });
+        });
+        setTimeout(() => {res.status(200).redirect('/profile')}, 500)
+    }
+    catch(err){
         console.error({message: "Error in post route: ", Error: err})
+        res.status(400).json({message: "Bad request, no data recieved", Error: err})
     }
 })
