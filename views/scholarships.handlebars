@@ -1,0 +1,23 @@
+<h1>Apply for Scholarships</h1>
+  <form action="/submit" method="POST">
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="Your Email" required>
+
+    <label for="university">University:</label>
+    <input type="text" id="university" name="university" placeholder="Your University" required>
+
+    <label for="scholarship_type">Scholarship Type:</label>
+    <select id="scholarship_type" name="scholarship_type" required>
+      <option value="merit">Merit-based</option>
+      <option value="need">Need-based</option>
+      <option value="other">Other</option>
+    </select>
+
+    <label for="essay">Essay:</label>
+    <textarea id="essay" name="essay" placeholder="Your Essay" required></textarea>
+
+    <button type="submit">Submit Application</button>
+  </form>
