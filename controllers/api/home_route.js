@@ -16,12 +16,12 @@ router.get('/', async (req, res) => {
 }});
 /**
  * about page route
- * Endpoint: /about
+ * Endpoint: /scholarships
  */
-router.get('/about', (req, res) => {
+router.get('/scholarships', (req, res) => {
     
     try{
-        res.status(200).render('about', { aboutPageTemplate: true });
+        res.status(200).render('about', { isScholarships: true });
         return;
     }
     catch(err){

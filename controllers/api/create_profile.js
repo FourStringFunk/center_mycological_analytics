@@ -45,7 +45,7 @@ router.post('/newuser', async (req,res)=>{
             return
         }
         // create a new student entry
-        userData = await Student.create({
+        let userData = await Student.create({
             first_name: req.body.fName,
             last_name: req.body.lName,
             email: req.body.email,
