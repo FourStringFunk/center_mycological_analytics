@@ -11,7 +11,7 @@ if (process.env.JAWSDB_URL) {
     sequelize = new Sequelize(process.env.JAWSDB_URL);
 } else {
     // needed to change syntax from DBA_NAME, DB_USER to DBANAME, DBUSER as the underscores were preventing the database from running.
-    sequelize = new Sequelize(process.env.DBANAME, process.env.DBUSER, process.env.DBPW, {
+    sequelize = new Sequelize('C_M_A', 'root', process.env.DB_PW, {
         host: '127.0.0.1',
         dialect: 'mysql',
         port: 3306
