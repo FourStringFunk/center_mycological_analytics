@@ -3,29 +3,11 @@
  * all uncommented routes should be funtional
  */
 const router = require('express').Router();
-//const commentRoutes = require('./comment_routes');
-// const profile = require('./api/profile_route');
-const contact = require('./api/contact_route');
-const login = require('./api/login_route')
-// const createprofile= require('./api/create_profile')
-const home = require('./api/home_route')
-const logout = require('./api/logout_route')
-// const ping = require('./api/ping_route')
-// gets all user comments and posts
-router.use('/', home);
-// for loging in directly
-router.use('/login', login)
-// for the dashboard
-////router.use('/profile', profile)
-// for signing up
-////router.use('/createProfile', createprofile)
-// for signing out
-router.use('/logout', logout)
-//for contact page
-router.use('/contact', contact)
-// for ping
-// router.use('/ping', ping)
+const apiRoutes = require('./api');
+const home = require('./home_route')
 
+router.use('/', home);
+router.use('/api', apiRoutes);
 
 
 router.use((req,res) =>{
