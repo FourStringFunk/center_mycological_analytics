@@ -1,0 +1,34 @@
+<div>
+<div>
+    <h1>Welcome  {{student.first_name}}</h1>
+    <br>
+    <body>
+    <h2>My Profile</h2>
+    <p>
+        <li>{{student.first_name}}</li>
+        <li>{{student.last_name}}</li>
+        <li>{{student.email}}</li>
+        <li>{{student.address_1}}
+            {{student.address_2}}
+        </li>
+        <li>{{student.city}}</li>
+        <li>{{student.state}}</li>
+        <li>{{student.zip}}</li>
+    </p>
+    </body>
+</div>
+<div>
+    <h1>My Course List</h1>
+    <p>
+        <li>{{courses.course_id}}</li>
+        <li>{{courses.certificate_awarded}}</li>
+        <li>{{courses.completion_status}}</li>
+    </p>    
+</div>
+<div>
+    <h1>Questions</h1>
+    <p>Please don't hesitate to reach out to us if you 
+        have any other questions or requests.</p>
+</div>
+<a href="/about">email us</a>
+</div>

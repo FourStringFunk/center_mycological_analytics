@@ -2,7 +2,7 @@ const router = require('express').Router();
 const fetch = require('node-fetch');
 const fs = require('fs')
 const Courses = require('../models/Courses')
-
+const chalk = require('chalk')
 /**
  * Homepage route
  * Endpoint: /
@@ -41,12 +41,15 @@ router.get('/courses', async (req, res) => {
     
     try{
         const mushroomCourses = await Courses.findAll();
-        const plainData = mushroomCourses.map(course => course.get({ plain: true }));
-        res.status(200).json({mushroomCourses});
+        const courses = mushroomCourses.map(course => course.get({ plain: true }));
+     
+        console.log(chalk.red(courses))
+      // calls courses template, getCourses() is a helper function
+        res.status(200).render('courses', { isCoursesTemplate: true, courses });
         return;
     }
     catch(err){
-        res.status(500).json({message: 'About page failed to load', Error: err})
+        res.status(500).json({message: 'Courses page failed to load', Error: err})
         console.error(err)
     }
 });

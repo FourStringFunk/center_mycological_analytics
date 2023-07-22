@@ -1,37 +1,12 @@
 /** 
- * 
- * Guys Helpers
- * 
  * Registering helper function 
  * this function is being used in homepage.handlebars as {{randomImage}}
  */
+
 const Handlebars = require('handlebars');
 // inserts a random image from the public directory
 let previousRandomIndex = -1;
 
-Handlebars.registerHelper('randomImage', function() {
-    const images = ["/img/tech1.png", "/img/feature-1.png", "/img/tech2.png", "/img/tech5.png", "/img/tech3.png", "/img/tech4.png"];
-    
-    if (images.length <= 3) {
-        throw new Error("There must be more than 3 images to choose from.");
-    }
-
-    // Generate a new random index different from the previous ones
-    let randomIndex;
-    do {
-        randomIndex = Math.floor(Math.random() * images.length);
-    } while (previousRandomIndices.includes(randomIndex));
-    
-    // If we've already stored 3 indices, remove the oldest one
-    if (previousRandomIndices.length >= 3) {
-        previousRandomIndices.shift();
-    }
-
-    // Add the new index to the array of previously chosen indices
-    previousRandomIndices.push(randomIndex);
-
-    return images[randomIndex];
-});
 
 let previousRandomIndices = [];
 
