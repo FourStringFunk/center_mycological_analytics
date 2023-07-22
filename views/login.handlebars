@@ -1,13 +1,22 @@
-<!-- 1 column callout -->
-    <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="oneColCallout">
-        <div class="container d-flex flex-column align-items-center">
-            <h2 class="display4 text-dark text-center mb-3">Why the Center for Mycological Analytics?</h2>
-            <p class="lead text-center">We are a community of leaders, researchers, and citizen scientists with the mission of providing educational resources around the burgeoning interest in mushrooms, their ecosystems, metabolisms, and human interactions.</p>
-            <div class="container justify-content-center mt-3" id="ctaButton">
-                <a class="d-flex flex-nowrap justify-content-center align-items-center" href="/api/contact/apply">
-                    <img src="img/icons/arrow.png" alt="arrow icon" />
-                    <p class="ctaBtn ml-5"> Our programs</p>
-                </a>
-            </div>
-        </div>
-    </div>
+<div>
+
+    <h1>login (your endpoint, send this form: POST req: api/users/validate)</h1>
+    <h2>This for needs client side sanitization, I gave Deni a script from my code bank, that will acheive this,
+        that script will nee minor adaptions. you can view it in action here if you need to: https://cms-styleblog-b43fd1e13c1e.herokuapp.com/
+    </h2>
+    <form method="POST">
+    <label for="name">email:</label>
+    <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+    <label for="name">password:</label>
+    <input type="text" id="name" name="name" placeholder="Your Name" required>
+
+  <a href="/api/users/forgot"> Fogot Password? </a>
+  <p>this should open another page: 
+  user fills out their info, and clicks a button which targets the endpoint: /api/users/forgot/retrieve. 
+  This will initiate the email to be sent to them</p>
+
+    <button type="submit">Send </button>
+  </form>
+
+</div>

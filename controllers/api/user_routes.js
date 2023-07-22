@@ -132,12 +132,12 @@ router.post('/forgot/retrieve', async (req,res)=>{
         console.log('Email failure: ', err);
     }
 });
-
+// 
 /**
  * User clicks, they are authenticated, confirm logout template is rendered.
- * Endpoint: api/users/logout' endpoint
+ * Endpoint: /api/users/logout' endpoint
  */
-router.get('/logout', checkAuth1 ,(req, res) => {
+router.get('/logout', checkAuth1,(req, res) => {
     try{
         res.status(200).render('logout', { isLogoutTemplate: true });
     }catch(error){
@@ -147,27 +147,26 @@ router.get('/logout', checkAuth1 ,(req, res) => {
 });
 /**
  * User is asked if they are sure they want to logout, they either confirm or decline, clicking decline should send them to home.
- * Endpoint: api/users/logout/confirm' endpoint
+ * Endpoint: /api/users/logout/confirm' endpoint
  */
-router.get('logout/confirm', (req, res) => {
-    try {
-        req.session.destroy(function (err) {
+router.get('/logout/confirm', async (req, res) => {
+    req.session.destroy(async function (err) {
         if (err) {
-            // Handle error, you can also use next(err) if you have a error handler middleware in express
             console.error(err);
             return res.status(500).send('Server Error');
         }
-        let sessionToken = req.cookies.session_token
-        Session.updateActiveStatus(false, sessionToken)
-        Session.kill(sessionToken);
-        // Session destroyed, user logged out
+        try {
+            let sessionToken = req.cookies.session_token;
+            await Session.updateActiveStatus(false, sessionToken);
+            await Session.kill(sessionToken);
+        } catch (error) {
+            console.error(error);
+            return res.status(500).send('Server Error');
+        }
+
         res.clearCookie('session_token'); // clear the browser cookie
-        res.status(200).render('logout', { isConfirmLogOut: true });
+        res.status(200).redirect('/api/users/login');
     });
-    }catch(error){
-        console.error(error);
-        res.status(500).send('Server Error')
-    }
 });
 
 

@@ -9,10 +9,10 @@ const path = require('path');
 const fs = require('fs');
 /**
  * User profile route, serves up the users data for the 'dashboard' page
- * Endpoint: api/proile
+ * Endpoint: /api/proile
  * 
  */
-router.get('/', checkAuth2 , async (req, res) => {
+router.get('/',checkAuth2, async (req, res) => {
     let cookieUserId = req.session.user_id;
     try {
         const studentData = await getProfile(cookieUserId);
