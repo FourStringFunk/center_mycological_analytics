@@ -12,8 +12,8 @@ const { body, validationResult } = require('express-validator');
 const checkAuth1 = require('../../utils/checkAuth')
 /**
  * login page route serves the content
- * Endpoint: /users/login
- */
+ * Endpoint: api/users/login
+ */ 
 router.get('/login', (req, res) => {
     try{
         res.status(200).render('login', { isLoginTemplate: true });
@@ -24,7 +24,7 @@ router.get('/login', (req, res) => {
 });
 /**
  * login validation, if(valid) redirects--> /profile
- * Endpoint: /users/validate
+ * Endpoint: api/users/validate
  */
 router.post('/validate', body('email').isEmail(), body('password').isLength({ min: 5 }), async (req, res) => {
     const errors = validationResult(req);
@@ -56,7 +56,10 @@ router.post('/validate', body('email').isEmail(), body('password').isLength({ mi
         });
 
         // sets the express-session as active
-        req.session.user_id = userData.id;
+        req.session.save(() => {
+            req.session.user_id = userData.id;
+            req.session.logged_in = true;
+        });
 
         // set the users status to active in the database
         const userSession = await Session.findOne({where: { user_id: userData.id }})
@@ -74,7 +77,7 @@ router.post('/validate', body('email').isEmail(), body('password').isLength({ mi
 });
 /**
  * serves the forgot password page, user should input their email and request a forgot password email
- * Endpoint: /users/forgot
+ * Endpoint: /api/users/forgot
  */
 router.get('/forgot', (req, res) => {
     try{
@@ -86,7 +89,7 @@ router.get('/forgot', (req, res) => {
 });
 /**
  * login sends forgot password email, if(sucess) redirects--> /login
- * Endpoint: /users/forgot/retrieve
+ * Endpoint: /api/users/forgot/retrieve
  */
 router.post('/forgot/retrieve', async (req,res)=>{
     try{
@@ -132,7 +135,7 @@ router.post('/forgot/retrieve', async (req,res)=>{
 
 /**
  * User clicks, they are authenticated, confirm logout template is rendered.
- * Endpoint: /users/logout' endpoint
+ * Endpoint: api/users/logout' endpoint
  */
 router.get('/logout', checkAuth1 ,(req, res) => {
     try{
@@ -144,7 +147,7 @@ router.get('/logout', checkAuth1 ,(req, res) => {
 });
 /**
  * User is asked if they are sure they want to logout, they either confirm or decline, clicking decline should send them to home.
- * Endpoint: users/logout/confirm' endpoint
+ * Endpoint: api/users/logout/confirm' endpoint
  */
 router.get('logout/confirm', (req, res) => {
     try {

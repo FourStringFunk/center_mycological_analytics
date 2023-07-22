@@ -4,17 +4,18 @@
  */
 const router = require('express').Router();
 const nodemailer = require('nodemailer');
-const multer = require('multer'); // handles file uploads
+const multer = require('multer'); 
 const path = require('path');
 const fs = require('fs');
 const Student = require('../../models/Students');
 const Session = require('../../models/Session')
 const uuid = require('uuid');
 require('dotenv').config();
+const shortid = require('shortid');
 let maxCount = 3;
 /**
  * contact page route, send an email from the contact page if(success) redirect--> '/'
- * Endpoint: /contact
+ * Endpoint: /api/contact
  */
 router.post('/', (req,res) => {
     try{
@@ -74,6 +75,7 @@ router.post('/', (req,res) => {
  * Multer helper function
  * for uploading images (i left this here for testing) once tested should be moved to another file and imported)
  */
+// handle file uploads
 // key functions defined within this object: destination and filename.
 const storage = multer.diskStorage({    
     // specifies how uploaded files should be stored on the disk
@@ -92,11 +94,11 @@ const upload = multer({ storage: storage });
 
 /**
  * application page route, if(success) file written at /utils/uploads/applications, then redirect--> '/'
- * Endpoint: /contact/apply
+ * Endpoint: api/contact/scholarship
  */
-router.post('/apply', upload.array('images', maxCount), (req,res) => {
+router.post('/scholarship', upload.array('images', maxCount), (req,res) => {
     try {
-        const filenames = req.files ? req.files.map(file => file.filename) : [];
+        const filenames = req.files ? req.files.map((file) => {file.filename}) : [];
         
         let application = {
             first_name: req.body.firstName,
@@ -130,7 +132,7 @@ router.post('/apply', upload.array('images', maxCount), (req,res) => {
 
 /**
  * create profile route, serves the content
- * Endpoint: /contact/createProfile
+ * Endpoint: api/contact/createProfile
  */
 router.get('/createProfile', (req, res) => {
     try{
@@ -142,7 +144,7 @@ router.get('/createProfile', (req, res) => {
 });
 /**
  * new user route, checks the users email, creates a new student and session
- * Endpoint: /contact/newuser
+ * Endpoint: api/contact/newuser
  */
 router.post('/newuser', async (req,res)=>{
     try{
@@ -155,40 +157,36 @@ router.post('/newuser', async (req,res)=>{
             res.status(409).json({message: "You didnt send any data."})
             return
         } 
+        // create a new student entry
         let studentData = await Student.create({
+            id: shortid.generate(),
             first_name: req.body.firstName,
             last_name: req.body.lastName,
             email: req.body.email,
+            password_hash: req.body.password,
         })
         if(!studentData){
             res.status(500).json({message: 'Failed to add new user to the student database'})
             return
         }
-        // create a new student entry
-        let userData = await Student.create({
-            first_name: req.body.fName,
-            last_name: req.body.lName,
-            email: req.body.email,
-            password_hash: req.body.password,
-        });
         let expiresAt = new Date();
         // Set the initial expiration time of the session for 30 minutes
         expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
         const sessionToken = uuid.v4();
         // set the session in the database
         const newSession = await Session.create({
-            user_id: userData.id,
+            user_id: studentData.id,
             session_token: sessionToken,  // session IDs
             expires_at: expiresAt,
             active: true,
         });
+        console.log('New session: ', newSession)
         // set the session on req session
         req.session.save(() => {
-            req.session.user_id = userData.id;
+            req.session.user_id = studentData.id;
             req.session.logged_in = true;
-            res.json({ user: userData, message: 'You are now logged in!' });
         });
-        setTimeout(() => {res.status(200).redirect('/profile')}, 500)
+        setTimeout(() => {res.status(200).redirect('/api/proile')}, 500)
     }
     catch(err){
         console.error({message: "Error in post route: ", Error: err})

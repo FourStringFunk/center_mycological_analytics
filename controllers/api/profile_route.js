@@ -1,25 +1,28 @@
 const router = require('express').Router();
-const Session = require('../../models/Session');
-const Students = require('../../models/Students')
-const StudentCourses = require('../../models/StudentCourses')
-const { v4: uuidv4 } = require('uuid');
-const checkAuth2 = require('../../utils/checkAuth')
 
+const Students = require('../../models/Students')
+
+const getProfile = require('../../utils/getStudentProfile')
+const checkAuth2 = require('../../utils/checkAuth')
+const fetchCourses = require('../../utils/fetchCompletedCourses')
+const path = require('path');
+const fs = require('fs');
 /**
- *
+ * User profile route, serves up the users data for the 'dashboard' page
+ * Endpoint: api/proile
  * 
  */
 router.get('/', checkAuth2 , async (req, res) => {
     let cookieUserId = req.session.user_id;
     try {
-        const userHasPosts = await getUserPostData(cookieUserId);;
-        if (userHasPosts) {
-            // User has posts
-            const postDataList = await fetchPostData();  // Fetch posts data
-            return res.status(200).render('dashboard', { viewAndCommentTemplate: true, imageUrl, postDataList });
+        const studentData = await getProfile(cookieUserId);
+        let {student, courses} = studentData
+        if (studentData) {
+            // returns an 2 arrays
+            return res.status(200).render('dashboard', { isProfileTamplate: true, student, courses });
         } else {
             // User does not have any posts
-            res.status(200).render('dashboard', { isDashboardTemplate: true, imageUrl });
+            res.status(400).json({message: 'There is no data for the requested student'});
         }
     } catch(err) {
         // Handle any errors
@@ -28,82 +31,92 @@ router.get('/', checkAuth2 , async (req, res) => {
     }
 });
 /**
- * 
+ *  User profile route, serves up the users data for the 'dashboard' page
+ *  Endpoint: api/profile/viewCertificate/:certificateId
+ * **This enpoint requires an :id, and the certificate id should be sent to it from client side according to the mock-up
+ */
+router.get('/viewCertificate/:certificateId', checkAuth2 ,async (req, res) => {
+    let studentId = req.session.user_id;
+try{
+    if(!req.session.logged_in == true){
+        return res.status(401).send('Please log in to view this certificate');
+    }
+    const certificateId = req.params.certificateId;
+    // Fetch the list of completed courses
+    const completedCourses = await fetchCourses(studentId)
+    // Check if the course associated with this certificate is in the user's list of completed courses
+    if (!completedCourses.includes(certificateId)) {
+        return res.status(403).send('You do not have permission to view this certificate');
+    }
+
+    // the certificate pdf file needs to be stored in a folder named "certificates" in the root directory.
+    
+    // The certificate filename is assumed to be the certificateId with a .pdf extension.
+    const filePath = path.join(__dirname, 'certificates', `${certificateId}.pdf`);
+    // Check if the file exists
+    if (fs.existsSync(filePath)) {
+        res.status(200).sendFile(filePath);
+    } else {
+        res.status(404).send('Certificate not found');
+    }
+}catch(err){
+    res.status(500).send('Server Error', err);
+}
+});
+/**
+ *  Update profile route
+ *  Endpoint: api/profile/updateProfile
  * 
  */
-router.get('/newpost', (req, res) => {
-    let imageUrl;
-    fetch('https://source.unsplash.com/random')
-        .then(response => {
-            imageUrl = response.url;
-        })
-        .catch(error => {
-            console.log(error);
-            imageUrl = "/img/tech2.png";
-        })
-        .finally(() => {
-            try{
-                res.status(200).render('dashboard', { isNewPostTemplate: true, imageUrl });
-            }catch(error){
-                console.error(error);
-                res.status(500).send('Server Error')
-            }
-        });
-});
-// '/userProfile/viewpost' endpoint
-// allows user to view their posts
-router.get('/viewposts', checkAuth, async (req, res) => {
-    let cookieUserId = req.session.user_id;
-    let imageUrl
-
-    if(!cookieUserId){
-        return res.status(401).json({ error: "No user id found in session"})
-    }
-
+router.get('/update', checkAuth2, (res,req) =>{
     try{
-        let response = await fetch('https://source.unsplash.com/random');
-        imageUrl = response.url;
-    }catch(err){
-        console.error(err);
-        imageUrl = "/img/tech4.png";
+        res.status(200).render('(TBD)');
+        return;
     }
-    try {
-        let postDataList = await getUserPostData(cookieUserId);
-        res.status(200).render('dashboard', { isViewPostTemplate: true, imageUrl, postDataList });
-    } catch(error) {
-        console.error(error);
-        res.status(500).send('Server Error');
+    catch(err){
+        res.status(500).json({message: 'Server error', Error: err})
+        console.error(err)
     }
-});
-// '/userProfile/viewposts/createnew' endpoint
-// creates new post
-router.post('/viewposts/createnew', checkAuth, async (req, res) => {
+})
+
+router.put('/update/profile', checkAuth2, async (req,res) =>{
     try{
-        const {title, body} = req.body;
-        let cookieUserId = req.session.user_id;
-        console.log("req.session.user_id: ",  req.session.user_id)
-            if(!cookieUserId){
-                console.error({error: "No user id found in session"})
-                res.status(401).redirect('/viewposts');
-                return;
-            }
-            let uuid = uuidv4();
-            let newBlogPost = {
-                id: uuid,
-                title: title,
-                body: body,
-                user_id: cookieUserId
-            }
-        try{
-            await Post.create(newBlogPost)
-            res.redirect('/dashboard/viewposts');
-        }catch(err){
-            console.error(err);
-            res.status(500).json({message: 'Server Error', error: err})
+        if(!req.body){
+            return res.status(409).json({message: "Recieved no data"})
         }
-    }catch(err){
-        res.status(500).json({message: "server error", Error: err})
+        const userData = await Students.findOne({
+            where: {
+                id: req.session.user_id 
+            }
+        })
+        let updateData = {
+            email: req.body.email || userData.email,
+            first_name: req.body.firstName || userData.first_name,
+            last_name: req.body.lastName || userData.last_name,
+            address_1: req.body.address1 || userData.address1,
+            address_2: req.body.address2 || userData.address2,
+            city: req.body.city || userData.city,
+            state: req.body.state || userData.state,
+            country: req.body.country || userData.country,
+            zip: req.body.zip ||userData.zip,
+            employment_status: req.body.employmentStatus || userData.employment_status,
+            employer_name: req.body.employerName || userData.employer_name,
+            income: req.body.income || userData.income,
+        }
+        if(!updateData){
+            return res.status(409).json({message: "Data is incomplete"})
+        }
+
+        await userData.update(updateData)
+
+        res.status(200).render('/api/profile');
+        return;
     }
-});
+    catch(err){
+        res.status(500).json({message: 'Server error', Error: err})
+        console.error(err)
+    }
+})
+
 
 module.exports = router;

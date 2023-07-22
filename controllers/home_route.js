@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const fetch = require('node-fetch');
 const fs = require('fs')
+const Courses = require('../models/Courses')
 
 /**
  * Homepage route
@@ -36,14 +37,16 @@ router.get('/scholarships', (req, res) => {
  * Endpoint: /courses
  * 
  */
-router.get('/courses', (req, res) => {
+router.get('/courses', async (req, res) => {
     
     try{
-        res.status(200).render('about', { courseTamplate: true });
+        const mushroomCourses = await Courses.findAll();
+        const plainData = mushroomCourses.map(course => course.get({ plain: true }));
+        res.status(200).json({mushroomCourses});
         return;
     }
     catch(err){
-        res.status(400).json({message: 'About page failed to load', Error: err})
+        res.status(500).json({message: 'About page failed to load', Error: err})
         console.error(err)
     }
 });
@@ -64,7 +67,7 @@ router.get('/about', (req, res) => {
 });
 /**
  * Connection page route
- * Endpoint: /connection
+ * Endpoint: /getConnected
  */
 router.get('/connection', (req, res) => {
     
