@@ -1,33 +1,48 @@
 <div>
-    <div>
-        
-        <h2>About Us</h2>
+  <div>
 
-        <p>We are a community of leaders, researchers, and citizen scientists 
-            with the mission of providing educational resources around the burgeoning 
-            interest in mushrooms, their ecosystems, metabolisms, and human interactions.</p>
-            <br>
-            <p>Our goal is to build a foundation for the next generation by breaking 
-                down barriers in scientific spaces while creating digestible procedures
-                for our community to utilize.</p>
-            <br>
-            <p>We have a history of innovation in mushroom analytics, 
-                supporting award winning cultivators, and building conversation platforms. 
-                From developing the Hyphae Spectrum to building out ISO accredited labs and culture spaces across the country, 
-                our team of instructors is dedicated to sharing their experience, insight, and expertise.</p>
+    <h2>About Us</h2>
 
+    <p>We are a community of leaders, researchers, and citizen scientists with
+      the mission of providing educational resources around the burgeoning 
+      interest in mushrooms, their ecosystems, metabolisms, and human
+      interactions.</p>
+    <p>Our goal is to build a foundation for the next generation by breaking
+      down barriers in scientific spaces while creating digestible procedures
+      for our community to utilize.</p>
+    <p>We have a history of innovation in mushroom analytics, supporting award
+      winning cultivators, and building conversation platforms. From developing
+      the Hyphae Spectrum to building out ISO accredited labs and culture spaces
+      across the country, our team of instructors is dedicated to sharing their
+      experience, insight, and expertise.</p>
+
+  </div>
+  <h1>Contact (your endpoint for this form: POST req: /api/contact)</h1>
+  <form>
+    <div class="form-group mb-3">
+      <label for="exampleInputEmail1">Email address</label>
+      <input
+        type="email"
+        class="form-control"
+        id="exampleInputEmail1"
+        aria-describedby="emailHelp"
+        placeholder="Enter email"
+      />
+      <div>
+        <small id="emailHelp" class="form-text text-muted">We'll never share
+          your email with anyone else.</small>
+      </div>
     </div>
-    <h1>Contact (your endpoint for this form: POST req: /api/contact)</h1>
-  <form action="/submit" method="POST">
-    <label for="name">First Name:</label>
-    <input type="text" id="name" name="name" placeholder="Your Name" required>
-
-    <label for="name">last Name:</label>
-    <input type="text" id="name" name="name" placeholder="Your Name" required>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" placeholder="Your Email" required>
-
-    <button type="submit">Submit </button>
+    <div class="form-group mb-3">
+      <label for="exampleInputPassword1">Password</label>
+      <input
+        type="password"
+        class="form-control"
+        id="exampleInputPassword1"
+        placeholder="Password"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
   </form>
+
 </div>
