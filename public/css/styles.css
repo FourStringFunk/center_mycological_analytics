@@ -3,10 +3,6 @@
     margin: 0;
 }
 
-html {
-    width: 100%;
-}
-
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
@@ -25,7 +21,7 @@ a, button, p, ul, li {
 }
 
 /* 1-COLUMN CALLOUT*/
-#oneColCallout {
+#oneColCallout, #carousel {
     height: 50vh;
 }
 
@@ -34,3 +30,5 @@ a, button, p, ul, li {
     margin-left: 10px;
     margin-bottom: 5px;
 }
+
+/* Carousel */
