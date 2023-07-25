@@ -1,0 +1,36 @@
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center px-5 py-5 bg-light" id="contactUs">
+    <div class="mb-3">
+        <h2 class="">Create your Profile</h2>
+    </div>
+
+    <form method="POST" class="d-flex flex-column w-50" id="loginForm">
+        <div class="form-group">
+            <label class="mb-1" for="fName">First Name</label>
+            <input type="text" class="form-control" id="fName" aria-describedby="usernameHelp" placeholder="Enter your first name" required>
+        </div>
+        
+        <div class="form-group mt-4 mb-3">
+            <label class="mb-1" for="lName">Last Name</label>
+            <input type="text" class="form-control" id="lName" aria-describedby="lNameHelp" placeholder="Enter your last name" required>
+        </div>
+
+        <div class="form-group mt-4 mb-3">
+            <label class="mb-1" for="email">Email</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group mt-4 mb-3">
+            <label class="mb-1" for="password">Password</label>
+            <input type="text" class="form-control" id="password" aria-describedby="passwordHelp" placeholder="Enter your password" required>
+        </div>
+
+        <div class="form-group mt-4 mb-3">
+            <label class="mb-1" for="verifyPassword">Verify Password</label>
+            <input type="text" class="form-control" id="verifyPassword" aria-describedby="verifyPasswordHelp" placeholder="Enter your password again" required>
+        </div>
+
+        <div class="d-flex flex-row-reverse mt-3">
+            <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
+        </div>
+    </form>
+</div>
