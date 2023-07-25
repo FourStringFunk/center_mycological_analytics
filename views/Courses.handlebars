@@ -1,36 +1,60 @@
-<div>
-  <div>
-
-    <h2>Courses List</h2>
-
-    <p>Scroll through the course list below to view our current offerings.
+<body>
+    <!-- banner --> 
+    <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="banner" style="background-image: url(img/banner-bk.jpg);">
+        <div class="container-fluid d-flex flex-column align-items-center">
+          <img class="card-img-top" src="../public/img/smart-protect-1.jpg" alt="Card image cap" />
+            <h2>Course List</h2>
+            <p>Scroll through the course list below to view our current offerings.
       In-Person events to fifteen (15) students, so SEATING IS LIMITED!</p>
-
-    <!-- Begin Mushroom Extraction and Analysis -->
-    <div class="card" style="width: 18rem;">
-      <img class="card-img-top" src="../public/img/smart-protect-1.jpg" alt="Card image cap" />
-      <div class="card-body">
-        <h3 class="card-title">Mushroom Extraction and Analysis Certificate Course</h3>
-        <p class="card-text">CMAS-1001 | Online</p>
-        <p>This summer we are offering a 45-seat course over three days, in-person training! Out goal is to bring together our community of citizen scientists and researchers to provide you all the opportunity to learn from our work and insights, and then offer space for you to become a part of it with us!</p>
-        <a href="#"><p>Register Today >></p></a>
-        
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Cras justo odio</li>
-        <li class="list-group-item">Dapibus ac facilisis in</li>
-        <li class="list-group-item">Vestibulum at eros</li>
-      </ul>
-      <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
-      </div>
+            <button class="btn btn-primary btn-lg w-25 buttonStyle" href="INSERT CLASSES LINK HERE" type="button">Apply Now</button>
+        </div>
     </div>
-    <!-- End Mushroom Extraction and Analysis -->
 
-  </div>
-  {{#each courses}}
-    <a href="link to whereever"><li>{{this.course_name}}</li></a>
-  {{/each}}
+    <!-- 1 column callout -->
+    <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center px-5" id="oneColCallout">
+        <div class="container-fluid d-flex flex-column align-items-center">
+          <p><img class="card-img-top" src="../public/img/smart-protect-1.jpg" alt="Card image cap" /></p>
+            <h3 class="display4 text-dark text-center mb-3">Mushroom Extraction and Analysis Certificate Course</h3>
+            <p class="card-text">CMAS-1001 | Online</p>
+        <a href="#"><p>Register Today >></p></a>
+            <p class="lead text-center">This summer we are offering a 45-seat course over three days, in-person training! Out goal is to bring together our community of citizen scientists and researchers to provide you all the opportunity to learn from our work and insights, and then offer space for you to become a part of it with us!</p>
+            <div class="container justify-content-center mt-3" id="ctaButton">
+                <a class="d-flex flex-nowrap justify-content-center align-items-center" href="/about">
+                    <img src="img/icons/arrow.png" alt="arrow icon" />
+                    <p class="ctaBtn ml-5"> Learn more</p>
+                </a>
+            </div>
+        </div>
+    </div>
 
-</div>
+    <!-- CONTACT FORM -->
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-light" id="contactUs">
+        <div class="mb-3">
+            <h2 class="">Get in Touch</h2>
+        </div>
+
+        <form method="POST" class="d-flex flex-column w-50" id="contactForm">
+            <div class="form-group">
+                <label class="mb-1" for="fName">First Name</label>
+                <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your first name">
+            </div>
+            <div class="form-group mt-4 mb-4">
+                <label class="mb-1" for="lName">Last Name</label>
+                <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your last name">
+            </div>
+            <div class="form-group mb-4">
+                <label class="mb-1" for="exampleInputEmail1">Email Address</label>
+                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+            </div>
+            <div class="form-group mb-4">
+                <label class="mb-1" for="message">Write A Brief Message</label>
+                <textarea class="form-control" id="message" rows="3"></textarea>
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
