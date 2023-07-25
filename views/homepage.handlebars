@@ -1,40 +1,9 @@
 <body>
-    <!-- banner -->
-    <header>
-        <nav class="navbar navbar-expand-md h-100 w-100" id="nav">
-            <div class="container-fluid bg-white">
-                <a class="navbar-brand d-flex flex-row align-items-center" href="INSERT LINK HERE" width="30" height="24" class="d-inline-block align-text-top" data-bs-target="#navbarSupportedContent">
-                    <img src="img/brand/CMA_logo.svg" style="width: 50px; height: 50px; margin-right: 10px;" alt="logo">
-                <h1 class="org-title text-wrap fs-2">Center for Mycological Analytics</h1>
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/courses">Courses</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/scholarships">Scholarships</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="api/users/login">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </nav>
-    </header>
-    
+    <!-- banner --> 
     <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="banner" style="background-image: url(img/banner-bk.jpg);">
         <div class="container-fluid d-flex flex-column align-items-center">
             <h1 class="display-4 text-white text-center mb-5">Summer registration is now open!</h1>
-            <button class="btn btn-primary btn-lg w-25" href="INSERT CLASSES LINK HERE" type="button">Apply Now</button>
+            <button class="btn btn-primary btn-lg w-25 buttonStyle" href="INSERT CLASSES LINK HERE" type="button">Apply Now</button>
         </div>
     </div>
 
@@ -44,7 +13,7 @@
             <h2 class="display4 text-dark text-center mb-3">Why the Center for Mycological Analytics?</h2>
             <p class="lead text-center">We are a community of leaders, researchers, and citizen scientists with the mission of providing educational resources around the burgeoning interest in mushrooms, their ecosystems, metabolisms, and human interactions.</p>
             <div class="container justify-content-center mt-3" id="ctaButton">
-                <a class="d-flex flex-nowrap justify-content-center align-items-center" href="INSER LINK TO ABOUT PAGE">
+                <a class="d-flex flex-nowrap justify-content-center align-items-center" href="/about">
                     <img src="img/icons/arrow.png" alt="arrow icon" />
                     <p class="ctaBtn ml-5"> Learn more</p>
                 </a>
@@ -67,8 +36,8 @@
                 <div class="card-body d-flex flex-column justify-content-center">
                     <h4 class="card-title">01. Our Programs</h4>
                     <p class="card-text">Attend a certificate course and join the next generation of mycological experts.</p>
-                    <div class="container justify-content-center mt-3" id="ctaButton">
-                        <a class="d-flex flex-nowrap align-items-center" href="INSER LINK TO ABOUT PAGE">
+                    <div class="container justify-content-center mt-3 ctaButton">
+                        <a class="d-flex flex-nowrap align-items-center" href="/courses">
                             <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" style="width: 32px; height: 32px;"/>
                             <p class="ctaBtn ml-5">Learn more</p>
                         </a>
@@ -81,8 +50,8 @@
                 <div class="card-body d-flex flex-column justify-content-center">
                     <h4 class="card-title">02. Scholarships</h4>
                     <p class="card-text"> Learn more about the financial opportunities to help pursue your education.</p>
-                    <div class="container justify-content-center mt-3" id="ctaButton">
-                        <a class="d-flex flex-nowrap align-items-center" href="INSER LINK TO ABOUT PAGE">
+                    <div class="container justify-content-center mt-3 ctaButton">
+                        <a class="d-flex flex-nowrap align-items-center" href="/scholarships">
                             <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" style="width: 32px; height: 32px;"/>
                             <p class="ctaBtn ml-5"> Learn more</p>
                         </a>
@@ -96,7 +65,7 @@
                     <h4 class="card-title">03. Connection</h4>
                     <p class="card-text">  Get involved with our larger community and help break down barriers.</p>
                     <div class="container justify-content-center mt-3" id="ctaButton">
-                        <a class="d-flex flex-nowrap align-items-center" href="INSER LINK TO ABOUT PAGE">
+                        <a class="d-flex flex-nowrap align-items-center" href="https://www.linkedin.com/company/center-for-mycological-analytics/">
                             <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" style="width: 32px; height: 32px;" />
                             <p class="ctaBtn ml-5"> Learn more</p>
                         </a>
@@ -136,31 +105,33 @@
     </div>
 
     <!-- CONTACT FORM -->
-    <div class="jumbotron bg-light container-fluid d-flex flex-column justify-content-center">
-        <div>
+    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-light" id="contactUs">
+        <div class="mb-3">
             <h2 class="">Get in Touch</h2>
         </div>
 
-        <form class="w-50 d-flex flex-column align-items center">
+        <form method="POST" class="d-flex flex-column w-50" id="contactForm">
             <div class="form-group">
-                <label for="fName">First Name</label>
+                <label class="mb-1" for="fName">First Name</label>
                 <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your first name">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            <div class="form-group">
-                <label for="lName">First Name</label>
+            <div class="form-group mt-4 mb-4">
+                <label class="mb-1" for="lName">Last Name</label>
                 <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your last name">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
+            <div class="form-group mb-4">
+                <label class="mb-1" for="exampleInputEmail1">Email Address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <div class="form-group mb-4">
+                <label class="mb-1" for="message">Write A Brief Message</label>
+                <textarea class="form-control" id="message" rows="3"></textarea>
+            </div>
+            <div class="d-flex flex-row-reverse">
+                <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
+            </div>
         </form>
     </div>
-
 </body>
 
 </html>

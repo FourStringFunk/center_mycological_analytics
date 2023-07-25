@@ -3,6 +3,13 @@
     margin: 0;
 }
 
+:root {
+    --accent: #5e6d55;
+    --alt-bg: #757575;
+    --main-text: #000000;
+    --alt-bg: #ffffff;
+}
+
 h1, h2, h3, h4, h5, h6 {
     margin: 0;
     padding: 0;
@@ -15,14 +22,19 @@ a, button, p, ul, li {
     padding: 0;
 }
 
+.buttonStyle {
+    background-color: var(--accent) !important;
+    border: none !important;
+}
+
 /* JUMBOTRON */
 .jumbotron {
     height: 50vh;
 }
 
 /* 1-COLUMN CALLOUT*/
-#oneColCallout, #carousel {
-    height: 50vh;
+#oneColCallout, #carousel, #contactUs {
+    height: 75vh;
 }
 
 .ctaBtn {
@@ -32,3 +44,11 @@ a, button, p, ul, li {
 }
 
 /* Carousel */
+
+/* CONTACT FORM */
+
+/* FOOTER */
+#footerBrand {
+    width: 25vh;
+    height: 25vh;
+}
