@@ -1,14 +1,36 @@
 <div>
-    <div>
+  <div>
+
+    <h2>Courses List</h2>
+
+    <p>Scroll through the course list below to view our current offerings.
+      In-Person events to fifteen (15) students, so SEATING IS LIMITED!</p>
+
+    <!-- Begin Mushroom Extraction and Analysis -->
+    <div class="card" style="width: 18rem;">
+      <img class="card-img-top" src="../public/img/smart-protect-1.jpg" alt="Card image cap" />
+      <div class="card-body">
+        <h3 class="card-title">Mushroom Extraction and Analysis Certificate Course</h3>
+        <p class="card-text">CMAS-1001 | Online</p>
+        <p>This summer we are offering a 45-seat course over three days, in-person training! Out goal is to bring together our community of citizen scientists and researchers to provide you all the opportunity to learn from our work and insights, and then offer space for you to become a part of it with us!</p>
+        <a href="#"><p>Register Today >></p></a>
         
-        <h2>Courses List</h2>
-
-        <p>Scroll through the course list below to view our current offerings. 
-            In-Person events to fifteen (15) students, so SEATING IS LIMITED!</p>
-
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Cras justo odio</li>
+        <li class="list-group-item">Dapibus ac facilisis in</li>
+        <li class="list-group-item">Vestibulum at eros</li>
+      </ul>
+      <div class="card-body">
+        <a href="#" class="card-link">Card link</a>
+        <a href="#" class="card-link">Another link</a>
+      </div>
     </div>
-    {{#each courses}}
-        <a href="link to whereever"><li>{{this.course_name}}</li></a>
-    {{/each}}
-    
+    <!-- End Mushroom Extraction and Analysis -->
+
+  </div>
+  {{#each courses}}
+    <a href="link to whereever"><li>{{this.course_name}}</li></a>
+  {{/each}}
+
 </div>
