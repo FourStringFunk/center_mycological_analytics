@@ -34,7 +34,7 @@ a, button, p, ul, li {
 
 /* 1-COLUMN CALLOUT*/
 #oneColCallout, #carousel, #contactUs {
-    height: 65vh;
+    height: 75vh;
 }
 
 .ctaBtn {
@@ -46,3 +46,9 @@ a, button, p, ul, li {
 /* Carousel */
 
 /* CONTACT FORM */
+
+/* FOOTER */
+#footerBrand {
+    width: 25vh;
+    height: 25vh;
+}
