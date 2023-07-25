@@ -69,7 +69,7 @@
                     <p class="card-text">Attend a certificate course and join the next generation of mycological experts.</p>
                     <div class="container justify-content-center mt-3" id="ctaButton">
                         <a class="d-flex flex-nowrap align-items-center" href="INSER LINK TO ABOUT PAGE">
-                            <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" />
+                            <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" style="width: 32px; height: 32px;"/>
                             <p class="ctaBtn ml-5">Learn more</p>
                         </a>
                     </div>
@@ -83,7 +83,7 @@
                     <p class="card-text"> Learn more about the financial opportunities to help pursue your education.</p>
                     <div class="container justify-content-center mt-3" id="ctaButton">
                         <a class="d-flex flex-nowrap align-items-center" href="INSER LINK TO ABOUT PAGE">
-                            <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" />
+                            <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" style="width: 32px; height: 32px;"/>
                             <p class="ctaBtn ml-5"> Learn more</p>
                         </a>
                     </div>
@@ -97,7 +97,7 @@
                     <p class="card-text">  Get involved with our larger community and help break down barriers.</p>
                     <div class="container justify-content-center mt-3" id="ctaButton">
                         <a class="d-flex flex-nowrap align-items-center" href="INSER LINK TO ABOUT PAGE">
-                            <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" />
+                            <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon" style="width: 32px; height: 32px;" />
                             <p class="ctaBtn ml-5"> Learn more</p>
                         </a>
                     </div>
@@ -136,27 +136,30 @@
     </div>
 
     <!-- CONTACT FORM -->
-    <div class="jumbotron bg-light">
+    <div class="jumbotron bg-light container-fluid d-flex flex-column justify-content-center">
         <div>
             <h2 class="">Get in Touch</h2>
         </div>
 
-        <form>
+        <form class="w-50 d-flex flex-column align-items center">
+            <div class="form-group">
+                <label for="fName">First Name</label>
+                <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your first name">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+                <label for="lName">First Name</label>
+                <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your last name">
+                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">Email address</label>
                 <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
                 <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
             </div>
-            <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-            </div>
-            <div class="form-check">
-                <input type="checkbox" class="form-check-input" id="exampleCheck1">
-                <label class="form-check-label" for="exampleCheck1">Check me out</label>
-            </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
+    </div>
 
 </body>
 
