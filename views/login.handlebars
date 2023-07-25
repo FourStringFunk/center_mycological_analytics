@@ -1,8 +1,8 @@
-
+{{#if isLoginTemplate}}
 <div class="container-fluid d-flex flex-column justify-content-center align-items-center px-5 py-5 bg-light" id="contactUs">
     <div class="mb-3 align-item-center">
         <h2 class="text-center mb-3">Login</h2>
-        <p class="text-center">Don't have a profile yet? <a href="CREATE PROFILE LINK">Create one</a></p>
+        <p class="text-center">Don't have a profile yet? <a href="/api/users/create">Create one</a></p>
     </div>
 
     <form method="POST" class="d-flex flex-column w-50" id="loginForm">
@@ -22,22 +22,13 @@
         </div>
     </form>
 </div>
+{{/if}}
+
+<!-- This is a partial and is for the forgot password section 
+Someone needs to make the forgot password page html so they can get their commits up-->
+{{#if forgotPassword}}
+  {{> forgot}}
+{{/if}}
 
 
-    <h1>login (your endpoint, send this form: POST req: api/users/validate)</h1>
-    <h2>This for needs client side sanitization, I gave Deni a script from my code bank, that will acheive this,
-        that script will nee minor adaptions. you can view it in action here if you need to: https://cms-styleblog-b43fd1e13c1e.herokuapp.com/
-    </h2>
-    <form method="POST">
-    <label for="name">email:</label>
-    <input type="text" id="name" name="name" placeholder="Your Name" required>
-
-    <label for="name">password:</label>
-    <input type="text" id="name" name="name" placeholder="Your Name" required>
-
-    <p>this should open another page: 
-  user fills out their info, and clicks a button which targets the endpoint: /api/users/forgot/retrieve. 
-  This will initiate the email to be sent to them</p>
-
-    <button type="submit">Send </button>
-    </form>
+   

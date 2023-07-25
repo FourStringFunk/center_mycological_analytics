@@ -8,8 +8,9 @@ const fetchCourses = require('../../utils/fetchCompletedCourses')
 const path = require('path');
 const fs = require('fs');
 /**
- * User profile route, serves up the users data for the 'dashboard' page
- * Endpoint: /api/proile
+ * User profile route, serves up the users data for the 'dashboard' aka 
+ * StudentCourses page
+ * Endpoint: /api/profile
  * checkAuth2
  */
 router.get('/', async (req, res) => {
@@ -19,7 +20,7 @@ router.get('/', async (req, res) => {
         let {student, courses} = studentData
         if (studentData) {
             // returns an 2 arrays
-            return res.status(200).render('dashboard', { isProfileTamplate: true, student, courses });
+            return res.status(200).render('StudentCourses', { isProfileTamplate: true, student, courses });
         } else {
             // User does not have any posts
             res.status(400).json({message: 'There is no data for the requested student'});

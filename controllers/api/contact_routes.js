@@ -7,11 +7,7 @@ const nodemailer = require('nodemailer');
 const multer = require('multer'); 
 const path = require('path');
 const fs = require('fs');
-const Student = require('../../models/Students');
-const Session = require('../../models/Session')
-const uuid = require('uuid');
 require('dotenv').config();
-const shortid = require('shortid');
 let maxCount = 3;
 /**
  * contact page route, send an email from the contact page if(success) redirect--> '/'
@@ -130,69 +126,6 @@ router.post('/scholarship', upload.array('images', maxCount), (req,res) => {
     }
 });
 
-/**
- * create profile route, serves the content
- * Endpoint: api/contact/createProfile
- */
-router.get('/createProfile', (req, res) => {
-    try{
-        res.status(200).render('login', { isCreateProfileTemplate: true});
-    }catch(error){
-        console.error(error);
-        res.status(500).send('Server Error')
-    }
-});
-/**
- * new user route, checks the users email, creates a new student and session
- * Endpoint: api/contact/newuser
- */
-router.post('/newuser', async (req,res)=>{
-    try{
-        const duplicateData = await Student.findOne({where:{email: req.body.email}})
-        if(duplicateData){
-            res.status(409).json({message: "Email already exists."})
-            return;
-        }
-        if(!req.body) {
-            res.status(409).json({message: "You didnt send any data."})
-            return
-        } 
-        // create a new student entry
-        let studentData = await Student.create({
-            id: shortid.generate(),
-            first_name: req.body.firstName,
-            last_name: req.body.lastName,
-            email: req.body.email,
-            password_hash: req.body.password,
-        })
-        if(!studentData){
-            res.status(500).json({message: 'Failed to add new user to the student database'})
-            return
-        }
-        let expiresAt = new Date();
-        // Set the initial expiration time of the session for 30 minutes
-        expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
-        const sessionToken = uuid.v4();
-        // set the session in the database
-        const newSession = await Session.create({
-            user_id: studentData.id,
-            session_token: sessionToken,  // session IDs
-            expires_at: expiresAt,
-            active: true,
-        });
-        console.log('New session: ', newSession)
-        // set the session on req session
-        req.session.save(() => {
-            req.session.user_id = studentData.id;
-            req.session.logged_in = true;
-        });
-        setTimeout(() => {res.status(200).redirect('/api/proile')}, 500)
-    }
-    catch(err){
-        console.error({message: "Error in post route: ", Error: err})
-        res.status(400).json({message: "Bad request, no data recieved", Error: err})
-    }
-})
 
 
 module.exports = router;

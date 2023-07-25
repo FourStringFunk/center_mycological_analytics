@@ -10,6 +10,7 @@ const uuid = require('uuid');
 const sendEmail = require('../../utils/forgotPasswordEmail')
 const { body, validationResult } = require('express-validator');
 const checkAuth1 = require('../../utils/checkAuth')
+const shortid = require('shortid');
 /**
  * login page route serves the content
  * Endpoint: api/users/login
@@ -23,58 +24,172 @@ router.get('/login', (req, res) => {
     }
 });
 /**
- * login validation, if(valid) redirects--> /profile
+ * This route take data from the login page and is data is good, allows user to login
+ * client side .js handles the redirect, because it sets the browser cookie on the client side
  * Endpoint: api/users/validate
- */
-router.post('/validate', body('email').isEmail(), body('password').isLength({ min: 5 }), async (req, res) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
-    }
+ */ 
+router.post('/validate', async (req, res) => {
     try{
+        // find the user by email
         const userData = await Students.findOne({where:{email: req.body.email}})
         if(!userData){
             res.status(404).json({message: "User not found!"})
             return;
         }
-        const validPassword = await userData.validatePassword(req.body.password);
-        if(!validPassword){
-            console.error("Error in post route /login/valdate: ", err)
-            res.status(400).json({message: "Incorrect email or password"});
-            return;
-        }
-        // setup user session
-        let expiry = new Date();
-        // session expiry 30 minutes
-        expiry.setMinutes(expiry.getMinutes() + 30); 
-        const sessionToken = uuid.v4();
-        const session = await Session.create({
-            user_id: userData.id,
-            session_token: sessionToken,  // session ID
-            expires_at: expiry,
-            active: true,
-        });
+     // uses the ckeckPassword function inside the USER model, returns true if it matches
+     const validPassword = await userData.validatePassword(req.body.password);
+     if (!validPassword) {
+       res.status(400).json({message: "Incorrect email or password"});
+       return;
+     }
+      let expiresAt = new Date();
+     // Set the initial expiration time of the session for 30 minutes
+      expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
+      const sessionToken = uuid.v4();
+      // setting the seeeion in the database
+      const newSession = await Session.create({
+          user_id: userData.id,
+          session_token: sessionToken,  // session IDs
+          expires_at: expiresAt,
+          active: true,
+      });
 
-        // sets the express-session as active
-        req.session.save(() => {
-            req.session.user_id = userData.id;
-            req.session.logged_in = true;
-        });
-
-        // set the users status to active in the database
-        const userSession = await Session.findOne({where: { user_id: userData.id }})
-        if (userSession) {
-            userSession.active = true;
-            await userSession.save();
-        }
-        // send back user info
-        res.status(201).redirect('/profile');
-
+     // sets the express-session as active
+     req.session.save(() => {
+        req.session.user_id = userData.id;
+        req.session.logged_in = true;
+        res.json({ user: userData, message: 'You are now logged in!' });
+    });
+      
+     // set the users status to active in the database
+     const userSession = await Session.findOne({where: { user_id: userData.id }})
+     if (userSession) {
+        userSession.active = true;
+        await userSession.save();
+    }
+    // send back the newSession info to user
+     res.status(201).json({ newSession });
     }catch(err){
-        console.error("Error in post route: ", err)
-        return res.status(500).json({message: 'Session interrupted unexpectedly: Session will refresh in 30 min'})
+        console.error({message: "Error in post route: ", Error: err})
+        return res.status(500).json({message: 'Error session interrupted unexpectedly: Session will refresh in 30 min'})
     }
 });
+/**
+ * This serves the 'create profile' page for the user to sign up
+ * Endpoint: api/users/create
+ */ 
+router.get('/create', (req, res) => {
+    try{
+        res.status(200).render('createProfile', { isNewProfile: true });
+    }catch(error){
+        console.error(error);
+        res.status(500).send('Server Error')
+    }
+});
+/**
+ * new user route, checks the users email, creates a new student and session
+ * Endpoint: api/users/create/newuser
+ */
+router.post('/create/newuser', async (req,res)=>{
+    try{
+        const duplicateData = await Students.findOne({where:{email: req.body.email}})
+        if(duplicateData){
+            res.status(409).json({message: "Email already exists."})
+            return;
+        }
+        if(!req.body) {
+            res.status(409).json({message: "You didnt send any data."})
+            return
+        } 
+        // create a new student entry
+        let studentData = await Students.create({
+            id: shortid.generate(),
+            first_name: req.body.firstName,
+            last_name: req.body.lastName,
+            email: req.body.email,
+            password_hash: req.body.password,
+        })
+        if(!studentData){
+            res.status(500).json({message: 'Failed to add new user to the student database'})
+            return
+        }
+        let expiresAt = new Date();
+        // Set the initial expiration time of the session for 30 minutes
+        expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
+        const sessionToken = uuid.v4();
+        // set the session in the database
+        const newSession = await Session.create({
+            user_id: studentData.id,
+            session_token: sessionToken,  // session IDs
+            expires_at: expiresAt,
+            active: true,
+        });
+        console.log('New session: ', newSession)
+        // set the session on req session
+        req.session.save(() => {
+            req.session.user_id = studentData.id;
+            req.session.logged_in = true;
+        });
+        setTimeout(() => {res.status(200).redirect('/api/proile')}, 500)
+    }
+    catch(err){
+        console.error({message: "Error in post route: ", Error: err})
+        res.status(400).json({message: "Bad request, no data recieved", Error: err})
+    }
+})
+/**
+ * login validation, if(valid) redirects--> /profile
+ * Endpoint: api/users/validate
+ */
+// router.post('/validate', body('email').isEmail(), body('password').isLength({ min: 5 }), async (req, res) => {
+//     const errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//       return res.status(400).json({ errors: errors.array() });
+//     }
+//     try{
+//         const userData = await Students.findOne({where:{email: req.body.email}})
+//         if(!userData){
+//             res.status(404).json({message: "User not found!"})
+//             return;
+//         }
+//         const validPassword = await userData.validatePassword(req.body.password);
+//         if(!validPassword){
+//             console.error("Error in post route /login/valdate: ", err)
+//             res.status(400).json({message: "Incorrect email or password"});
+//             return;
+//         }
+//         // setup user session
+//         let expiry = new Date();
+//         // session expiry 30 minutes
+//         expiry.setMinutes(expiry.getMinutes() + 30); 
+//         const sessionToken = uuid.v4();
+//         const session = await Session.create({
+//             user_id: userData.id,
+//             session_token: sessionToken,  // session ID
+//             expires_at: expiry,
+//             active: true,
+//         });
+        
+//         // sets the express-session as active
+//         req.session.save(() => {
+//             req.session.user_id = userData.id;
+//             req.session.logged_in = true;
+//         });
+
+//         // set the users status to active in the database
+//         const userSession = await Session.findOne({where: { user_id: userData.id }})
+//         if (userSession) {
+//             userSession.active = true;
+//             await userSession.save();
+//         }
+//         // send back user info
+//         res.status(201).redirect('/profile');
+
+//     }catch(err){
+//         console.error("Error in post route: ", err)
+//         return res.status(500).json({message: 'Session interrupted unexpectedly: Session will refresh in 30 min'})
+//     }
+// });
 /**
  * serves the forgot password page, user should input their email and request a forgot password email
  * Endpoint: /api/users/forgot
