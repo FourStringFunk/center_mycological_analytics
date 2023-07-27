@@ -1,34 +1,32 @@
 <div>
-<div>
-    <h1>Welcome {{student.first_name}}</h1>
-    <br>
-    <body>
-    <h2>My Profile</h2>
-    <p>
-        <li>{{student.first_name}}</li>
-        <li>{{student.last_name}}</li>
-        <li>{{student.email}}</li>
-        <li>{{student.address_1}}
-            {{student.address_2}}
-        </li>
-        <li>{{student.city}}</li>
-        <li>{{student.state}}</li>
-        <li>{{student.zip}}</li>
-    </p>
-    </body>
-</div>
-<div>
-    <h1>My Course List</h1>
-    <p>
-        <li>{{courses.course_id}}</li>
-        <li>{{courses.certificate_awarded}}</li>
-        <li>{{courses.completion_status}}</li>
-    </p>    
-</div>
-<div>
-    <h1>Questions</h1>
-    <p>Please don't hesitate to reach out to us if you 
-        have any other questions or requests.</p>
-</div>
-<a href="/about">email us</a>
+    <div>
+        <h1>Welcome {{student.first_name}} {{student.last_name}}</h1>
+        <br>
+        <body>
+        <h2>My Profile</h2>
+        <p>
+            <li>First Name: {{student.first_name}}</li>
+            <li>Last Name: {{student.last_name}}</li>
+            <li>Email: {{student.email}}</li>
+            <li>Address: {{student.address_1}} {{student.address_2}}</li>
+            <li>City: {{student.city}}</li>
+            <li>State: {{student.state}}</li>
+            <li>Zip: {{student.zip}}</li>
+        </p>
+        </body>
+    </div>
+    <div>
+        <h1>My Course List</h1>
+        <p>
+            <li>Course ID: {{studentCourses.course_id}}</li>
+            <li>Certificate Awarded: {{studentCourses.certificate_awarded}}</li>
+            <li>Completion Status: {{studentCourses.completion_status}}</li>
+        </p>    
+    </div>
+    <div>
+        <h1>Questions</h1>
+        <p>Please don't hesitate to reach out to us if you 
+            have any other questions or requests.</p>
+    </div>
+    <a href="/about">Email Us</a>
 </div>

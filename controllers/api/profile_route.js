@@ -11,18 +11,25 @@ const fs = require('fs');
  * User profile route, serves up the users data for the 'dashboard' aka 
  * StudentCourses page
  * Endpoint: /api/profile
- * checkAuth2
+ * 
  */
-router.get('/', async (req, res) => {
+router.get('/',checkAuth2, async (req, res) => {
     let cookieUserId = req.session.user_id;
+    
+    
     try {
         const studentData = await getProfile(cookieUserId);
-        let {student, courses} = studentData
+        
+        console.log(studentData)
         if (studentData) {
+            let altNavigation = null;
+            if(req.cookies.session_token){
+                altNavigation = { isProfileTamplate: true, ...studentData , altNavigation : true}
+            }
             // returns an 2 arrays
-            return res.status(200).render('StudentCourses', { isProfileTamplate: true, student, courses });
+            return res.status(200).render('StudentCourses', altNavigation);
         } else {
-            // User does not have any posts
+           
             res.status(400).json({message: 'There is no data for the requested student'});
         }
     } catch(err) {
