@@ -1,12 +1,97 @@
-<h1>Scholarship 
-Application</h1>
-<br>
-<p>​​Scholarships are our form of financial assistance and are intended to help 
-  students pursue continuing education and advance their career goals. 
-  However, not all students have equal access to financial resources to 
-  fund their education, which is why scholarships are often awarded to students
-  who are considered financially disadvantaged.</p>
-<br>
+    <!-- banner --> 
+    <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="banner" style="background-image: url(img/banner-bk.jpg);">
+        <div class="container-fluid d-flex flex-column align-items-center">
+            <h1 class="display-4 text-white text-center mb-5">Scholarship Application</h1>
+        </div>
+    </div>
+
+<div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center align-items-center px-5" id="oneColCallout">
+  <div class="container-fluid d-flex flex-column align-items-center">
+    <p class="lead text-center">Scholarships are our form of financial assistance and are intended to help students pursue continuing education and advance their career goals. However, not all students have equal access to financial resources to fund their education, which is why scholarships are often awarded to students who are considered financially disadvantaged.</p>
+    <p class="lead text-center">If you would like to apply for a scholarship, fill out the form below. Make sure you attach a Cover Letter describing your Reason of Intention behind your financial support request.</p>
+  </div>
+
+  <div class="accordion w-75 mt-5" id="scholarshipAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Equal Opportunity
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#scholarshipAccordion">
+        <div class="accordion-body">
+          Help level the playing field and provide equal opportunities for all students to pursue higher education, regardless of their financial background. By reserving scholarships for the needy, we can ensure that every student has a fair chance to access the same educational opportunities.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Encourage Diversity
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#scholarshipAccordion">
+        <div class="accordion-body">
+          Can help promote diversity in higher education by providing financial assistance to students from underrepresented backgrounds who might not otherwise be able to afford it. This helps to create a more diverse community, which can enhance the learning experience for all students.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Address Social Inequity
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#scholarshipAccordion">
+        <div class="accordion-body">
+          Can also be a tool to address social inequality by providing financial assistance to students from low-income backgrounds. By supporting these students, we can help to break the cycle of poverty and promote upward social mobility.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFour">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Maximize Impact
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#scholarshipAccordion">
+        <div class="accordion-body">
+          Limited resources mean that some scholarships must be allocated judiciously to make the greatest impact. By reserving scholarships for needy students, we can maximize the impact of those resources, helping those who need it the most.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CONTACT FORM -->
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-light" id="contactUs">
+  <div class="mb-3">
+    <h2 class="">Apply Now</h2>
+  </div>
+
+  <form method="POST" class="d-flex flex-column w-50" id="contactForm">
+    <div class="form-group">
+      <label class="mb-1" for="fName">First Name</label>
+      <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your first name" required>
+    </div>
+    <div class="form-group mt-4 mb-4">
+      <label class="mb-1" for="lName">Last Name</label>
+      <input type="text" class="form-control" id="lName" aria-describedby="lNameHelp" placeholder="Enter your last name" required>
+    </div>
+    <div class="form-group mb-4">
+      <label class="mb-1" for="exampleInputEmail1">Email Address</label>
+      <input type="email" class="form-control" id="applicationEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+    </div>
+    <div class="d-flex flex-row-reverse">
+      <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
+    </div>
+    <div class="form-group">
+      <label for="coverLetter">Upload your Cover letter</label>
+      <input type="file" class="form-control-file" id="coverLetter">
+  </div>
+  </form>
+</div>
+
 <h2>Apply Now</h2>
 <br>
 <p>Fill out the form below to submit your application for a scholarship. 
