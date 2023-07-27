@@ -4,6 +4,7 @@
  */
 const router = require('express').Router();
 const nodemailer = require('nodemailer');
+const mg = require('nodemailer-mailgun-transport');
 const multer = require('multer'); 
 const path = require('path');
 const fs = require('fs');
@@ -14,58 +15,36 @@ let maxCount = 3;
  * Endpoint: /api/contact
  */
 router.post('/', (req,res) => {
-    try{
-        let first_name = req.body.firstName;
-        let last_name = req.body.lastName;
-        
-        console.log('--before transporter--')
+    let first_name = req.body.firstName;
+    let last_name = req.body.lastName;
+    let email = req.body.email;
+    let message = req.body.message;
 
-        const transporter = nodemailer.createTransport({
-            service: 'Gmail', 
-            auth:{
-                user: process.env.TRANSPORTERUSER,
-                pass: process.env.TRANSPORTERPASS
-            },
-        });
-        
-        if(!transporter){
-            res.status(500).json({message: 'Server email error @transporter (inside server route) credentials not valid'});
-            return;
+    const auth = {
+        auth: {
+          api_key: process.env.MAILGUN_API_KEY,
+          domain: process.env.MAILGUN_DOMAIN
         }
-        
-        console.log('--before mail options--');
-        
-        let mailOptions = {
-            from: req.body.email,
-            to: (first_name && last_name) ? 'recipient@example.com' : process.env.TRANSPORTERRECIPIENT,
-            subject: 'From the Contact form',
-            text: (first_name && last_name) ? `${req.body.message} - ${first_name} ${last_name}` : req.body.message
-        }
-        
-        if(!mailOptions){
-            res.status(400).json({message: 'Server email error @mailOption invalid input'});
-            return;
-        }
-
-        try{
-            transporter.sendMail(mailOptions,(error, info)=>{
-                if(error){
-                    console.error('Error sending email:', error);
-                    res.status(404).json({message: 'Error, failed to send'});
-                    return;
-                }
-                res.status(200).redirect('/');
-                console.info('Email sent:', info.response);
-            });
-        }catch(err){
-            res.status(400).json({message: 'failed to send email', Error: err});
-            console.log('Email not sent: ', err);
-            return;
-        }
-    }catch(err){
-        res.status(400).json({message: 'Server error @ /contact', Error: err});
-        console.log('Email failure: ', err);
     }
+
+    const transporter = nodemailer.createTransport(mg(auth));
+    console.log('--before mail options--');
+    let mailOptions = {
+        from: email,
+        to: (first_name && last_name && email && message) ? 'guybeals01@gmail.com' : 'shadowkeeper70@gmail.com',
+        subject: 'From the Contact form',
+        text: (first_name && last_name && email && message) ? `${message} - ${first_name} ${last_name}` : message,
+    }
+
+    transporter.sendMail(mailOptions,(error, info)=>{
+        if(error){
+            console.error('Error sending email:', error);
+            res.status(500).json({message: 'Server error, failed to send email', Error: error});
+        } else {
+            console.info('Email sent to:', mailOptions.to);
+            res.status(200).json({message: 'You successfully sent a message'})
+        }
+    });
 });
 /**
  * Multer helper function
@@ -112,7 +91,7 @@ router.post('/scholarship', upload.array('images', maxCount), (req,res) => {
             uploads: filenames // Check if files exist and assign the filenames or an empty array
         }
         // write the application to the directory
-        const dir = path.join(__dirname, '../../utils/uploads/applications');
+        const dir = path.join(__dirname, '/utils/uploads/applications');
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir, { recursive: true });
         }
