@@ -7,11 +7,11 @@ const router = require('express').Router();
 const Students = require('../../models/Students');
 const Session = require('../../models/Session');
 const uuid = require('uuid');
-const sendEmail = require('../../utils/forgotPasswordEmail')
 const { body, validationResult } = require('express-validator');
 const checkAuth1 = require('../../utils/checkAuth')
 const shortid = require('shortid');
-const chalk = require('chalk')
+const nodemailer = require('nodemailer');
+const mg = require('nodemailer-mailgun-transport');
 /**
  * login page route serves the content
  * Endpoint: api/users/login
@@ -71,8 +71,7 @@ router.post('/validate', async (req, res) => {
             await userSession.save();
         }
         // send back the newSession info to user
-        console.log(chalk.red("right be fore 200 response"))
-     res.status(200).json({ newSession })
+        res.status(200).json({ newSession })
     }catch(err){
         console.error({message: "Error in post route: ", Error: err})
         return res.status(500).json({message: 'Error session interrupted unexpectedly: Session will refresh in 30 min'})
@@ -128,7 +127,6 @@ router.post('/create/newuser', async (req,res)=>{
             expires_at: expiresAt,
             active: true,
         });
-        console.log('New session: ', newSession)
         // set the session on req session
         req.session.save(() => {
             req.session.user_id = studentData.id;
@@ -223,28 +221,43 @@ router.post('/forgot/retrieve', async (req,res)=>{
                 res.status(400).json({message: 'No user found with this email'});
                 return;
             }
+            const auth = {
+                auth: {
+                  api_key: process.env.MAILGUN_API_KEY,
+                  domain: process.env.MAILGUN_DOMAIN
+                }
+            }
+            // example use of how wed send a token to setup the password reset token for security
+            let resetLink = `https://yourapp.com/resetPassword/${user.resetPasswordToken}`; // replace with your reset password route
+
+            let mailOptions = {
+                from: "guymorganb@gmail.com",
+                to: email,
+                subject: 'Your Password reset link',
+                html: `<p>You requested for a password reset, kindly click on the button below to reset your password:</p> 
+                    <button style="background-color: #4CAF50; /* Green */
+                                    border: none;
+                                    color: white;
+                                    padding: 15px 32px;
+                                    text-align: center;
+                                    text-decoration: none;
+                                    display: inline-block;
+                                    font-size: 16px;
+                                    margin: 4px 2px;
+                                    cursor: pointer;"><a href='${resetLink}' style='color: white; text-decoration: none;'>Reset Password</a></button> 
+                    <p>If you did not request this, please ignore this email and your password will remain unchanged.</p>`
+            }
+            const transporter = nodemailer.createTransport(mg(auth));
             console.log('--before transporter for forgot password--');
-            await sendEmail(student.email, 'Your password reset', 'Please click the following link to reset your password: resetmypassword.com', '<p>Please click the following link to reset your password:</p><a href="https://www.resetmypassword.com" style="display: inline-block; padding: 10px 20px; color: white; background-color: #007BFF; text-decoration: none; border-radius: 5px;">Reset Password</a>');
-// todo- need to generate a unique token for each user and include it in the reset password link so that you can identify the user when the link is clicked.
-            if(!mailOptions){
-                res.status(400).json({message: 'Server email error @mailOption invalid input'});
-                return;
-            }
-            try{
-                transporter.sendMail(mailOptions,(error, info)=>{
-                    if(error){
-                        console.error('Error sending email:', error);
-                        res.status(404).json({message: 'Error, failed to send'});
-                        return;
-                    }
-                    setTimeout(() => {res.status(200).redirect('/login')}, 500);
-                    console.info('Email sent:', info.response);
-                });
-            }catch(err){
-                res.status(400).json({message: 'failed to send email', Error: err});
-                console.log('Email not sent: ', err);
-                return;
-            }
+            transporter.sendMail(mailOptions,(error, info)=>{
+                if(error){
+                    console.error('Error sending email:', error);
+                    res.status(500).json({message: 'Server error, failed to send email', Error: error});
+                } else {
+                    console.info('Email sent to:', mailOptions.to);
+                    res.status(200).json({message: 'You successfully sent a message'})
+                }
+            });
         }
     }catch(err){
         res.status(400).json({message: 'Server error @ /forgot/retrieve', Error: err});

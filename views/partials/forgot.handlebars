@@ -1,16 +1,9 @@
  <h1>login (your endpoint, send this form: POST req: /api/users/forgot/retrieve)</h1>
     <h2>This form needs client side sanitization
     </h2>
-    <form method="POST">
+    <form method="POST" id="forgotForm">
     <label for="name">email:</label>
-    <input type="text" id="name" name="name" placeholder="Your Name" required>
+    <input type="text" id="userEmail" name="email" placeholder="Your email" required>
 
-    <label for="name">password:</label>
-    <input type="text" id="name" name="name" placeholder="Your Name" required>
-
-    <h2><p>Expected behavior for this page: 
-  user fills out their info, and clicks a button which targets the endpoint: /api/users/forgot/retrieve. 
-  This will initiate the email to be sent to them</p>
-    </h2>
-    <button type="submit">Send </button>
+    <button type="submit" id="retrievePass">Send </button>
     </form>
