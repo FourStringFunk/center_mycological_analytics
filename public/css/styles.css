@@ -65,6 +65,19 @@ a, button, p, ul, li {
     height: 25vh;
 }
 
+<<<<<<< HEAD
+/* Custom CSS to fix content pushing up into the jumbotron */
+#oneColCallout {
+    margin-top: 50px; /* Adjust the value as needed to add space between the jumbotron and the content below */
+  }
+  
+  @media (max-width: 768px) {
+    #oneColCallout {
+      margin-top: 30px; /* Adjust the value for smaller screens if needed */
+    }
+  }
+  
+=======
 /* MEDIA QUERIES */
 @media screen and (max-width: 400px) {
     /* UNIVERSAL */
@@ -91,3 +104,4 @@ a, button, p, ul, li {
         height: 210vh;
     }
 }
+>>>>>>> 4464cc8ba6ec27cacbb9dab1194bd327a04d8b6b
