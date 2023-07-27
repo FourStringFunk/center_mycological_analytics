@@ -53,9 +53,10 @@ let validate = async function() {
                 // If login is successful, redirect to dashboard
                 if (response.ok) {
                     const data = await response.json();
-                    console.log("heres your data: ",data)
                     // we need to set the cookie in the browser
-                    document.cookie = `session_token=${data.newSession.session_token}; path=/`
+                    let expiryDate = new Date();
+                    expiryDate.setTime(expiryDate.getTime() + (30 * 60 * 1000)); // Expire in 30 minutes
+                    document.cookie = `session_token=${data.newSession.session_token}; expires=${expiryDate.toUTCString()}; path=/`;
                     msgs[msgs.length] = "Login Success!";
                     displayErrorMsgs(msgs)
                     setTimeout(() => {window.location.href = '/api/profile';}, 550);

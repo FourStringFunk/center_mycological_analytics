@@ -13,9 +13,6 @@ async function getProfile(sessionId) {
         throw new ValidationError("No session id")
     }
 
-    let studentArray = [];
-    let courseData = [];
-
     let studentData = await Student.findOne({where: {id : studentId}})
 
     let studentObject = {};

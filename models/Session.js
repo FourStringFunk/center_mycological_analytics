@@ -147,9 +147,9 @@ Session.init( {
       unique: true,
     },
     user_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: false,
-      unique: true,
+      unique: false,
       references: {
         model: 'Students',
         key: 'id'

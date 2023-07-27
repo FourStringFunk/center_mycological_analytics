@@ -43,7 +43,7 @@ static async updateStudentCourse(studentId, courseId, completionStatus, certific
 }
 StudentCourses.init( {
     student_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: false,
       primaryKey: true,
       references: {

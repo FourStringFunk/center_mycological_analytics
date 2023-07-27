@@ -2,8 +2,8 @@
  * .js for validating new username and password (client side)
  */
 const form = document.getElementById('loginForm')
-const firstName = document.getElementById('fName');
-const lastName = document.getElementById('lName');
+const fName = document.getElementById('fName');
+const lName = document.getElementById('lName');
 const emailInput = document.getElementById('email');
 const Password = document.getElementById('password');
 const Verify_Password = document.getElementById('verifyPassword');
@@ -42,8 +42,8 @@ const clearErrors = function(){
 let validate = async function() {
     clearErrors()
     // reminder, these are the elements youll pass to the api call, fName, lName etc.
-    const fName = firstName.value.trim()
-    const lName = lastName.value.trim()
+    const firstName = fName.value.trim()
+    const lastName = lName.value.trim()
     const email = emailInput.value.trim()
     const password = Password.value.trim() 
     const verify = Verify_Password.value.trim();
@@ -63,28 +63,30 @@ let validate = async function() {
             const response = await fetch('/api/users/create/newuser', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ firstName, lastName, email, password })
             });
                 // If login is successful, redirect to dashboard
                 if (response.ok) {
                     // set the session token in the browser
                     const data = await response.json();
-                    document.cookie = `session_token=${data.newSession.session_token}; path=/`; // set the cookie
+                    let expiryDate = new Date();
+                    expiryDate.setTime(expiryDate.getTime() + (30 * 60 * 1000)); // Expire in 30 minutes
+                    document.cookie = `session_token=${data.newSession.session_token}; expires=${expiryDate.toUTCString()}; path=/`;
                     msgs[msgs.length] = 'Profile Created!';
                     // now load a new box which will allow the user to input their username, sends a GET request
-                    setTimeout(() => {window.location.href = '/api/proile';}, 650);
+                    setTimeout(() => {window.location.href = '/api/profile';}, 650);
                     return;
                 } else {
                     // Display error message from server
                     // you have to use await or it wont work
-                    const data = await response.json();
-                    console.error({message: "Server error", Error: data})
+                    
+                    console.error({message: "Server error"})
                     msgs[msgs.length] = data.message
                     displayErrorMsgs(msgs)
                     return;
                 }
         }catch(err){
-            console.error({message:"Server error", Error: err})
+            console.error({message:"Server e", Error: err})
         }finally{
             displayErrorMsgs(msgs)
         }

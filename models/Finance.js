@@ -36,7 +36,7 @@ class Finance extends Model{
       primaryKey: true
     },
     student_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: false,
       references: {
         model: 'Students',
