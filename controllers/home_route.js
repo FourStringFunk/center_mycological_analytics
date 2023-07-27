@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
     // const mainHeroImg = fs.readFileSync('/img/pexels-artem-podrez-5726794.jpg')
  
     try{
-        const altNavigation = null;
+        let altNavigation = null;
         if(req.cookies.session_token){
             altNavigation = { homePageTemplate: true , altNavigation : true}
         }else{
