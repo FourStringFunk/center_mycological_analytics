@@ -1,5 +1,5 @@
 /**
- * 2 different functions to check authorized user
+ * 2 different functions to authorize user
  * @param {*} req 
  * @param {*} res 
  * @param {*} next 
@@ -7,7 +7,7 @@
  */
 
 const { ValidationError } = require("sequelize");
-
+const Session = require('../models/Session')
 // authorizes
 async function checkAuth1(req, res, next) {
     let sessionToken = req.cookies.session_token; // this is the users id that is saved in the session
@@ -27,7 +27,7 @@ async function checkAuth1(req, res, next) {
             next(); // Session is valid, continue to the requested route
         } else {
             // Session is not valid, redirect the user to the signup page
-            res.redirect('api/users/login');
+            return res.redirect('api/users/login');
         }
     } catch(err) {
         console.error('error: '+ err); // log the error
@@ -61,7 +61,7 @@ async function checkAuth2(req, res, next) {
             console.log(chalk.blue("Session is valid, browser and Database match: "), chalk.green(req.cookies.session_token), "|", chalk.blue("Session user_id: "), chalk.green(req.session.user_id));
         } else {
             // Session is not valid, redirect the user to the signup page
-            res.redirect('api/users/login');
+            return res.redirect('api/users/login');
         }
     } catch(err) {
         console.error('error: '+ err); // log the error

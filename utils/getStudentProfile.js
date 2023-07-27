@@ -18,35 +18,38 @@ async function getProfile(sessionId) {
 
     let studentData = await Student.findOne({where: {id : studentId}})
 
+    let studentObject = {};
+    let courseObject = {};
+
     if (studentData) {
         studentData = studentData.dataValues;
-        studentArray.push(
-            studentData.id,
-            studentData.email,
-            studentData.enrollment_status,
-            studentData.first_name,
-            studentData.last_name,
-            studentData.address_1,
-            studentData.address_2,
-            studentData.city,
-            studentData.state,
-            studentData.zip,
-            studentData.deleted
-        );
+        studentObject = {
+            id: studentData.id,
+            email: studentData.email,
+            enrollment_status: studentData.enrollment_status,
+            first_name: studentData.first_name,
+            last_name: studentData.last_name,
+            address_1: studentData.address_1,
+            address_2: studentData.address_2,
+            city: studentData.city,
+            state: studentData.state,
+            zip: studentData.zip,
+            deleted: studentData.deleted
+        };
 
         let sc = await StudentCourse.findOne({where: {student_id : studentData.id}})
         if (sc) {
-            courseData.push(
-                sc.student_id,
-                sc.course_id,
-                sc.certificate_awarded,
-                sc.completion_status
-            );
+            courseObject = {
+                student_id: sc.student_id,
+                course_id: sc.course_id,
+                certificate_awarded: sc.certificate_awarded,
+                completion_status: sc.completion_status
+            };
         }
     }
     const profileData = {
-        student: studentArray,
-        studentCourses: courseData
+        student: studentObject,
+        studentCourses: courseObject
       };
     
       return profileData;

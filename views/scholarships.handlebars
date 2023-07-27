@@ -1,35 +1,164 @@
-<h1>Scholarship 
-Application</h1>
-<br>
-<p>​​Scholarships are our form of financial assistance and are intended to help 
-  students pursue continuing education and advance their career goals. 
-  However, not all students have equal access to financial resources to 
-  fund their education, which is why scholarships are often awarded to students
-  who are considered financially disadvantaged.</p>
-<br>
-<h2>Apply Now</h2>
-<br>
-<p>Fill out the form below to submit your application for a scholarship. 
-  Make sure you include a one-page cover letter describing your 
-  Reason of Intention for your financial support request.</p>
-  <br>
-  <form action="/submit" method="POST">
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" placeholder="Your Name" required>
+<!-- banner --> 
+<div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="banner" style="background-image: url(img/banner-bk.jpg);">
+  <div class="container-fluid d-flex flex-column align-items-center">
+    <h1 class="display-4 text-white text-center mb-5">Scholarship Application</h1>
+  </div>
+</div>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" placeholder="Your Email" required>
+<div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center align-items-center px-5" id="applicationInfo">
+  <div class="container-fluid d-flex flex-column align-items-center">
+    <p class="lead text-center">Scholarships are our form of financial assistance and are intended to help students pursue continuing education and advance their career goals. However, not all students have equal access to financial resources to fund their education, which is why scholarships are often awarded to students who are considered financially disadvantaged.</p>
+    <p class="lead text-center">If you would like to apply for a scholarship, fill out the form below. Make sure you attach a Cover Letter describing your Reason of Intention behind your financial support request.</p>
+  </div>
 
-    <label for="university">University:</label>
-    <input type="text" id="university" name="university" placeholder="Your University" required>
+  <div class="accordion w-50 mt-5" id="scholarshipAccordion">
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingOne">
+        <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+          Equal Opportunity
+        </button>
+      </h2>
+      <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#scholarshipAccordion">
+        <div class="accordion-body">
+          Help level the playing field and provide equal opportunities for all students to pursue higher education, regardless of their financial background. By reserving scholarships for the needy, we can ensure that every student has a fair chance to access the same educational opportunities.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingTwo">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+          Encourage Diversity
+        </button>
+      </h2>
+      <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#scholarshipAccordion">
+        <div class="accordion-body">
+          Can help promote diversity in higher education by providing financial assistance to students from underrepresented backgrounds who might not otherwise be able to afford it. This helps to create a more diverse community, which can enhance the learning experience for all students.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingThree">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Address Social Inequity
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#scholarshipAccordion">
+        <div class="accordion-body">
+          Can also be a tool to address social inequality by providing financial assistance to students from low-income backgrounds. By supporting these students, we can help to break the cycle of poverty and promote upward social mobility.
+        </div>
+      </div>
+    </div>
+    <div class="accordion-item">
+      <h2 class="accordion-header" id="headingFour">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+          Maximize Impact
+        </button>
+      </h2>
+      <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#scholarshipAccordion">
+        <div class="accordion-body">
+          Limited resources mean that some scholarships must be allocated judiciously to make the greatest impact. By reserving scholarships for needy students, we can maximize the impact of those resources, helping those who need it the most.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <label for="scholarship_type">Scholarship Type:</label>
-    <select id="scholarship_type" name="scholarship_type" required>
-      <option value="merit">Merit-based</option>
-      <option value="need">Need-based</option>
-      <option value="other">Other</option>
+<!-- CONTACT FORM -->
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-light" id="scholarshipApplication">
+  <div class="mb-3">
+    <h2 class="">Apply Now</h2>
+  </div>
+
+  <form method="POST" class="d-flex flex-column" id="scholarshipApplicationForm">
+    <div class="form-group">
+      <label class="mb-1" for="fName">First Name</label>
+      <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="First Name" required>
+    </div>
+
+    <div class="form-group mt-4 mb-4">
+      <label class="mb-1" for="lName">Last Name</label>
+      <input type="text" class="form-control" id="lName" aria-describedby="lNameHelp" placeholder="Last Name" required>
+    </div>
+
+    <div class="form-group mb-4">
+      <label class="mb-1" for="email">Email Address</label>
+      <input type="email" class="form-control" id="applicationEmail" aria-describedby="emailHelp" placeholder="Email" required>
+    </div>
+
+    <div class="form-group mb-4">
+      <label class="mb-1" for="address">Address</label>
+      <input type="text" class="form-control" id="address" aria-describedby="addressHelp" placeholder="Address">
+    </div>
+
+    <div class="form-group mb-4">
+      <label class="mb-1" for="address2">Address 2</label>
+      <input type="text" class="form-control" id="address2" aria-describedby="address2Help" placeholder="Apt, unit, or number">
+    </div>
+
+    <div class="form-group mb-4">
+      <label class="mb-1" for="city">City</label>
+      <input type="text" class="form-control" id="city" aria-describedby="cityHelp" placeholder="City">
+    </div>
+
+    <div class="form-group mb-4">
+      <label class="mb-1" for="country">Country</label>
+      <input type="text" class="form-control" id="country" aria-describedby="countryHelp" placeholder="Country">
+    </div>
+
+    <div class="form-group mb-4">
+      <label class="mb-1" for="zip">ZIP</label>
+      <input type="number" class="form-control" id="zip" aria-describedby="zipHelp" placeholder="ZIP">
+    </div>
+
+    <label class="mb-1" for="employment">Are you currently employed?</label>
+    <select class="form-select mb-4" aria-label=".form-select">
+      <option selected>Choose an option</option>
+      <option value="1">Yes</option>
+      <option value="2">No</option>
     </select>
 
+    <label class="mb-1" for="employment">What is your current income range?</label>
+    <select class="form-select mb-4" aria-label=".form-select">
+      <option selected>Choose an option</option>
+      <option value="1">$0 - $11,000</option>
+      <option value="2">$11,001 - $45,000</option>
+      <option value="3">$45,001 - $95,000</option>
+      <option value="4">$95,001 - $150,000</option>
+      <option value="5">$150,001+</option>
+    </select>
 
-    <button type="submit">Submit Application</button>
+    <label class="mb-1" for="employment">Are you currently employed?</label>
+    <select class="form-select mb-4" aria-label=".form-select">
+      <option selected>Choose an option</option>
+      <option value="1">Yes</option>
+      <option value="2">No</option>
+    </select>
+
+    <label class="mb-1" for="employment">Do you plan to pay in full?</label>
+    <select class="form-select mb-4" aria-label=".form-select">
+      <option selected>Choose an option</option>
+      <option value="1">Yes</option>
+      <option value="2">No</option>
+    </select>
+
+    <label class="mb-1" for="employment">Would you like a payment plan?</label>
+    <select class="form-select mb-4" aria-label=".form-select">
+      <option selected>Choose an option</option>
+      <option value="1">Yes</option>
+      <option value="2">No</option>
+    </select>
+
+    <div class="form-group">
+      <label class="mb-1" for="coverLetter">Upload your Cover letter</label></br>
+      <input type="file" class="form-control-file" id="coverLetter" required>
+    </div>
+
+    <div class="d-flex flex-row-reverse mt-5">
+      <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
+    </div>
   </form>
+</div>
+
+<script>
+  $('.collapse').collapse()
+</script>

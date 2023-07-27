@@ -57,6 +57,26 @@ class Session extends Model{
       console.error('Error in session model updateActiveStatus: ', err);
     }
   }
+  static async calcMinutes(sessionToken) {
+    try{
+      const session = await this.findOne({where:{session_token: sessionToken}})
+      if (session) {
+        const now = new Date();
+        if (session.active) {
+          // If the session is active, calculate the difference in minutes
+          // between the last activity and now, and add it to the minutes_active
+          const minActive = Math.floor((now - session.last_activity_time) / 60000);
+          session.minutes_active += minActive;
+        }
+        // Always update the last_activity_time field
+        session.updated_at = now;
+        session.changed('updated_at', true);
+        await session.save();
+      }
+    }catch (err) {
+      console.error('Error in session model ping: ', err);
+    }
+  }
   // static method
   static async findExpiredSessions() {
     try {
@@ -106,6 +126,15 @@ class Session extends Model{
       });
     }catch(err){
       console.error('Error in session model clearExpiredSessions: ', err);
+    }
+  }
+  static async getAllSessionTokens() {
+    try {
+      const sessions = await this.findAll();
+      const sessionTokens = sessions.map(session => session.session_token);
+      return sessionTokens;
+    } catch (err) {
+      console.error('Error in retrieving session tokens: ', err);
     }
   }
 }

@@ -10,7 +10,7 @@ const bcrypt = require('bcrypt')
 
 class Students extends Model{
   // validate user password
-static async validatePassword(loginPw){
+async validatePassword(loginPw){
   return bcrypt.compareSync(loginPw, this.password_hash);
 }
 static async getCompletedCourses(studentId){

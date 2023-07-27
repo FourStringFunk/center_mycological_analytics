@@ -11,6 +11,7 @@ const sendEmail = require('../../utils/forgotPasswordEmail')
 const { body, validationResult } = require('express-validator');
 const checkAuth1 = require('../../utils/checkAuth')
 const shortid = require('shortid');
+const chalk = require('chalk')
 /**
  * login page route serves the content
  * Endpoint: api/users/login
@@ -24,7 +25,7 @@ router.get('/login', (req, res) => {
     }
 });
 /**
- * This route take data from the login page and is data is good, allows user to login
+ * This route take data from the login page and if data is good, allows user to login
  * client side .js handles the redirect, because it sets the browser cookie on the client side
  * Endpoint: api/users/validate
  */ 
@@ -37,7 +38,10 @@ router.post('/validate', async (req, res) => {
             return;
         }
      // uses the ckeckPassword function inside the USER model, returns true if it matches
+    
+
      const validPassword = await userData.validatePassword(req.body.password);
+
      if (!validPassword) {
        res.status(400).json({message: "Incorrect email or password"});
        return;
@@ -46,29 +50,29 @@ router.post('/validate', async (req, res) => {
      // Set the initial expiration time of the session for 30 minutes
       expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
       const sessionToken = uuid.v4();
-      // setting the seeeion in the database
+      // setting the session in the database
       const newSession = await Session.create({
           user_id: userData.id,
           session_token: sessionToken,  // session IDs
           expires_at: expiresAt,
           active: true,
-      });
-
-     // sets the express-session as active
-     req.session.save(() => {
-        req.session.user_id = userData.id;
-        req.session.logged_in = true;
-        res.json({ user: userData, message: 'You are now logged in!' });
-    });
-      
-     // set the users status to active in the database
-     const userSession = await Session.findOne({where: { user_id: userData.id }})
-     if (userSession) {
-        userSession.active = true;
-        await userSession.save();
-    }
-    // send back the newSession info to user
-     res.status(201).json({ newSession });
+        });
+        
+        // sets the express-session as active
+        req.session.save(() => {
+            req.session.user_id = userData.id;
+            req.session.logged_in = true;
+        });
+        
+        // set the users status to active in the database
+        const userSession = await Session.findOne({where: { user_id: userData.id }})
+        if (userSession) {
+            userSession.active = true;
+            await userSession.save();
+        }
+        // send back the newSession info to user
+        console.log(chalk.red("right be fore 200 response"))
+     res.status(200).json({ newSession })
     }catch(err){
         console.error({message: "Error in post route: ", Error: err})
         return res.status(500).json({message: 'Error session interrupted unexpectedly: Session will refresh in 30 min'})
@@ -280,7 +284,7 @@ router.get('/logout/confirm', async (req, res) => {
         }
 
         res.clearCookie('session_token'); // clear the browser cookie
-        res.status(200).redirect('/api/users/login');
+        res.status(200).redirect('/');
     });
 });
 
