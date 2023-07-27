@@ -1,59 +1,97 @@
 <body>
-    <!-- banner --> 
-    <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="banner" style="background-image: url(img/banner-bk.jpg);">
-        <div class="container-fluid d-flex flex-column align-items-center">
-            <h1 class="display-4 text-white text-center mb-5">About Us</h1>
+  <!-- banner -->
+  <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="banner" style="background-image: url(img/banner-bk.jpg);">
+    <div class="container-fluid d-flex flex-column align-items-center">
+      <h1 class="display-4 text-white text-center mb-5">About Us</h1>
+    </div>
+  </div>
+
+  <!-- 1 column callout -->
+  {{!-- <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center px-5" id="oneColCallout"> --}}
+    <div class="container-fluid d-flex flex-column align-items-center">
+      <div class="card w-75 p-3 border-0">
+        <img src="..." class="card-img-top" alt="..." />
+        <div class="card-body">
+          <p class="lead text-center">We are a community of leaders,
+            researchers, and citizen scientists with the mission of providing
+            educational resources around the burgeoning interest in mushrooms,
+            their ecosystems, metabolisms, and human interactions.</p>
+          <p>Our goal is to build a foundation for the next generation by
+            breaking down barriers in scientific spaces while creating
+            digestible procedures for our community to utilize.</p>
+          <p>We have a history of innovation in mushroom analytics, supporting
+            award-winning cultivators, and building conversation platforms. From
+            developing the Hyphae Spectrum to building out ISO accredited labs
+            and culture spaces across the country, our team of instructors is
+            dedicated to sharing their experience, insight, and expertise.</p>
+          <div class="container justify-content-center mt-3" id="ctaButton">
+            <a class="d-flex flex-nowrap justify-content-center align-items-center" href="/about">
+              <img src="img/icons/arrow.png" alt="arrow icon" />
+              <p class="ctaBtn ml-5"> Learn more</p>
+            </a>
+          </div>
+          <div>
+            <h2 class="display-4 text-dark text-center mb-3">Faculty and Staff</h2>
+            <div class="text-center">
+              <img class="rounded-circle" alt="avatar1" src="https://static.wixstatic.com/media/ae4342_3d38b71ab704482ca0f37fa916fddec2~mv2.jpg/v1/fill/w_282,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/Image%20place%20holder.jpg" />
+              <div>
+                <h4>Founder and Instructor</h4>
+                <h2>Ian Bollinger</h2>
+                <a href="mailto:ian@centerformycoanalytics.org">ian@centerformycoanalytics.org</a>
+                <p>
+                  Ian Bollinger is Co-Founder, Director of R&D, and Entheogen Researcher at Hyphae Labs, centering his work around education and conversations.</p>
+
+                <p>He brings the importance of drug testing, citizen science, and community benefit to the forefront through his work supporting the science behind the Psilocybin/Hyphae Cups and in developing the Hyphae Spectrum(TM). </p>
+
+                <p>Through these endeavors he hopes to provide space for highlighting those scientists and cultivators who kept the work alive during the 'prohibition dark ages' as well as provide tools, education, as well as access to platforms the next generation and community can flourish from.</p>
+              </div>
+              <div class="text-center">
+                <img class="rounded-circle shadow-4-strong mx-auto" alt="avatar2" src="https://static.wixstatic.com/media/ae4342_2ee5debf15b844f7869005c89f89a7f3~mv2.jpg/v1/fill/w_282,h_282,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/Image%20place%20holder.jpg" />
+                <div>
+                  <h4>Founder and Instructor</h4>
+                  <h2>Ms. Emily Davis</h2>
+                  <a href="mailto:emily@centerformycoanalytics.org">emily@centerformycoanalytics.org</a>
+                </div>
+                <p>Emily Davis is a scientist, researcher, and creator. Emily has been learning within the mycology community since 2019.</p>
+
+                <p>Emily holds a Masters degree in environmental science and has experience working in academic, government, startup, industry, and community lab spaces.</p>
+
+                <p>They hope to use this experience to guide others through scientific frameworks/processes, and empower curiosity and conversation within the mycology space.</p>
+
+              </div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
+  {{!-- </div> --}}
+
+  <!-- CONTACT FORM -->
+  <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-light" id="contactUs">
+    <div class="mb-3">
+      <h2 class="">Get in Touch</h2>
     </div>
 
-    <!-- 1 column callout -->
-    <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center px-5" id="oneColCallout">
-        <div class="container-fluid d-flex flex-column align-items-center">
-            <p class="lead text-center">We are a community of leaders, researchers, and citizen scientists with the mission of providing educational resources around the burgeoning interest in mushrooms, their ecosystems, metabolisms, and human interactions.</p>
-            <p>Our goal is to build a foundation for the next generation by breaking
-      down barriers in scientific spaces while creating digestible procedures
-      for our community to utilize.</p>
-       <p>We have a history of innovation in mushroom analytics, supporting award
-      winning cultivators, and building conversation platforms. From developing
-      the Hyphae Spectrum to building out ISO accredited labs and culture spaces
-      across the country, our team of instructors is dedicated to sharing their
-      experience, insight, and expertise.</p>
-            <div class="container justify-content-center mt-3" id="ctaButton">
-                <a class="d-flex flex-nowrap justify-content-center align-items-center" href="/about">
-                    <img src="img/icons/arrow.png" alt="arrow icon" />
-                    <p class="ctaBtn ml-5"> Learn more</p>
-                </a>
-            </div>
-        </div>
-    </div>
-
-
-    <!-- CONTACT FORM -->
-    <div class="container-fluid d-flex flex-column justify-content-center align-items-center bg-light" id="contactUs">
-        <div class="mb-3">
-            <h2 class="">Get in Touch</h2>
-        </div>
-
-        <form method="POST" class="d-flex flex-column w-50" id="contactForm">
-            <div class="form-group">
-                <label class="mb-1" for="fName">First Name</label>
-                <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your first name">
-            </div>
-            <div class="form-group mt-4 mb-4">
-                <label class="mb-1" for="lName">Last Name</label>
-                <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your last name">
-            </div>
-            <div class="form-group mb-4">
-                <label class="mb-1" for="exampleInputEmail1">Email Address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-            </div>
-            <div class="form-group mb-4">
-                <label class="mb-1" for="message">Write A Brief Message</label>
-                <textarea class="form-control" id="message" rows="3"></textarea>
-            </div>
-            <div class="d-flex flex-row-reverse">
-                <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
-            </div>
-        </form>
-    </div>
+    <form method="POST" class="d-flex flex-column w-50" id="contactForm">
+      <div class="form-group">
+        <label class="mb-1" for="fName">First Name</label>
+        <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your first name" />
+      </div>
+      <div class="form-group mt-4 mb-4">
+        <label class="mb-1" for="lName">Last Name</label>
+        <input type="text" class="form-control" id="lName" aria-describedby="fNameHelp" placeholder="Enter your last name" />
+      </div>
+      <div class="form-group mb-4">
+        <label class="mb-1" for="exampleInputEmail1">Email Address</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" />
+      </div>
+      <div class="form-group mb-4">
+        <label class="mb-1" for="message">Write A Brief Message</label>
+        <textarea class="form-control" id="message" rows="3"></textarea>
+      </div>
+      <div class="d-flex flex-row-reverse">
+        <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
+      </div>
+    </form>
+  </div>
 </body>
