@@ -43,12 +43,48 @@ a, button, p, ul, li {
     margin-bottom: 5px;
 }
 
+/* SCHOLARSHIP PAGE */
+
+#scholarshipApplication {
+    height: 125vh;
+}
+
 /* Carousel */
 
 /* CONTACT FORM */
+#formSubmit {
+    width: 150px;
+}
 
 /* FOOTER */
 #footerBrand {
     width: 25vh;
     height: 25vh;
+}
+
+/* MEDIA QUERIES */
+@media screen and (max-width: 400px) {
+    /* UNIVERSAL */
+    h1.org-title {
+        font-size: 20px !important;
+        text-wrap: wrap !important;
+    }
+
+    /* SCHOLARSHIP PAGE*/
+    #applicationInfo {
+        height: 160vh;
+    }
+
+    #scholarshipApplication {
+        height: 175vh;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* UNIVERSAL */
+
+    /* SCHOLARSHIP PAGE */
+    #scholarshipApplication {
+        height: 210vh;
+    }
 }
