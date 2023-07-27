@@ -37,7 +37,7 @@ let validate = async function() {
     clearErrors()
     // reminder, these are the elements youll pass to the api call, fName, lName etc.
     const email = emailInput.value.trim();
-    const password = passwordInput;
+    const password = passwordInput.value.trim();
     const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b/;
     if (!emailPattern.test(email)){
         msgs[msgs.length] = "Please enter a valid email address.";
@@ -53,6 +53,7 @@ let validate = async function() {
                 // If login is successful, redirect to dashboard
                 if (response.ok) {
                     const data = await response.json();
+                    console.log("heres your data: ",data)
                     // we need to set the cookie in the browser
                     document.cookie = `session_token=${data.newSession.session_token}; path=/`
                     msgs[msgs.length] = "Login Success!";
@@ -62,7 +63,7 @@ let validate = async function() {
                     // Display error message from server
                     // you have to use await or it wont work
                     const data = await response.json();
-                    console.error({message: "Server error", Error: data})
+                    console.log({message: "Server e", Error: data})
                     msgs[msgs.length] = data.message
                 }
         }catch(err){
