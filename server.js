@@ -58,6 +58,18 @@ async function startServer() {
         await StudentCourses.sync();
         
         app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
+
+        setInterval(async () => {
+            try {
+                // Every 5 minutes, this will run and delete any sessions that are 30 minutes old
+                // it will also calculate the users time every 5 minutes, this feature needs more work though
+              const cutoff = new Date(Date.now() - (2 * 60 * 1000));     // 30 minutes ago,
+              await Session.clearExpiredSessions(cutoff);                 // if updated_at is less than (rightNow - 30 minutes), delete the session.
+            } catch (err) {
+              console.error('Error in handling sessions: ', err);
+            }
+          }, 2 * 60 * 1000);            
+
     } catch (err) {
         console.error('Unable to connect to the database:', err);
     }

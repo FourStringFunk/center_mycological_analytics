@@ -108,6 +108,15 @@ class Session extends Model{
       console.error('Error in session model clearExpiredSessions: ', err);
     }
   }
+  static async getAllSessionTokens() {
+    try {
+      const sessions = await this.findAll();
+      const sessionTokens = sessions.map(session => session.session_token);
+      return sessionTokens;
+    } catch (err) {
+      console.error('Error in retrieving session tokens: ', err);
+    }
+  }
 }
 Session.init( {
     id: {
