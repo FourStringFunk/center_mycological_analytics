@@ -69,7 +69,7 @@
     <h2 class="">Apply Now</h2>
   </div>
 
-  <form method="POST" class="d-flex flex-column w-50" id="contactForm">
+  <form method="POST" class="d-flex flex-column w-50" id="scholarshipApplicationForm">
     <div class="form-group">
       <label class="mb-1" for="fName">First Name</label>
       <input type="text" class="form-control" id="fName" aria-describedby="fNameHelp" placeholder="Enter your first name" required>
@@ -79,16 +79,28 @@
       <input type="text" class="form-control" id="lName" aria-describedby="lNameHelp" placeholder="Enter your last name" required>
     </div>
     <div class="form-group mb-4">
-      <label class="mb-1" for="exampleInputEmail1">Email Address</label>
-      <input type="email" class="form-control" id="applicationEmail" aria-describedby="emailHelp" placeholder="Enter email" required>
+      <label class="mb-1" for="email">Email Address</label>
+      <input type="email" class="form-control" id="applicationEmail" aria-describedby="emailHelp" placeholder="Enter your email" required>
     </div>
-    <div class="d-flex flex-row-reverse">
-      <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
+    <div class="form-group mb-4">
+      <label class="mb-1" for="address">Address</label>
+      <input type="text" class="form-control" id="address" aria-describedby="addressHelp" placeholder="Enter your address">
+    </div>
+    <div class="form-group mb-4">
+      <label class="mb-1" for="address2">Apt, unit, number</label>
+      <input type="text" class="form-control" id="address2" aria-describedby="address2Help" placeholder="Enter your apt, unit, or number">
+    </div>
+    <div class="form-group mb-4">
+      <label class="mb-1" for="city">City</label>
+      <input type="text" class="form-control" id="city" aria-describedby="city" placeholder="Enter your city"
     </div>
     <div class="form-group">
       <label for="coverLetter">Upload your Cover letter</label>
       <input type="file" class="form-control-file" id="coverLetter">
-  </div>
+    </div>
+    <div class="d-flex flex-row-reverse">
+      <button id="formSubmit" type="submit" class="btn btn-primary buttonStyle">Submit</button>
+    </div>
   </form>
 </div>
 
