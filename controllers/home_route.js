@@ -31,7 +31,13 @@ router.get('/', async (req, res) => {
 router.get('/scholarships', (req, res) => {
     
     try{
-        res.status(200).render('scholarships', { isScholarships: true });
+        let altNavigation = null;
+        if(req.cookies.session_token){
+            altNavigation = { isScholarships: true , altNavigation : true}
+        }else{
+            altNavigation = { isScholarships: true , altNavigation : false}
+        }
+        res.status(200).render('scholarships', altNavigation);
         return;
     }
     catch(err){
@@ -47,12 +53,20 @@ router.get('/scholarships', (req, res) => {
 router.get('/courses', async (req, res) => {
     
     try{
+        let altNavigation = null;
+       
         const mushroomCourses = await Courses.findAll();
         const courses = mushroomCourses.map(course => course.get({ plain: true }));
+
+        if(req.cookies.session_token){
+            altNavigation = { isCoursesTemplate: true, courses, altNavigation : true}
+        }else{
+            altNavigation = { isCoursesTemplate: true, courses, altNavigation : false}
+        }
      
         console.log(chalk.red(courses))
       // calls courses template, getCourses() is a helper function
-        res.status(200).render('courses', { isCoursesTemplate: true, courses });
+        res.status(200).render('courses', altNavigation);
         return;
     }
     catch(err){
@@ -61,13 +75,19 @@ router.get('/courses', async (req, res) => {
     }
 });
 /**
- * scholarships page route
+ * about page route
  * Endpoint: /about
  */
 router.get('/about', (req, res) => {
     
     try{
-        res.status(200).render('about', { isAboutTemplate: true });
+        let altNavigation = null;
+        if(req.cookies.session_token){
+            altNavigation = { isAboutTemplate: true , altNavigation : true}
+        }else{
+            altNavigation = { isAboutTemplate: true , altNavigation : false}
+        }
+        res.status(200).render('about', altNavigation);
         return;
     }
     catch(err){
@@ -82,6 +102,12 @@ router.get('/about', (req, res) => {
 router.get('/connection', (req, res) => {
     
     try{
+        let altNavigation = null;
+        if(req.cookies.session_token){
+            altNavigation = { isAboutTemplate: true , altNavigation : true}
+        }else{
+            altNavigation = { isAboutTemplate: true , altNavigation : false}
+        }
         res.status(200).render('(TBD)');
         return;
     }

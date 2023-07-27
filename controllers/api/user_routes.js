@@ -50,9 +50,7 @@ router.post('/validate', async (req, res) => {
      // Set the initial expiration time of the session for 30 minutes
       expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
       const sessionToken = uuid.v4();
-      // setting the seeeion in the database
-
-      
+      // setting the session in the database
       const newSession = await Session.create({
           user_id: userData.id,
           session_token: sessionToken,  // session IDs
@@ -77,7 +75,7 @@ router.post('/validate', async (req, res) => {
      res.status(200).json({ newSession })
     }catch(err){
         console.error({message: "Error in post route: ", Error: err})
-        return //res.status(500).json({message: 'Error session interrupted unexpectedly: Session will refresh in 30 min'})
+        return res.status(500).json({message: 'Error session interrupted unexpectedly: Session will refresh in 30 min'})
     }
 });
 /**
