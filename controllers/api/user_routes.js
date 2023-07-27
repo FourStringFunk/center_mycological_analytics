@@ -55,7 +55,6 @@ router.post('/validate', async (req, res) => {
           user_id: userData.id,
           session_token: sessionToken,  // session IDs
           expires_at: expiresAt,
-          active: true,
         });
         
         // sets the express-session as active
@@ -125,14 +124,21 @@ router.post('/create/newuser', async (req,res)=>{
             user_id: studentData.id,
             session_token: sessionToken,  // session IDs
             expires_at: expiresAt,
-            active: true,
         });
         // set the session on req session
         req.session.save(() => {
             req.session.user_id = studentData.id;
             req.session.logged_in = true;
         });
-        setTimeout(() => {res.status(200).redirect('/api/proile')}, 500)
+
+        // set the users status to active in the database
+        const userSession = await Session.findOne({where: { user_id: studentData.id }})
+        if (userSession) {
+            userSession.active = true;
+            await userSession.save();
+        }
+
+       res.status(200).json({ newSession })
     }
     catch(err){
         console.error({message: "Error in post route: ", Error: err})

@@ -33,7 +33,7 @@ static async getCompletedCourses(studentId){
 Students.init( {
     id: {
       autoIncrement: false,
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING(50),
       allowNull: false,
       primaryKey: true,
       unique: true,
@@ -61,7 +61,7 @@ Students.init( {
     },
     address_1: {
       type: DataTypes.STRING(100),
-      allowNull: false
+      allowNull: true
     },
     address_2: {
       type: DataTypes.STRING(100),
@@ -69,19 +69,19 @@ Students.init( {
     },
     city: {
       type: DataTypes.STRING(40),
-      allowNull: false
+      allowNull: true
     },
     state: {
       type: DataTypes.STRING(20),
-      allowNull: false
+      allowNull: true
     },
     country: {
       type: DataTypes.STRING(30),
-      allowNull: false
+      allowNull: true
     },
     zip: {
       type: DataTypes.INTEGER,
-      allowNull: false
+      allowNull: true
     },
     completed_courses: {
       type: DataTypes.STRING(50),
