@@ -24,7 +24,7 @@ router.get('/login', (req, res) => {
     }
 });
 /**
- * This route take data from the login page and is data is good, allows user to login
+ * This route take data from the login page and if data is good, allows user to login
  * client side .js handles the redirect, because it sets the browser cookie on the client side
  * Endpoint: api/users/validate
  */ 
@@ -280,7 +280,7 @@ router.get('/logout/confirm', async (req, res) => {
         }
 
         res.clearCookie('session_token'); // clear the browser cookie
-        res.status(200).redirect('/api/users/login');
+        res.status(200).redirect('/');
     });
 });
 

@@ -9,8 +9,15 @@ const chalk = require('chalk')
  */
 router.get('/', async (req, res) => {
     // const mainHeroImg = fs.readFileSync('/img/pexels-artem-podrez-5726794.jpg')
+ 
     try{
-        res.status(200).render('homepage', { homePageTemplate: true });
+        const altNavigation = null;
+        if(req.cookies.session_token){
+            altNavigation = { homePageTemplate: true , altNavigation : true}
+        }else{
+            altNavigation = { homePageTemplate: true , altNavigation : false}
+        }
+        res.status(200).render('homepage', altNavigation);
     }catch(error){
         console.error(error);
         res.status(500).send('Server Error');
