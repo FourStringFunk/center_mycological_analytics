@@ -1,32 +1,51 @@
-<div>
-    <div>
-        <h1>Welcome {{student.first_name}} {{student.last_name}}</h1>
-        <br>
-        <body>
-        <h2>My Profile</h2>
-        <p>
-            <li>First Name: {{student.first_name}}</li>
-            <li>Last Name: {{student.last_name}}</li>
-            <li>Email: {{student.email}}</li>
-            <li>Address: {{student.address_1}} {{student.address_2}}</li>
-            <li>City: {{student.city}}</li>
-            <li>State: {{student.state}}</li>
-            <li>Zip: {{student.zip}}</li>
-        </p>
-        </body>
+<div class="py-2 px-2 bg-light"></div>
+
+<div class="py-4 px-5">
+    <h1 class="display-4">Welcome {{student.first_name}}!</h1>
+</div>
+
+<div class="py-5 px-5 bg-light">
+    <h2 class="mb-4">My Profile</h2> 
+    <p><strong>First Name:</strong> {{student.first_name}}</p>
+    <p><strong>Last Name:</strong> {{student.last_name}}</p>
+    <p><strong>Email:</strong> {{student.email}}</p>
+    <p><strong>Address:</strong> {{student.address_1}}</p>
+    <p><strong>Address 2:</strong> {{student.address_2}}</p>
+    <p><strong>City:</strong> {{student.city}}</p>
+    <p><strong>State:</strong> {{student.state}}</p>
+    <p><strong>Zip:</strong> {{student.zip}}</p>
+    <button class="btn btn-primary buttonStyle mt-3" href="/update" type="button">Update Profile</button> <!-- NEED TO FIGURE OUT PUT REQUEST WITH FORM -->
+</div>
+
+<div class="py-5 px-5">
+    <h2 class="mb-4">Course List</h2>
+    <div class="card">
+        <div class="card-body">
+            <h4 class="mb-3">{{studentCourses.course_name}}TEST COURSE NAME</h4> <!-- NEED TO ADD THIS FIELD TO STUDENT COURSES TABLE -->
+            <p>Course ID: {{studentCourses.course_id}}</p>
+            <p>Certificate Awarded: {{studentCourses.certificate_awarded}}</p>
+            <p class="mb-0">Completion Status: {{studentCourses.completion_status}}</p>
+        </div>
     </div>
-    <div>
-        <h1>My Course List</h1>
-        <p>
-            <li>Course ID: {{studentCourses.course_id}}</li>
-            <li>Certificate Awarded: {{studentCourses.certificate_awarded}}</li>
-            <li>Completion Status: {{studentCourses.completion_status}}</li>
-        </p>    
+    <div class="card mt-3">
+        <div class="card-body">
+            <h4 class="mb-3">{{studentCourses.course_name}}TEST COURSE NAME</h4> <!-- NEED TO ADD THIS FIELD TO STUDENT COURSES TABLE -->
+            <p>Course ID: {{studentCourses.course_id}}</p>
+            <p>Certificate Awarded: {{studentCourses.certificate_awarded}}</p>
+            <p class="mb-0">Completion Status: {{studentCourses.completion_status}}</p>
+        </div>
     </div>
+</div>
+
+<div class="py-5 px-5 bg-light">
     <div>
         <h1>Questions</h1>
-        <p>Please don't hesitate to reach out to us if you 
-            have any other questions or requests.</p>
+        <p class="mt-3">Please don't hesitate to reach out to us if you have any other questions or requests.</p>
     </div>
-    <a href="/about">Email Us</a>
+    <div class="mb-3 align-item-center">
+        <a class="d-flex flex-nowrap align-items-center" href="mailto:emily@centerformycoanalytics.org "> 
+            <img src="img/icons/arrow.png" alt="arrow icon" />
+            <p class="ctaBtn mt-3 ml-5">Email Us</p>
+        </a>
+    </div>
 </div>
