@@ -71,9 +71,9 @@ const upload = multer({ storage: storage });
  * application page route, if(success) file written at /utils/uploads/applications, then redirect--> '/'
  * Endpoint: api/contact/scholarship
  */
-router.post('/scholarship', upload.array('images', maxCount), (req,res) => {
+router.post('/scholarship', upload.single('coverLetter'), (req, res) => {
     try {
-        const filenames = req.files ? req.files.map((file) => {file.filename}) : [];
+        const uploadedFilename = req.file ? req.file.filename : ""; // filename is now a string, not an array
         
         let application = {
             first_name: req.body.firstName,
@@ -85,13 +85,14 @@ router.post('/scholarship', upload.array('images', maxCount), (req,res) => {
             country: req.body.country,
             zip: req.body.zip,
             employment_status: req.body.employmentStatus,
+            employment_status2: req.body.employmentStatus2,
             employer_name: req.body.employerName,
-            income: req.body.income,
+            income: req.body.incomeRange,
             payment_plan: req.body.paymentPlan,
-            uploads: filenames // Check if files exist and assign the filenames or an empty array
+            uploads: uploadedFilename // Filename is a string
         }
         // write the application to the directory
-        const dir = path.join(__dirname, '/utils/uploads/applications');
+        const dir = path.join(__dirname, '/utils/uploads');
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir, { recursive: true });
         }
