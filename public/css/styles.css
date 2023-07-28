@@ -84,10 +84,5 @@ a, button, p, ul, li {
 }
 
 @media screen and (max-width: 768px) {
-    /* UNIVERSAL */
-
-    /* SCHOLARSHIP PAGE */
-    #scholarshipApplication {
-        height: 210vh;
-    }
+    
 }
