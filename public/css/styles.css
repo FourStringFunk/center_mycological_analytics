@@ -66,11 +66,22 @@ a, button, p, ul, li {
 }
 
 /* MEDIA QUERIES */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
     /* UNIVERSAL */
+    
+
+    /* HOMEPAGE */
     h1.org-title {
         font-size: 20px !important;
         text-wrap: wrap !important;
+    }
+
+    #oneColCallout {
+        height: 130vh;
+    }
+
+    #contactUs {
+        height: 75vh;
     }
 
     /* SCHOLARSHIP PAGE*/
