@@ -11,17 +11,15 @@ router.post('/', (req, res) => {
   try{
     const sessionToken = req.cookies.session_token;
     if(!sessionToken){
-      res.status(400)
-      return;
+      return res.status(400)
     }
     // ping route to update the session model 'updated_at'
-    Session.updatePing(sessionToken)
+    Session.pingAndUpdate(sessionToken)
       .then(() => res.sendStatus(200))
       .catch(error => {
         console.error('Error:', error);
         res.status(500).json({message: 'Server Error', Error: err})
       });
-    
   }catch(err){
     res.status(500).json({message: 'Server Error', Error: err})
   }

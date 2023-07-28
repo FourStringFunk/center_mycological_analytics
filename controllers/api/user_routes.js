@@ -47,8 +47,8 @@ router.post('/validate', async (req, res) => {
        return;
      }
       let expiresAt = new Date();
-     // Set the initial expiration time of the session for 30 minutes
-      expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
+     // Set the initial expiration time of the session for 10 minutes
+      expiresAt.setMinutes(expiresAt.getMinutes() + 10); 
       const sessionToken = uuid.v4();
       // setting the session in the database
       const newSession = await Session.create({
@@ -116,8 +116,8 @@ router.post('/create/newuser', async (req,res)=>{
             return
         }
         let expiresAt = new Date();
-        // Set the initial expiration time of the session for 30 minutes
-        expiresAt.setMinutes(expiresAt.getMinutes() + 30); 
+        // Set the initial expiration time of the session for 10 minutes
+        expiresAt.setMinutes(expiresAt.getMinutes() + 10); 
         const sessionToken = uuid.v4();
         // set the session in the database
         const newSession = await Session.create({
@@ -216,7 +216,8 @@ router.get('/forgot', (req, res) => {
  */
 router.post('/forgot/retrieve', async (req,res)=>{
     try{
-        let email = req.body.email.trim();
+        let email = req.body.email;
+        console.log(email)
         if(email){
             let student = await Students.findOne({
                 where: {
@@ -234,8 +235,8 @@ router.post('/forgot/retrieve', async (req,res)=>{
                 }
             }
             // example use of how wed send a token to setup the password reset token for security
-            let resetLink = `https://yourapp.com/resetPassword/${user.resetPasswordToken}`; // replace with your reset password route
-
+            // let resetLink = `https://yourapp.com/resetPassword/${user.resetPasswordToken}`; // replace with your reset password route
+            let resetLink = "/"
             let mailOptions = {
                 from: "guymorganb@gmail.com",
                 to: email,

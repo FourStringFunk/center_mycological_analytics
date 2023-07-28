@@ -61,10 +61,10 @@ async function startServer() {
 
         setInterval(async () => {
             try {
-                // Every 5 minutes, this will run and delete any sessions that are 30 minutes old
-                // it will also calculate the users time every 5 minutes, this feature needs more work though
-              const cutoff = new Date(Date.now() - (2 * 60 * 1000));     // 30 minutes ago,
-              await Session.clearExpiredSessions(cutoff);                 // if updated_at is less than (rightNow - 30 minutes), delete the session.
+                // Every 2 minutes, this will run and delete any sessions that are 1 minute old
+                // this function will execute every 2 minutes, 
+              const cutoff = new Date(Date.now() - (1 * 60 * 1000));     //  deletes sessions 1 minute past expiry time,
+              await Session.clearExpiredSessions(cutoff);                
             } catch (err) {
               console.error('Error in handling sessions: ', err);
             }

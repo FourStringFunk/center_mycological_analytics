@@ -54,7 +54,7 @@ let validate = async function() {
                 if (response.ok) {
                     msgs[msgs.length] = "If the email exists, the reset link was sent";
                     displayErrorMsgs(msgs)
-                    setTimeout(() => {window.location.href = '/api/login';}, 550);
+                    setTimeout(() => {window.location.href = '/api/users/login';}, 550);
                 } else {
                     // Display error message from server
                     // you have to use await or it wont work

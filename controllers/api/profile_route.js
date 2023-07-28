@@ -16,7 +16,6 @@ const fs = require('fs');
 router.get('/',checkAuth2, async (req, res) => {
     let cookieUserId = req.session.user_id;
     
-    
     try {
         const studentData = await getProfile(cookieUserId);
         
