@@ -25,22 +25,33 @@ a, button, p, ul, li {
 .buttonStyle {
     background-color: var(--accent) !important;
     border: none !important;
+    width: 200px;
 }
 
-/* JUMBOTRON */
+/* HOMEPAGE */
+/* Jumbotron */
 .jumbotron {
     height: 50vh;
 }
 
 /* 1-COLUMN CALLOUT*/
-#oneColCallout, #carousel, #contactUs {
+#oneColCallout, #contactUs {
     height: 50vh;
+}
+
+#sponsor {
+    height: 50vh !important;
 }
 
 .ctaBtn {
     font-size: 1.5em;
     margin-left: 10px;
     margin-bottom: 5px;
+}
+
+/* SPONSOR */
+.sponsorImg {
+    width: 200px;
 }
 
 /* SCHOLARSHIP PAGE */
@@ -51,7 +62,7 @@ a, button, p, ul, li {
 
 /* Carousel */
 #sponsor {
-    height: 25vh;
+    height: 50vh !important;
 }
 
 /* CONTACT FORM */
@@ -66,11 +77,29 @@ a, button, p, ul, li {
 }
 
 /* MEDIA QUERIES */
-@media screen and (max-width: 400px) {
+@media screen and (max-width: 420px) {
     /* UNIVERSAL */
+
+    /* HOMEPAGE */
     h1.org-title {
         font-size: 20px !important;
         text-wrap: wrap !important;
+    }
+
+    #oneColCallout {
+        height: 150vh !important;
+    }
+
+    #sponsor {
+        height: 75vh !important;
+    }
+
+    .sponsorImg:nth-child(1) {
+        margin: 2vh 0 2vh 0 !important;
+    }
+
+    #contactUs {
+        height: 85vh;
     }
 
     /* SCHOLARSHIP PAGE*/
@@ -83,11 +112,17 @@ a, button, p, ul, li {
     }
 }
 
-@media screen and (max-width: 768px) {
-    /* UNIVERSAL */
+@media screen and (max-width: 820px) {
+    /* HOMEPAGE */
+    #oneColCallout {
+        height: 125vh;
+    }
 
-    /* SCHOLARSHIP PAGE */
-    #scholarshipApplication {
-        height: 210vh;
+    .sponsorImg {
+        width: 100px;
+    }
+
+    #contactUs {
+        height: 85vh !important;
     }
 }
