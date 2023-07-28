@@ -1,12 +1,15 @@
 /**
- * .js for validating new username and password (client side)
+ * .js for scholarship application (client side)
  */
-const form = document.getElementById('loginForm')
+const form = document.getElementById('scholarshipApplicationForm')
 const fName = document.getElementById('fName');
 const lName = document.getElementById('lName');
-const emailInput = document.getElementById('email');
-const Password = document.getElementById('password');
-const Verify_Password = document.getElementById('verifyPassword');
+const emailInput = document.getElementById('applicationEmail');
+const add = document.getElementById('address');
+const add2 = document.getElementById('address2');
+const town = document.getElementById('city');
+const nation = document.getElementById('country');
+const zipcode = document.getElementById('zip');
 
 const submitbtn = document.getElementById('formSubmit');
 
@@ -42,28 +45,48 @@ const clearErrors = function(){
 let validate = async function() {
     clearErrors()
     // reminder, these are the elements youll pass to the api call, fName, lName etc.
+    
     const firstName = fName.value.trim()
     const lastName = lName.value.trim()
     const email = emailInput.value.trim()
-    const password = Password.value.trim() 
-    const verify = Verify_Password.value.trim();
+    const address = add.value.trim() 
+    const address2 = add2.value.trim();
+    const city = town.value.trim() 
+    const country = nation.value.trim();
+    const zip = zipcode.value.trim();
 
-    const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])[A-Za-z\d!@#$%^&*]{8,}$/;
-    const emailPattern = /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}\b/;
+    const address = add.value.trim() 
+    const address2 = add2.value.trim();
+    const city = town.value.trim() 
+    const country = nation.value.trim();
+    const zip = zipcode.value.trim();
 
-    if (!emailPattern.test(email)){
-        return msgs[msgs.length] = "Please enter a valid email address.";
-    } else if(!passwordPattern.test(password)){
-        return msgs[msgs.length] = "Please enter a valid password of 1 uppercase, 1 lowecase, 1 special char, and 1 digit.";
-    } else if(password !== verify) {
-        return msgs[msgs.length] = "Passwords do not match.";
-    }
+    if (!firstName || ""){
+        return msgs[msgs.length] = "Please enter a first name.";
+    } else if(!lastName || ""){
+        return msgs[msgs.length] = "Please enter a last name";
+    } else if(!email || "") {
+        return msgs[msgs.length] = "Please enter an email";
+    } else if(!address || ""){
+        return msgs[msgs.length] = "Please enter an address";
+    } else if(!city || ""){
+        return msgs[msgs.length] = "Please enter a city";
+    } else if(!country || ""){
+        return msgs[msgs.length] = "Please enter a country";
+    } else if(!zip || ""){
+        return msgs[msgs.length] = "Please enter a zip";
+    } 
     // Fetch API, returns a Promise
         try{
-            const response = await fetch('/api/users/create/newuser', {
+            const response = await fetch('/api/contact/scholarship', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ firstName, lastName, email, password })
+                body: JSON.stringify({ 
+                    firstName, lastName, 
+                    email, address, 
+                    address2, city,
+                    country, zip,
+                     })
             });
                 // If login is successful, redirect to dashboard
                 if (response.ok) {
@@ -79,6 +102,7 @@ let validate = async function() {
                 } else {
                     // Display error message from server
                     // you have to use await or it wont work
+                    
                     console.error({message: "Server error"})
                     msgs[msgs.length] = data.message
                     displayErrorMsgs(msgs)
@@ -99,5 +123,3 @@ const init = () =>{
     });
 }
 init();
-
-// document.cookie:  session_token=b1d11468-7ac6-4bbc-9598-758ae20dcfb1

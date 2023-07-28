@@ -42,7 +42,18 @@ const seedDatabase = async () => {
   const coursesData = [
     {
       id: 1,
-      course_name: "Course 1",
+      course_name: "Cooking",
+      start_date: "2023-09-01",
+      end_date: "2023-12-01",
+      start_time: "09:00:00",
+      end_time: "10:30:00",
+      course_active: true,
+      cost: 1000,
+      deleted: false
+    },
+    {
+      id: 1,
+      course_name: "Cleaning",
       start_date: "2023-09-01",
       end_date: "2023-12-01",
       start_time: "09:00:00",
