@@ -1,22 +1,7 @@
 /**
  * .js for scholarship application (client side)
  */
-const form = document.getElementById('scholarshipApplicationForm')
-const fName = document.getElementById('fName');
-const lName = document.getElementById('lName');
-const emailInput = document.getElementById('applicationEmail');
-const add = document.getElementById('address');
-const add2 = document.getElementById('address2');
-const town = document.getElementById('city');
-const nation = document.getElementById('country');
-const zipcode = document.getElementById('zip');
-const eStatus = document.getElementById('employmentStatus');
-const iRange = document.getElementById('incomeRange');
-const eStatus2 = document.getElementById('employmentStatus2');
-const pFull = document.getElementById('paymentInFull');
-const pPlan = document.getElementById('paymentPlan');
 
-const submitbtn = document.getElementById('formSubmit');
 
 let msgs = [];
 const displayErrorMsgs = function(msgs) {
@@ -55,43 +40,53 @@ let validate = async function() {
     const lastName = lName.value.trim()
     const email = emailInput.value.trim()
     const address = add.value.trim() 
-    const address2 = add2.value.trim();
+    const address2 = add2.value.trim()
     const city = town.value.trim() 
-    const country = nation.value.trim();
-    const zip = zipcode.value.trim();
+    const country = nation.value.trim()
+    const zip = zipcode.value.trim()
+    const employmentStatus = document.getElementById('employmentStatus').value
+    const incomeRange = document.getElementById('incomeRange').value
+    const employmentStatus2 = document.getElementById('employmentStatus2').value
+    const paymentInFull = document.getElementById('paymentInFull').value
+    const paymentPlan = document.getElementById('paymentPlan').value
+    const coverLetter = document.getElementById('coverLetter').files[0]
 
-    const employmentStatus = eStatus.value.trim() 
-    const incomeRange = iRange.value.trim();
-    const city = town.value.trim() 
-    const country = nation.value.trim();
-    const zip = zipcode.value.trim();
+    let formData = new FormData();
+    formData.append('firstName', firstName);
+    formData.append('lastName', lastName);
+    formData.append('email', email);
+    formData.append('address', address);
+    formData.append('address2', address2);
+    formData.append('city', city);
+    formData.append('country', country);
+    formData.append('zip', zip);
+    formData.append('employmentStatus', employmentStatus);
+    formData.append('incomeRange', incomeRange);
+    formData.append('employmentStatus2', employmentStatus2);
+    formData.append('paymentInFull', paymentInFull);
+    formData.append('paymentPlan', paymentPlan);
+    formData.append('coverLetter', coverLetter);
 
-    if (!firstName || ""){
+    if (!firstName){
         return msgs[msgs.length] = "Please enter a first name.";
-    } else if(!lastName || ""){
+    } else if(!lastName){
         return msgs[msgs.length] = "Please enter a last name";
-    } else if(!email || "") {
+    } else if(!email) {
         return msgs[msgs.length] = "Please enter an email";
-    } else if(!address || ""){
+    } else if(!address){
         return msgs[msgs.length] = "Please enter an address";
-    } else if(!city || ""){
+    } else if(!city){
         return msgs[msgs.length] = "Please enter a city";
-    } else if(!country || ""){
+    } else if(!country){
         return msgs[msgs.length] = "Please enter a country";
-    } else if(!zip || ""){
+    } else if(!zip){
         return msgs[msgs.length] = "Please enter a zip";
     } 
     // Fetch API, returns a Promise
         try{
             const response = await fetch('/api/contact/scholarship', {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ 
-                    firstName, lastName, 
-                    email, address, 
-                    address2, city,
-                    country, zip,
-                     })
+                body: formData
             });
                 // If login is successful, redirect to dashboard
                 if (response.ok) {
@@ -102,7 +97,7 @@ let validate = async function() {
                     document.cookie = `session_token=${data.newSession.session_token}; expires=${expiryDate.toUTCString()}; path=/`;
                     msgs[msgs.length] = 'Profile Created!';
                     // now load a new box which will allow the user to input their username, sends a GET request
-                    setTimeout(() => {window.location.href = '/api/profile';}, 650);
+                    setTimeout(() => {window.location.href = '/';}, 650);
                     return;
                 } else {
                     // Display error message from server
