@@ -13,7 +13,7 @@ class Session extends Model{
       const session = await this.findOne({where:{session_token: sessionToken}});
       if (session) {
         const now = new Date();
-        const expiryTime = new Date(now.getTime() + 30 * 60 * 1000); // Add 30 minutes to current time
+        const expiryTime = new Date(now.getTime() + 10 * 60 * 1000); // Add 30 minutes to current time
         console.log('Pinged the session')
         // Update the session's updated_at and expires_at timestamps
         session.updated_at = now;
@@ -118,7 +118,7 @@ class Session extends Model{
     try{
       await this.destroy({ 
         where: { 
-          updated_at: { 
+          expires_at: { 
             [Op.lt]: cutoff // [Op.lt] stands for "less than" (the < operator in SQL). This condition translates to: "where expires_at is less than now"
           // if updated_at is less than rightNow - 5 minutes, delete the session.
           } 
