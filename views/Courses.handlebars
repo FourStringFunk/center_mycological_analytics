@@ -1,33 +1,41 @@
 <body>
     <!-- banner --> 
     <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="banner" style="background-image: url(img/banner-bk.jpg);">
-        <div class="container-fluid d-flex flex-column align-items-center">
-          <img class="card-img-top" src="../public/img/smart-protect-1.jpg" alt="Card image cap" />
-            <h2>Course List</h2>
-            <p>Scroll through the course list below to view our current offerings.
-      In-Person events to fifteen (15) students, so SEATING IS LIMITED!</p>
-            <button class="btn btn-primary btn-lg w-25 buttonStyle" href="INSERT CLASSES LINK HERE" type="button">Apply Now</button>
+        <div class="container-fluid d-flex flex-column align-items-center px-5 py-5">
+            <h2 class="display4 text-center mb-3 text-uppercase text-light">Course List</h2>
+            <p class="lead text-light text-center">Scroll through the course list below to view our current offerings.
+            In-Person events to fifteen (15) students, so SEATING IS LIMITED!</p>
         </div>
     </div>
 
-    <!-- 1 column callout -->
-    {{!-- <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center px-5" id="oneColCallout"> --}}
-        <div class="container-fluid d-flex flex-column align-items-center">
-            <div class="card w-50 my-5 border-0">
-                {{!-- <img src="..." class="card-img-top" alt="..."> --}}
-                <div class="card-body">
-                    <h3 class="display4 text-dark text-center mb-3">Mushroom Extraction and Analysis Certificate Course</h3>
-                    <p class="card-text">CMAS-1001 | Online</p>
-                    <p class="lead text-center">This summer we are offering a 45-seat course over three days, in-person training! Out goal is to bring together our community of citizen scientists and researchers to provide you all the opportunity to learn from our work and insights, and then offer space for you to become a part of it with us!</p>
-                    <div class="container justify-content-center mt-3" id="ctaButton">
-                        <a class="d-flex flex-nowrap justify-content-center align-items-center" href="/about">
-                            <img src="img/icons/arrow.png" alt="arrow icon" />
-                            <p class="ctaBtn ml-5"> Learn more</p>
+    <!-- 3 column callout -->
+    <div class="d-flex flex-column justify-content-center align-items-center px-5 py-5" id="threeColCallout">
+        <div class="d-flex flex-column flex-grow-1 justify-content-center mb-5" style="height: 25%;">
+            <div class="d-flex flex-column align-items-center">
+                <h2 class="display4 text-dark text-center mb-5 text-uppercase">Our Programs</h2>
+                <p class="lead text-center">Our Certificate programs will provide you with the information, skills, and
+                    resources to be successful in the field of mycological analysis.</p>
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-center align-items-center" id="programCards">
+            <div class="card flex-fill h-lg-100 h-md-50 h-sm-50" style="width: 18rem;">
+                <img class="card-img-top" src="img/pexels-artem-podrez-5726794.jpg" alt="" style="height: 50%;">
+                <div class="card-body d-flex flex-column justify-content-center">
+                    <h4 class="card-title">01. Our Programs</h4>
+                    <p class="card-text">Attend a certificate course and join the next generation of mycological
+                        experts.</p>
+                    <div class="container justify-content-center mt-3 ctaButton">
+                        <a class="d-flex flex-nowrap align-items-center" href="/courses">
+                            <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon"
+                                style="width: 32px; height: 32px;" />
+                            <p class="ctaBtn ml-5">Learn more</p>
                         </a>
                     </div>
                 </div>
             </div>
-        </div>  
+        </div>
+    </div>
 
     {{!-- </div> --}}
 
