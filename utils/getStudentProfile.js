@@ -38,6 +38,7 @@ async function getProfile(sessionId) {
         if (sc) {
             courseObject = {
                 student_id: sc.student_id,
+                course_name: sc.course_name,
                 course_id: sc.course_id,
                 certificate_awarded: sc.certificate_awarded,
                 completion_status: sc.completion_status
