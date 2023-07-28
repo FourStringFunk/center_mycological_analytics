@@ -10,6 +10,11 @@ const add2 = document.getElementById('address2');
 const town = document.getElementById('city');
 const nation = document.getElementById('country');
 const zipcode = document.getElementById('zip');
+const eStatus = document.getElementById('employmentStatus');
+const iRange = document.getElementById('incomeRange');
+const eStatus2 = document.getElementById('employmentStatus2');
+const pFull = document.getElementById('paymentInFull');
+const pPlan = document.getElementById('paymentPlan');
 
 const submitbtn = document.getElementById('formSubmit');
 
@@ -55,8 +60,8 @@ let validate = async function() {
     const country = nation.value.trim();
     const zip = zipcode.value.trim();
 
-    const address = add.value.trim() 
-    const address2 = add2.value.trim();
+    const employmentStatus = eStatus.value.trim() 
+    const incomeRange = iRange.value.trim();
     const city = town.value.trim() 
     const country = nation.value.trim();
     const zip = zipcode.value.trim();
