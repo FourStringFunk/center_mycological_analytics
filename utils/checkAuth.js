@@ -12,7 +12,9 @@ const Session = require('../models/Session')
 async function checkAuth1(req, res, next) {
     let sessionToken = req.cookies.session_token; // this is the users id that is saved in the session
     if (!sessionToken) {
-        res.redirect('/signup')
+        await Session.updateActiveStatus(false, sessionToken);
+        await Session.kill(sessionToken);
+        res.redirect("/")
         return
     }
     // Search for the users session in the database by their cookieUserId saved by express-sessions
@@ -27,11 +29,16 @@ async function checkAuth1(req, res, next) {
             next(); // Session is valid, continue to the requested route
         } else {
             // Session is not valid, redirect the user to the signup page
-            return res.redirect('api/users/login');
+            await Session.updateActiveStatus(false, sessionToken);
+            await Session.kill(sessionToken);
+            res.redirect("/")
+            return
         }
     } catch(err) {
         console.error('error: '+ err); // log the error
-        res.redirect('api/users/login');
+        await Session.updateActiveStatus(false, sessionToken);
+        await Session.kill(sessionToken);
+        res.redirect("/")
     }
 }
 // authenticates
@@ -39,7 +46,9 @@ async function checkAuth2(req, res, next) {
     let sessionToken = req.cookies.session_token; // this is the users id that is saved in the session
    
     if (!sessionToken) {
-        res.redirect('api/users/login')
+        await Session.updateActiveStatus(false, sessionToken);
+        await Session.kill(sessionToken);
+        res.redirect("/")
         return
     }
     // Search for the users session in the database by their cookieUserId saved by express-sessions
@@ -61,11 +70,15 @@ async function checkAuth2(req, res, next) {
             console.log(chalk.blue("Session is valid, browser and Database match: "), chalk.green(req.cookies.session_token), "|", chalk.blue("Session user_id: "), chalk.green(req.session.user_id));
         } else {
             // Session is not valid, redirect the user to the signup page
-            return res.redirect('api/users/login');
+            await Session.updateActiveStatus(false, sessionToken);
+            await Session.kill(sessionToken);
+            res.redirect("/")
         }
     } catch(err) {
         console.error('error: '+ err); // log the error
-        res.redirect('api/users/login');
+        await Session.updateActiveStatus(false, sessionToken);
+        await Session.kill(sessionToken);
+        res.redirect("/")
     }
 }
 

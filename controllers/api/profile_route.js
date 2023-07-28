@@ -1,7 +1,5 @@
 const router = require('express').Router();
-
 const Students = require('../../models/Students')
-
 const getProfile = require('../../utils/getStudentProfile')
 const checkAuth2 = require('../../utils/checkAuth')
 const fetchCourses = require('../../utils/fetchCompletedCourses')
@@ -15,10 +13,8 @@ const fs = require('fs');
  */
 router.get('/',checkAuth2, async (req, res) => {
     let cookieUserId = req.session.user_id;
-    
     try {
         const studentData = await getProfile(cookieUserId);
-        
         console.log(studentData)
         if (studentData) {
             let altNavigation = null;
