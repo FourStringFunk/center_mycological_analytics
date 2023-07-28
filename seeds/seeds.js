@@ -106,6 +106,17 @@ const seedDatabase = async () => {
     }
   ];
 
+  const studentCoursesDataWithCourseName = studentCoursesData.map(studentCourse => {
+    const course = coursesData.find(course => course.id === studentCourse.course_id);
+    if (!course) {
+      throw new Error(`Course with id ${studentCourse.course_id} not found`);
+    }
+    return {
+      ...studentCourse,
+      course_name: course.course_name,
+    };
+  });
+
   await Students.bulkCreate(studentsData, {
     individualHooks: true,
     returning: true,
@@ -115,7 +126,7 @@ const seedDatabase = async () => {
 
   await Finance.bulkCreate(financeData);
 
-  await StudentCourses.bulkCreate(studentCoursesData);
+  await StudentCourses.bulkCreate(studentCoursesDataWithCourseName);
 
   process.exit(0);
 };

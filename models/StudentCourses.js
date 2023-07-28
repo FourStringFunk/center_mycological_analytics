@@ -42,53 +42,57 @@ static async updateStudentCourse(studentId, courseId, completionStatus, certific
 
 }
 StudentCourses.init( {
-    student_id: {
-      type: DataTypes.STRING(50),
-      allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'Students',
-        key: 'id'
-      }
+  student_id: {
+    type: DataTypes.STRING(50),
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: 'Students',
+      key: 'id'
+    }
+  },
+  course_id: {
+    type: DataTypes.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+    references: {
+      model: 'Courses',
+      key: 'id'
+    }
+  },
+  course_name: {
+    type: DataTypes.STRING(255),
+    allowNull: false,
+  },
+  certificate_awarded: {
+    type: DataTypes.BOOLEAN,
+    allowNull: true
+  },
+  completion_status: {
+    type: DataTypes.STRING(200),
+    allowNull: true
+  },
+}, {
+  sequelize,
+  tableName: 'StudentCourses',
+  timestamps: false,
+  indexes: [
+    {
+      name: "PRIMARY",
+      unique: true,
+      using: "BTREE",
+      fields: [
+        { name: "student_id" },
+        { name: "course_id" },
+      ]
     },
-    course_id: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      primaryKey: true,
-      references: {
-        model: 'Courses',
-        key: 'id'
-      }
+    {
+      name: "course_id",
+      using: "BTREE",
+      fields: [
+        { name: "course_id" },
+      ]
     },
-    certificate_awarded: {
-      type: DataTypes.BOOLEAN,
-      allowNull: true
-    },
-    completion_status: {
-      type: DataTypes.STRING(200),
-      allowNull: true
-    },
-  }, {
-    sequelize,
-    tableName: 'StudentCourses',
-    timestamps: false,
-    indexes: [
-      {
-        name: "PRIMARY",
-        unique: true,
-        using: "BTREE",
-        fields: [
-          { name: "student_id" },
-          { name: "course_id" },
-        ]
-      },
-      {
-        name: "course_id",
-        using: "BTREE",
-        fields: [
-          { name: "course_id" },
-        ]
-      },
-    ]
-  });
+  ]
+});
 module.exports = StudentCourses;

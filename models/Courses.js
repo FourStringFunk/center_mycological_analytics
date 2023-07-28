@@ -19,7 +19,8 @@ Courses.init( {
     },
     course_name: {
       type: DataTypes.STRING(255),
-      allowNull: false
+      allowNull: false,
+      primaryKey: true
     },
     start_date: {
       type: DataTypes.DATE,
