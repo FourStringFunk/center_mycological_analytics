@@ -35,7 +35,7 @@ a, button, p, ul, li {
 }
 
 /* 1-COLUMN CALLOUT*/
-#oneColCallout, #contactUs {
+#oneColCallout #contactUs {
     height: 50vh;
 }
 
@@ -87,7 +87,7 @@ a, button, p, ul, li {
     }
 
     #oneColCallout {
-        height: 150vh !important;
+        height: 100vh !important;
     }
 
     #sponsor {
