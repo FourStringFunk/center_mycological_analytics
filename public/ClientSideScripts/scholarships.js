@@ -107,7 +107,7 @@ let validate = async function() {
                 } else {
                     // Display error message from server
                     console.error({message: "Server error"})
-                    msgs[msgs.length] = data.message
+                    msgs[msgs.length] = "Error with submission"
                     displayErrorMsgs(msgs)
                     return;
                 }

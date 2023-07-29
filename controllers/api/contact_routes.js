@@ -47,7 +47,7 @@ router.post('/', (req,res) => {
 });
 /**
  * Multer helper function
- * for uploading images (i left this here for testing) once tested should be moved to another file and imported)
+ * for uploading files (I tried importing this and it exhibited strange behavior)
  */
 // handle file uploads
 // key functions defined within this object: destination and filename.
