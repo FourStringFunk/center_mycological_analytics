@@ -42,10 +42,10 @@ The dev team will use everything we've learned over the past six modules to crea
 - Emily Davis, Founder & Instructor
 
 ### Developers
-- Guy Beals
+- Guy Beals (Backend DB, Server, Template Engine)
 - Deni Ensign
 - Steven Hudek
-- Chris Harris
+- Chris Harris (Frontend, Design, Wireframes)
 
 ## LICENSE
 MIT License

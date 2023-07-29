@@ -9,7 +9,6 @@ const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
 require('dotenv').config();
-let maxCount = 3;
 /**
  * contact page route, send an email from the contact page if(success) redirect--> '/'
  * Endpoint: /api/contact
@@ -48,7 +47,7 @@ router.post('/', (req,res) => {
 });
 /**
  * Multer helper function
- * for uploading images (i left this here for testing) once tested should be moved to another file and imported)
+ * for uploading files (I tried importing this and it exhibited strange behavior)
  */
 // handle file uploads
 // key functions defined within this object: destination and filename.
@@ -59,9 +58,11 @@ const storage = multer.diskStorage({
         cb(null, path.join(__dirname, '../../utils/uploads/')); // cb is a callback function to provide the destination folder    
     },
     filename: function (req, file, cb) {
-      // Generate a unique filename for the uploaded file
-      const suffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-      cb(null, file.fieldname + '-' + suffix);
+        // Generate a unique filename for the uploaded file
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+        // preserve the file extention coming from the user
+        const fileExtension = path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
     },
   });
   // Create multer upload middleware using the storage configuration
@@ -81,7 +82,6 @@ router.post('/scholarship', upload.single('coverLetter'), (req, res) => {
             address_1: req.body.address1,
             address_2: req.body.address2,
             city: req.body.city,
-            state: req.body.state,
             country: req.body.country,
             zip: req.body.zip,
             employment_status: req.body.employmentStatus,
@@ -92,14 +92,24 @@ router.post('/scholarship', upload.single('coverLetter'), (req, res) => {
             uploads: uploadedFilename // Filename is a string
         }
         // write the application to the directory
-        const dir = path.join(__dirname, '/utils/uploads');
+        const dir = path.join(__dirname, '../../utils/uploads/');
+        // checks if the directory exists, if not creates it
         if (!fs.existsSync(dir)){
             fs.mkdirSync(dir, { recursive: true });
         }
+
         const filename = path.join(dir, `${application.first_name}_${application.last_name}_${Date.now()}.json`);
-        fs.writeFileSync(filename, JSON.stringify(application, null, 4));
-        console.info({Application: application})
-        res.status(200).redirect('/');
+        try {
+        // 4 is the number of spaces used for indentation
+            fs.writeFileSync(filename, JSON.stringify(application, null, 4));
+            console.info("File written successfully\n");
+            res.status(200).json(application);
+        } catch (error) {
+            console.error(`Error writing file: ${error}`);
+            res.status(500).send({message: "server error catch block on server"})
+        }finally{
+            console.info({Application: application})
+        }
     } catch(err) {
         res.status(400).json({message: 'Server error @ contact_routes.js /contact/apply', Error: err})
         console.log('Email failure: ', err);
