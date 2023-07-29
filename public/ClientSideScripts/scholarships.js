@@ -2,7 +2,16 @@
  * .js for scholarship application (client side)
  */
 
-
+const form = document.getElementById('scholarshipApplicationForm')
+const fName = document.getElementById('fName');
+const lName = document.getElementById('lName');
+const emailInput = document.getElementById('applicationEmail');
+const add = document.getElementById('address');
+const add2 = document.getElementById('address2');
+const town = document.getElementById('city');
+const nation = document.getElementById('country');
+const zipcode = document.getElementById('zip');
+const submitbtn = document.getElementById('formSubmit');
 let msgs = [];
 const displayErrorMsgs = function(msgs) {
     const ul = document.createElement('ul'); //create an element to hold our errors
@@ -39,7 +48,7 @@ let validate = async function() {
     const firstName = fName.value.trim()
     const lastName = lName.value.trim()
     const email = emailInput.value.trim()
-    const address = add.value.trim() 
+    const address1 = add.value.trim() 
     const address2 = add2.value.trim()
     const city = town.value.trim() 
     const country = nation.value.trim()
@@ -55,14 +64,14 @@ let validate = async function() {
     formData.append('firstName', firstName);
     formData.append('lastName', lastName);
     formData.append('email', email);
-    formData.append('address', address);
+    formData.append('address', address1);
     formData.append('address2', address2);
     formData.append('city', city);
     formData.append('country', country);
     formData.append('zip', zip);
     formData.append('employmentStatus', employmentStatus);
-    formData.append('incomeRange', incomeRange);
     formData.append('employmentStatus2', employmentStatus2);
+    formData.append('incomeRange', incomeRange);
     formData.append('paymentInFull', paymentInFull);
     formData.append('paymentPlan', paymentPlan);
     formData.append('coverLetter', coverLetter);
@@ -90,19 +99,13 @@ let validate = async function() {
             });
                 // If login is successful, redirect to dashboard
                 if (response.ok) {
-                    // set the session token in the browser
-                    const data = await response.json();
-                    let expiryDate = new Date();
-                    expiryDate.setTime(expiryDate.getTime() + (30 * 60 * 1000)); // Expire in 30 minutes
-                    document.cookie = `session_token=${data.newSession.session_token}; expires=${expiryDate.toUTCString()}; path=/`;
-                    msgs[msgs.length] = 'Profile Created!';
+                    // set the session token in the browse
+                    msgs[msgs.length] = 'Application Submitted!';
                     // now load a new box which will allow the user to input their username, sends a GET request
                     setTimeout(() => {window.location.href = '/';}, 650);
                     return;
                 } else {
                     // Display error message from server
-                    // you have to use await or it wont work
-                    
                     console.error({message: "Server error"})
                     msgs[msgs.length] = data.message
                     displayErrorMsgs(msgs)
@@ -119,6 +122,7 @@ const init = () =>{
         form.addEventListener("submit", function (event) {
           event.preventDefault();
           validate();
+          console.log('submitted')
         });
     });
 }
