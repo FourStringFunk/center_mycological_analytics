@@ -60,10 +60,6 @@ StudentCourses.init( {
       key: 'id'
     }
   },
-  course_name: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-  },
   certificate_awarded: {
     type: DataTypes.BOOLEAN,
     allowNull: true

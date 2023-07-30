@@ -7,7 +7,6 @@ const router = require('express').Router();
 const Students = require('../../models/Students');
 const Session = require('../../models/Session');
 const uuid = require('uuid');
-const { body, validationResult } = require('express-validator');
 const checkAuth1 = require('../../utils/checkAuth')
 const shortid = require('shortid');
 const nodemailer = require('nodemailer');

@@ -8,7 +8,7 @@ const seedDatabase = async () => {
 
   const studentsData = [
     {
-      id: 1,
+      id: "1r2edf",
       email: "student1@example.com",
       password_hash: "password1",
       enrollment_status: "enrolled",
@@ -23,7 +23,7 @@ const seedDatabase = async () => {
       deleted: false
     },
     {
-      id: 2,
+      id: "3rsd25",
       email: "student2@example.com",
       password_hash: "password2",
       enrollment_status: "enrolled",
@@ -41,8 +41,11 @@ const seedDatabase = async () => {
 
   const coursesData = [
     {
-      id: 1,
-      course_name: "Cooking",
+      id: 1001,
+      course_code: "CMAS",
+      course_name: "Mushroom Extraction and Analysis",
+      course_description: "This summer we are offering a 45-seat course over three 3-day, in-person trainings! Our goal is to bring together our community of citizen scientists and researchers to provide you all the opportunity to learn from our work and insights, and then offer space for you to become a part of it with us!",
+      course_location: "online",
       start_date: "2023-09-01",
       end_date: "2023-12-01",
       start_time: "09:00:00",
@@ -52,8 +55,11 @@ const seedDatabase = async () => {
       deleted: false
     },
     {
-      id: 1,
-      course_name: "Cleaning",
+      id: 1002,
+      course_code: "CMAS",
+      course_name: "Mushroom Chemical Structures & Compounds",
+      course_description: "This summer we are offering a 30-seat course over three 3-day, in-person trainings! Our goal is to bring together our community of citizen scientists and researchers to provide you all the opportunity to learn from our work and insights, and then offer space for you to become a part of it with us!",
+      course_location: "online",
       start_date: "2023-09-01",
       end_date: "2023-12-01",
       start_time: "09:00:00",
@@ -63,8 +69,11 @@ const seedDatabase = async () => {
       deleted: false
     },
     {
-      id: 2,
-      course_name: "Course 2",
+      id: 1003,
+      course_code: "CMAS",
+      course_name: "Psyhoactive chemicle state analysis",
+      course_description: "This summer we are offering a 25-seat course over three 3-day, in-person trainings! Our goal is to bring together our community of citizen scientists and researchers to provide you all the opportunity to learn from our work and insights, and then offer space for you to become a part of it with us!",
+      course_location: "in-person",
       start_date: "2023-09-01",
       end_date: "2023-12-01",
       start_time: "11:00:00",
@@ -72,13 +81,13 @@ const seedDatabase = async () => {
       course_active: true,
       cost: 1200,
       deleted: false
-    }
+    },
   ];
 
   const financeData = [
     {
       id: 1,
-      student_id: 1,
+      student_id: "1r2edf",
       account_status: "active",
       payment_term: 30,
       employer_name: "Company 1",
@@ -90,7 +99,7 @@ const seedDatabase = async () => {
     },
     {
       id: 2,
-      student_id: 2,
+      student_id: "3rsd25",
       account_status: "active",
       payment_term: 30,
       employer_name: "Company 2",
@@ -104,16 +113,34 @@ const seedDatabase = async () => {
 
   const studentCoursesData = [
     {
-      student_id: 1,
-      course_id: 1,
+      student_id: "1r2edf",
+      course_id: 1001,
       certificate_awarded: false,
-      completion_status: "ongoing"
+      completion_status: "In-progress"
     },
     {
-      student_id: 2,
-      course_id: 2,
+      student_id: "1r2edf",
+      course_id: 1003,
       certificate_awarded: false,
-      completion_status: "ongoing"
+      completion_status: "In-progress"
+    },
+    {
+      student_id: "3rsd25",
+      course_id: 1001,
+      certificate_awarded: false,
+      completion_status: "In-progress"
+    },
+    {
+      student_id: "3rsd25",
+      course_id: 1002,
+      certificate_awarded: false,
+      completion_status: "Not-Started"
+    },
+    {
+      student_id: "3rsd25",
+      course_id: 1003,
+      certificate_awarded: true,
+      completion_status: "Completed"
     }
   ];
 

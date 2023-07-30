@@ -13,23 +13,45 @@ const Students = require("./Students");
 const Session = require('./Session');
 
 
-  Courses.belongsToMany(Students, { as: 'student_id_Students', through: StudentCourses, foreignKey: "course_id", otherKey: "student_id" });
+Courses.belongsToMany(Students, { 
+  through: StudentCourses, 
+  foreignKey: "course_id", 
+  otherKey: "student_id" 
+});
 
-  Students.belongsToMany(Courses, { as: 'course_id_Courses', through: StudentCourses, foreignKey: "student_id", otherKey: "course_id" });
-  
-  StudentCourses.belongsTo(Courses, { as: "course", foreignKey: "course_id"});
-  
-  StudentCourses.belongsTo(Students, { as: "student", foreignKey: "student_id"});
+Students.belongsToMany(Courses, { 
+  through: StudentCourses, 
+  foreignKey: "student_id", 
+  otherKey: "course_id" 
+});
 
-  Finance.belongsTo(Students, { as: "student", foreignKey: "student_id"});
+StudentCourses.belongsTo(Courses, { 
+  foreignKey: "course_id"
+});
 
-  Students.hasMany(Finance, { as: "Finances", foreignKey: "student_id"});
+StudentCourses.belongsTo(Students, { 
+  foreignKey: "student_id"
+});
 
-  Courses.hasMany(StudentCourses, { as: "StudentCourses", foreignKey: "course_id"});
-  
-  Students.hasMany(StudentCourses, { as: "StudentCourses", foreignKey: "student_id"});
+Finance.belongsTo(Students, { 
+  foreignKey: "student_id"
+});
 
-  Session.belongsTo(Students, {foreignKey: 'user_id'});
+Students.hasMany(Finance, { 
+  foreignKey: "student_id"
+});
+
+Courses.hasMany(StudentCourses, { 
+  foreignKey: "course_id"
+});
+
+Students.hasMany(StudentCourses, { 
+  foreignKey: "student_id"
+});
+
+Session.belongsTo(Students, {
+  foreignKey: 'user_id'
+});
 
   module.exports = {
     Courses,

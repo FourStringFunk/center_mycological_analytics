@@ -19,24 +19,16 @@
 
 <div class="py-5 px-5">
     <h2 class="mb-4">Course List</h2>
+    {{#each studentCourses}}
     <div class="card">
         <div class="card-body">
-            <h4 class="mb-3">{{studentCourses.course_name}}</h4> <!-- NEED TO ADD THIS FIELD TO STUDENT COURSES TABLE -->
-            <p>Course ID: {{studentCourses.course_id}}</p>
-            <p>Certificate Awarded: {{studentCourses.certificate_awarded}}</p>
-            <p class="mb-0">Completion Status: {{studentCourses.completion_status}}</p>
+            <h4 class="mb-3">{{this.course_name}}</h4> <!-- NEED TO ADD THIS FIELD TO STUDENT COURSES TABLE -->
+            <p>{{this.course_code}} - {{this.id}}</p>
+            <p>Certificate Awarded | {{this.certificate_awarded}}</p>
+            <p class="mb-0">Completion Status | {{this.completion_status}}</p>
         </div>
     </div>
-    <div class="card mt-3">
-        <div class="card-body">
-            <h4 class="mb-3">{{studentCourses.course_name}}</h4> <!-- NEED TO ADD THIS FIELD TO STUDENT COURSES TABLE -->
-            <p>Course ID: {{studentCourses.course_id}}</p>
-            <p>Certificate Awarded: {{studentCourses.certificate_awarded}}</p>
-            <p class="mb-0">Completion Status: {{studentCourses.completion_status}}</p>
-        </div>
-    </div>
-</div>
-
+    {{/each}}
 <div class="py-5 px-5 bg-light">
     <div>
         <h1>Questions</h1>
@@ -44,7 +36,7 @@
     </div>
     <div class="mb-3 align-item-center">
         <a class="d-flex flex-nowrap align-items-center" href="mailto:emily@centerformycoanalytics.org "> 
-            <img src="img/icons/arrow.png" alt="arrow icon" />
+            <img src="/img/icons/arrow.png" alt="arrow icon" />
             <p class="ctaBtn mt-3 ml-5">Email Us</p>
         </a>
     </div>

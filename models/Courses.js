@@ -12,15 +12,26 @@ class Courses extends Model{
 }
 Courses.init( {
     id: {
-      autoIncrement: false,
+      autoIncrement: true,
       type: DataTypes.INTEGER,
       allowNull: false,
       primaryKey: true
     },
+    course_code:{
+      type: DataTypes.STRING(25),
+      allowNull: false,
+    },
     course_name: {
       type: DataTypes.STRING(255),
       allowNull: false,
-      primaryKey: true
+    },
+    course_description: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    },
+    course_location: {
+      type: DataTypes.STRING(255),
+      allowNull: false,
     },
     start_date: {
       type: DataTypes.DATE,
