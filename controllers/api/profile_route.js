@@ -15,13 +15,12 @@ router.get('/',checkAuth2, async (req, res) => {
     let cookieUserId = req.session.user_id;
     try {
         const studentData = await getProfile(cookieUserId);
-        console.log(studentData)
+        
         if (studentData) {
             let altNavigation = null;
             if(req.cookies.session_token){
                 altNavigation = { isProfileTamplate: true, ...studentData , altNavigation : true}
             }
-            // returns an 2 arrays
             return res.status(200).render('StudentCourses', altNavigation);
         } else {
            

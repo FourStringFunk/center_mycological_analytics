@@ -63,9 +63,6 @@ router.get('/courses', async (req, res) => {
         }else{
             altNavigation = { isCoursesTemplate: true, courses, altNavigation : false}
         }
-     
-        console.log(chalk.red(courses))
-      // calls courses template, getCourses() is a helper function
         res.status(200).render('courses', altNavigation);
         return;
     }

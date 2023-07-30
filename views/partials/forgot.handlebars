@@ -1,9 +1,13 @@
- <h1>login (your endpoint, send this form: POST req: /api/users/forgot/retrieve)</h1>
-    <h2>This form needs client side sanitization
-    </h2>
-    <form method="POST" id="forgotForm">
-    <label for="name">email:</label>
-    <input type="text" id="userEmail" name="email" placeholder="Your email" required>
-
-    <button type="submit" id="retrievePass">Send </button>
-    </form>
+   <div class="container-fluid d-flex flex-column justify-content-center align-items-center px-5 py-5 bg-light" id="forgot">
+    <div class="mb-3 align-item-center">
+        <h2 class="text-center mb-3">Enter the email for your accout to recieve a link.</h2>
+        <div class="d-flex flex-nowrap justify-content-center align-items-center">
+         <form method="POST" id="forgotForm">
+            <label for="name">email:</label>
+            <input type="text" id="userEmail" name="email" placeholder="Your email" required>
+            <button class="btn btn-primary btn-sm buttonStyle" type="submit" id="retrievePass">Send </button>
+            <a class="btn btn-primary btn-sm buttonStyle" href="/">Cancel</a>
+         </form>
+        </div>
+    </div>
+</div>

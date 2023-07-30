@@ -8,14 +8,14 @@
             <h2 class="display4 text-center mb-5 text-uppercase">Course List</h2>
             <p class="lead text-center">Scroll through the course list below to view our current offerings. In-Person events to fifteen (15) students, so SEATING IS LIMITED!</p>
         </div>
-
+    {{#each courses}}
         <div class="d-flex flex-wrap justify-content-center align-items-center mb-5" id="programCards">
             <div class="card flex-fill h-lg-100 h-md-50 h-sm-50">
                 <img class="card-img-top" src="img/pexels-artem-podrez-5726794.jpg" alt="">
                 <div class="card-body d-flex flex-column justify-content-center">
-                    <h4 class="card-title">Mushroom Extraction and Analysis Certificate Course</h4>
-                    <p class="card-text">CMAS-1001 | Online</p>
-                    <p class="card-text">This summer we are offering a 45-seat course over three 3-day, in-person trainings! Our goal is to bring together our community of citizen scientists and researchers to provide you all the opportunity to learn from our work and insights, and then offer space for you to become a part of it with us!</p>
+                    <h4 class="card-title">{{this.course_name}}</h4>
+                    <p class="card-text">{{this.course_code}}-{{this.id}} | {{this.course_location}}</p>
+                    <p class="card-text">{{this.course_description}}</p>
                     <div class="container justify-content-center mt-3 ctaButton">
                         <a class="d-flex flex-nowrap align-items-center" href="/courses">
                             <img id="cardBtn" src="img/icons/arrow.png" alt="arrow icon"
@@ -26,8 +26,8 @@
                 </div>
             </div>
         </div>
+    {{/each}}
     </div>
-
     <!-- SCHOLARSHIP APPLICATION -->
         <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center px-lg-5 bg-light" id="oneColCallout">
             <div class="container-fluid d-flex flex-column align-items-center mb-5">

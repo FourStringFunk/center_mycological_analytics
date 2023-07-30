@@ -2,21 +2,21 @@
  * Retrieve student data from the user model
  */
 
-const Student = require('../models/Students')
-const StudentCourse = require('../models/StudentCourses')
+const { Students, StudentCourses, Courses } = require('../models')
+
 const { ValidationError } = require('sequelize');
 
 
 async function getProfile(sessionId) {
-    let studentId = sessionId
-    if(!studentId){
+    
+    if(!sessionId){
         throw new ValidationError("No session id")
     }
 
-    let studentData = await Student.findOne({where: {id : studentId}})
+    let studentData = await Students.findOne({where: {id : sessionId}})
 
     let studentObject = {};
-    let courseObject = {};
+    let courseObjects = [];
 
     if (studentData) {
         studentData = studentData.dataValues;
@@ -34,23 +34,37 @@ async function getProfile(sessionId) {
             deleted: studentData.deleted
         };
 
-        let sc = await StudentCourse.findOne({where: {student_id : studentData.id}})
-        if (sc) {
-            courseObject = {
-                student_id: sc.student_id,
-                course_name: sc.course_name,
-                course_id: sc.course_id,
-                certificate_awarded: sc.certificate_awarded,
-                completion_status: sc.completion_status
+        let studentCourses = await StudentCourses.findAll({
+            where: {student_id : studentData.id},
+            include: [
+                {
+                  model: Courses,
+                },
+              ],
+        });
+
+        courseObjects = studentCourses.map((studentCourse) => {
+            //'Course' string corresponds to the model's name that the StudentCourse belongs to. 
+            // It should match the case (upper or lower) of the model's name.
+            const course = studentCourse.get('Course');
+            return {
+                id: course.id,
+                course_code: course.course_code,
+                course_name: course.course_name,
+                course_location: course.course_location,
+                // add other course fields as needed
+                certificate_awarded: studentCourse.certificate_awarded,
+                completion_status: studentCourse.completion_status,
             };
-        }
+        });
     }
+
     const profileData = {
         student: studentObject,
-        studentCourses: courseObject
-      };
+        studentCourses: courseObjects
+    };
     
-      return profileData;
+    return profileData;
 }
 
 module.exports = getProfile;

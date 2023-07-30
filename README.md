@@ -19,7 +19,7 @@ The dev team will use everything we've learned over the past six modules to crea
 - Protect all API keys and sensitive information with environment variables
 - Deploy using Heroku (with data)
 - Have a responsive, polished, and interactive UI
-- Meed good-quality coding standards
+- Meet good-quality coding standards
 - Have a professional README
 
 ## TABLE OF CONTENTS
@@ -42,10 +42,10 @@ The dev team will use everything we've learned over the past six modules to crea
 - Emily Davis, Founder & Instructor
 
 ### Developers
-- Guy Beals (Backend DB, Server, Template Engine)
+- Guy Beals (Backend: DB & DB Models, Server, Template Engine, Client side JavaScript)
+- Chris Harris (Frontend: Design, Responsiveness, Wireframes, UI/UX)
 - Deni Ensign
 - Steven Hudek
-- Chris Harris (Frontend, Design, Wireframes)
 
 ## LICENSE
 MIT License

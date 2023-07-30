@@ -17,9 +17,9 @@
     {{#if isNewProfile}}
     <script src="/ClientSideScripts/newProfile.js" defer ></script>
     {{/if}}
-    {{#if homePageTemplate}}
+    {{#ifCond homePageTemplate '||' isAboutTemplate}}
     <script src="/ClientSideScripts/contact.js" defer ></script>
-    {{/if}}
+    {{/ifCond}}
     {{#if forgotPassword}}
     <script src="/ClientSideScripts/forgotPass.js" defer ></script>
     {{/if}}
@@ -43,7 +43,7 @@
         <nav class="navbar navbar-expand-md h-100 w-100" id="nav">
             <div class="container-fluid bg-white">
                 <a class="navbar-brand d-flex flex-row align-items-center w-75" href="/" width="30" height="24" data-bs-target="#navbarSupportedContent">
-                    <img src="img/brand/CMA_logo.svg" style="width: 50px; height: 50px; margin-right: 10px;" alt="logo">
+                    <img src="/img/brand/CMA_logo.svg" style="width: 50px; height: 50px; margin-right: 10px;" alt="logo">
                     <h1 class="org-title text-wrap fs-2">Center for Mycological Analytics</h1>
                 </a>
 
@@ -62,7 +62,7 @@
                             <a class="nav-link" href="/scholarships">Scholarships</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="api/users/login">Login</a>
+                            <a class="nav-link" href="/api/users/login">Login</a>
                         </li>
                     </ul>
                 </div>
@@ -79,7 +79,7 @@
     <!-- FOOTER -->
     <footer>
         <div class="d-flex flex-column align-items-center px-5 py-5">
-            <img id="footerBrand" class="img-fluid" src="img/brand/CMA_logo.svg" alt="Center for Mycological Analytics Logo">
+            <img id="footerBrand" class="img-fluid" src="/img/brand/CMA_logo.svg" alt="Center for Mycological Analytics Logo">
             <h3 class="text-center mt-4">Center for Mycological Analytics</h3>
             <p>Citizen Science Education</p>
             <div id="social mt-5">
