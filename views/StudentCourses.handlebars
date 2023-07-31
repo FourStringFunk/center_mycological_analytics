@@ -14,13 +14,13 @@
     <p><strong>City:</strong> {{student.city}}</p>
     <p><strong>State:</strong> {{student.state}}</p>
     <p><strong>Zip:</strong> {{student.zip}}</p>
-    <button class="btn btn-primary buttonStyle mt-3" href="/update" type="button">Update Profile</button> <!-- NEED TO FIGURE OUT PUT REQUEST WITH FORM -->
+    <button class="ctaBtn btn btn-primary buttonStyle mt-3" href="/update" type="button" style="background-color: #5e6d55; border-color: #5e6d55">Update Profile</button> <!-- NEED TO FIGURE OUT PUT REQUEST WITH FORM -->
 </div>
 
 <div class="py-5 px-5">
     <h2 class="mb-4">Course List</h2>
     {{#each studentCourses}}
-    <div class="card">
+    <div class="card mb-3">
         <div class="card-body">
             <h4 class="mb-3">{{this.course_name}}</h4> <!-- NEED TO ADD THIS FIELD TO STUDENT COURSES TABLE -->
             <p>{{this.course_code}} - {{this.id}}</p>
@@ -29,6 +29,8 @@
         </div>
     </div>
     {{/each}}
+</div>
+
 <div class="py-5 px-5 bg-light">
     <div>
         <h1>Questions</h1>
@@ -36,8 +38,8 @@
     </div>
     <div class="mb-3 align-item-center">
         <a class="d-flex flex-nowrap align-items-center" href="mailto:emily@centerformycoanalytics.org "> 
-            <img src="/img/icons/arrow.png" alt="arrow icon" />
-            <p class="ctaBtn mt-3 ml-5">Email Us</p>
+            <img class="mr-5" src="/img/icons/arrow.png" alt="arrow icon" />
+            <p class="mt-3 ml-5">Email Us</p>
         </a>
     </div>
 </div>
