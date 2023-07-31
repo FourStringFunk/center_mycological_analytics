@@ -25,18 +25,24 @@ a, button, p, ul, li {
 .buttonStyle {
     background-color: var(--accent) !important;
     border: none !important;
-    width: 200px;
+    width: 200px !important;
+}
+
+.btn {
+    background-color: var(--accent) !important;
+    border: none !important;
+    width: 200px !important;
 }
 
 /* HOMEPAGE */
 /* Jumbotron */
 .jumbotron {
-    height: 50vh;
+    height: 40vh;
 }
 
 /* 1-COLUMN CALLOUT*/
-#oneColCallout #contactUs {
-    height: 50vh;
+#oneColCallout, #contactUs {
+    height: 70vh;
 }
 
 #sponsor {
@@ -44,9 +50,9 @@ a, button, p, ul, li {
 }
 
 .ctaBtn {
-    font-size: 1.5em;
-    margin-left: 10px;
-    margin-bottom: 5px;
+    font-size: 1.5em !important;
+    margin-left: 10px !important;
+    margin-bottom: 5px !important;
 }
 
 /* SPONSOR */
@@ -57,7 +63,7 @@ a, button, p, ul, li {
 /* SCHOLARSHIP PAGE */
 
 #scholarshipApplication {
-    height: 125vh;
+    height: 175vh;
 }
 
 /* Carousel */
@@ -71,10 +77,6 @@ a, button, p, ul, li {
 }
 
 /* FOOTER */
-#footerBrand {
-    width: 25vh;
-    height: 25vh;
-}
 
 /* MEDIA QUERIES */
 @media screen and (max-width: 420px) {
