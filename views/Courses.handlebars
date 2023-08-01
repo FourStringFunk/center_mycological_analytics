@@ -1,6 +1,6 @@
 <body>
     <!-- banner --> 
-    <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center" id="banner"
+    <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center object-fit-cover" id="banner"
         style="background-image: url(img/pexels-marcus-aurelius-4063590.jpg); width: 100%; object-fit: contain;">
         <div class="container-fluid d-flex flex-column align-items-center">
             <h1 class="display-4 text-white text-center mb-5">Course List</h1>
@@ -9,12 +9,13 @@
 
     <!-- course list -->
     <div class="d-flex flex-column justify-content-center align-items-center px-5 py-5" id="threeColCallout">
-        <div class="container-fluid d-flex flex-column align-items-center mb-5 animate__animated animate__slideInRight">
+        <div class="container-fluid d-flex flex-column align-items-center mb-5 w-100 animate__animated animate__slideInRight">
             <p class="lead text-center">Scroll through the course list below to view our current offerings. In-Person events to fifteen (15) students, so SEATING IS LIMITED!</p>
         </div>
-    {{#each courses}}
-        <div class="d-flex flex-wrap justify-content-center align-items-center mb-5 w-50" id="programCards">
-            <div class="card flex-fill h-lg-100 h-md-50 h-sm-50">
+    
+        <div class="d-flex flex-wrap justify-content-center align-items-between mb-5" id="programCards">
+            {{#each courses}}
+            <div class="card flex-fill h-lg-50 h-md-50 h-sm-50" id="courseCard">
                 <img class="card-img-top" src="img/pexels-artem-podrez-5726794.jpg" alt="">
                 <div class="card-body d-flex flex-column justify-content-center">
                     <h4 class="card-title">{{this.course_name}}</h4>
@@ -29,8 +30,9 @@
                     </div>
                 </div>
             </div>
+            {{/each}}
         </div>
-    {{/each}}
+    
     </div>
     <!-- SCHOLARSHIP APPLICATION -->
         <div class="jumbotron jumbotron-fluid d-flex flex-column justify-content-center px-lg-5 bg-light" id="oneColCallout">

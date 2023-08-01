@@ -37,12 +37,12 @@ a, button, p, ul, li {
 /* HOMEPAGE */
 /* Jumbotron */
 .jumbotron {
-    height: 40vh;
+    height: 50vh;
 }
 
 /* 1-COLUMN CALLOUT*/
 #oneColCallout {
-    height: 50vh;
+    height: 55vh !important;
 }
 
 #contactUs {
@@ -80,11 +80,19 @@ a, button, p, ul, li {
     width: 150px;
 }
 
+/* COURSE CARD */
+#courseCard {
+    width: 30% !important;
+}
+
 /* FOOTER */
 
 /* MEDIA QUERIES */
 @media screen and (max-width: 420px) {
     /* UNIVERSAL */
+    #oneColCallout {
+        height: 75vh !important;
+    }
 
     /* HOMEPAGE */
     h1.org-title {
@@ -107,7 +115,13 @@ a, button, p, ul, li {
     /* SCHOLARSHIP PAGE*/
 
     #scholarshipApplication {
-        height: 175vh;
+        height: 225vh;
+    }
+
+    #courseCard {
+        width: 100% !important;
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;
     }
 }
 
