@@ -31,7 +31,7 @@ app.use(express.json());                                         // Parse JSON b
 
 // sets up your cookies
 app.use(session({
-    secret: process.env.SECRET,                                 // the secret helps with hashing the session cookie I think?
+    secret: '#1SecretEver',                                 // the secret helps with hashing the session cookie I think?
     resave: false,                                              // set resave to false to prevent potentially problematic race conditions.
     saveUninitialized: false,
     cookie: { 
