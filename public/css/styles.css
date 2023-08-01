@@ -41,12 +41,16 @@ a, button, p, ul, li {
 }
 
 /* 1-COLUMN CALLOUT*/
-#oneColCallout, #contactUs {
-    height: 70vh;
+#oneColCallout {
+    height: 50vh;
+}
+
+#contactUs {
+    height: 75vh;
 }
 
 #sponsor {
-    height: 50vh !important;
+    height: 60vh !important;
 }
 
 .ctaBtn {
