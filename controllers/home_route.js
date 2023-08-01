@@ -63,7 +63,7 @@ router.get('/courses', async (req, res) => {
         }else{
             altNavigation = { isCoursesTemplate: true, courses, altNavigation : false}
         }
-        res.status(200).render('courses', altNavigation);
+        res.status(200).render('Courses', altNavigation);
         return;
     }
     catch(err){
